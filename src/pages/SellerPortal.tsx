@@ -59,7 +59,11 @@ const SellerPortal = () => {
           </div>
 
           <div className="mb-8">
-            <Button size="lg" className="w-full md:w-auto">
+            <Button 
+              size="lg" 
+              className="w-full md:w-auto"
+              onClick={() => navigate("/seller-portal/add-vehicle")}
+            >
               <Plus className="mr-2 h-4 w-4" />
               Add New Vehicle
             </Button>
