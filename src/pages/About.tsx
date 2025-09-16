@@ -52,11 +52,11 @@ const About = () => {
                 ನಮ್ಮ ಸೇವೆ (Our Service)
               </h2>
               <p className="text-lg text-primary font-semibold mb-6">
-                11000 ರೈತರಿಗೆ ಪಾರದರ್ಶಕ ಸೇವೆ ನೀಡಲಾಗುತ್ತಿದೆ
+                ಕರ್ನಾಟಕದಾದ್ಯಂತ 11000 ರೈತರಿಗೆ ಪಾರದರ್ಶಕತೆಯಿಂದ ಉಪಯೋಗಿಸಿದ ರೈತ ಉಪಕರಣಗಳ ಮಾರಾಟದ ವ್ಯವಸ್ಥೆ
               </p>
               <p className="text-muted-foreground">
-                We take pride in providing transparent services to farmers. Every piece of equipment 
-                listed on our platform goes through a thorough verification process by our executives 
+                We specialize in providing transparent services for pre-owned agricultural machinery to farmers. 
+                Every piece of equipment listed on our platform goes through a thorough verification process by our executives 
                 to ensure quality and authenticity.
               </p>
             </div>

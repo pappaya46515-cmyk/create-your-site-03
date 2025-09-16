@@ -72,10 +72,10 @@ const Buy = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              ಖರೀದಿದಾರ / Buyer Portal
+              ಖರೀದಿದಾರ / Buy Pre-owned
             </h1>
             <p className="text-xl text-muted-foreground">
-              Browse verified agricultural equipment from trusted sellers
+              Browse verified pre-owned agricultural equipment from trusted sellers
             </p>
           </div>
         </div>
@@ -126,7 +126,7 @@ const Buy = () => {
         <div className="container mx-auto px-4">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-foreground">
-              Available Equipment ({filteredEquipment.length})
+              Available Pre-owned Equipment ({filteredEquipment.length})
             </h2>
             <p className="text-muted-foreground">All listings are verified by Kamtha executives</p>
           </div>

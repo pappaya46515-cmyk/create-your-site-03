@@ -10,8 +10,8 @@ const Services = () => {
     {
       icon: <ShoppingCart className="h-10 w-10 text-primary" />,
       title: "ಖರೀದಿದಾರ ಸೇವೆ",
-      subtitle: "Buyer Services",
-      description: "Browse and purchase verified agricultural equipment from trusted sellers",
+      subtitle: "Buy Pre-owned Services",
+      description: "Browse and purchase verified pre-owned agricultural equipment from trusted sellers",
       features: [
         "Verified equipment listings",
         "Transparent pricing",
@@ -19,13 +19,13 @@ const Services = () => {
         "Direct seller contact"
       ],
       link: "/buy",
-      buttonText: "Start Buying"
+      buttonText: "Buy Pre-owned"
     },
     {
       icon: <Package className="h-10 w-10 text-secondary" />,
       title: "ಮಾರಾಟಗಾರ ಸೇವೆ",
-      subtitle: "Seller Services",
-      description: "List your agricultural equipment for sale with our verification process",
+      subtitle: "Sell Pre-owned Services",
+      description: "List your pre-owned agricultural equipment for sale with our verification process",
       features: [
         "Easy listing process",
         "Executive verification",
@@ -33,7 +33,7 @@ const Services = () => {
         "Fair pricing guidance"
       ],
       link: "/sell",
-      buttonText: "Start Selling"
+      buttonText: "Sell Pre-owned"
     },
     {
       icon: <Shield className="h-10 w-10 text-accent" />,
@@ -142,12 +142,12 @@ const Services = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/buy">
               <Button size="lg" className="bg-card text-foreground hover:bg-card/90">
-                Browse Equipment
+                Buy Pre-owned Equipment
               </Button>
             </Link>
             <Link to="/sell">
               <Button size="lg" variant="outline" className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
-                List Your Equipment
+                Sell Your Pre-owned
               </Button>
             </Link>
           </div>

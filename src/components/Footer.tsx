@@ -45,8 +45,8 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li><Link to="/about" className="opacity-80 hover:opacity-100 transition-opacity">About Us</Link></li>
               <li><Link to="/services" className="opacity-80 hover:opacity-100 transition-opacity">Our Services</Link></li>
-              <li><Link to="/buy" className="opacity-80 hover:opacity-100 transition-opacity">Buy Equipment</Link></li>
-              <li><Link to="/sell" className="opacity-80 hover:opacity-100 transition-opacity">Sell Equipment</Link></li>
+              <li><Link to="/buy" className="opacity-80 hover:opacity-100 transition-opacity">Buy Pre-owned</Link></li>
+              <li><Link to="/sell" className="opacity-80 hover:opacity-100 transition-opacity">Sell Pre-owned</Link></li>
             </ul>
           </div>
 
@@ -54,7 +54,7 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-sm">
-              <li className="opacity-80">Tractor Sales</li>
+              <li className="opacity-80">Pre-owned Tractor Sales</li>
               <li className="opacity-80">Equipment Verification</li>
               <li className="opacity-80">Customer Support</li>
               <li className="opacity-80">Farmer Assistance</li>

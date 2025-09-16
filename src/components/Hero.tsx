@@ -27,7 +27,7 @@ const Hero = () => {
           {/* Tagline in Kannada */}
           <div className="mb-6 inline-block">
             <p className="text-2xl md:text-3xl font-bold text-primary bg-card/90 backdrop-blur-sm px-6 py-3 rounded-full shadow-medium">
-              11000 ರೈತರಿಗೆ ಪಾರದರ್ಶಕ ಸೇವೆ ನೀಡಲಾಗುತ್ತಿದೆ
+              ಕರ್ನಾಟಕದಾದ್ಯಂತ 11000 ರೈತರಿಗೆ ಪಾರದರ್ಶಕತೆಯಿಂದ ಉಪಯೋಗಿಸಿದ ರೈತ ಉಪಕರಣಗಳ ಮಾರಾಟದ ವ್ಯವಸ್ಥೆ
             </p>
           </div>
 
@@ -36,7 +36,7 @@ const Hero = () => {
             Welcome to <span className="text-primary">Kamtha</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            Your Trusted Partner in Agricultural Equipment
+            Pre-owned Agri Machines and Transparent Service Across Karnataka
           </p>
 
           {/* Service Options */}
@@ -52,10 +52,10 @@ const Hero = () => {
                   ಖರೀದಿದಾರ ಮತ್ತು ಗ್ರಾಹಕ ಸೇವೆ
                 </h3>
                 <p className="text-muted-foreground mb-4">
-                  Buyer and Customer Service
+                  Buy Pre-owned Equipment & Customer Service
                 </p>
                 <Button className="bg-primary hover:bg-primary-hover text-primary-foreground">
-                  Explore Services <ArrowRight className="ml-2 h-4 w-4" />
+                  Buy Pre-owned <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </Link>
@@ -71,10 +71,10 @@ const Hero = () => {
                   ಮಾರಾಟಗಾರ
                 </h3>
                 <p className="text-muted-foreground mb-4">
-                  Seller Services
+                  Sell Your Pre-owned Equipment
                 </p>
                 <Button className="bg-secondary hover:bg-secondary-hover text-secondary-foreground">
-                  Start Selling <ArrowRight className="ml-2 h-4 w-4" />
+                  Sell Pre-owned <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </Link>

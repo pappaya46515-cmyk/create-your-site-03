@@ -67,10 +67,10 @@ const Sell = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              ಮಾರಾಟಗಾರ / Seller Portal
+              ಮಾರಾಟಗಾರ / Sell Your Pre-owned
             </h1>
             <p className="text-xl text-muted-foreground">
-              List your agricultural equipment for sale with our verification process
+              List your pre-owned agricultural equipment for sale with our verification process
             </p>
           </div>
         </div>
@@ -82,7 +82,7 @@ const Sell = () => {
           <div className="max-w-2xl mx-auto">
             <Card>
               <CardHeader>
-                <CardTitle className="text-2xl">Equipment Listing Form</CardTitle>
+                <CardTitle className="text-2xl">Pre-owned Equipment Listing Form</CardTitle>
                 <CardDescription>
                   Fill in the details below to list your equipment. All listings are verified by Kamtha executives.
                 </CardDescription>

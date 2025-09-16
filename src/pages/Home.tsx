@@ -8,8 +8,8 @@ const Home = () => {
   const features = [
     {
       icon: <Tractor className="h-8 w-8 text-primary" />,
-      title: "Wide Range of Equipment",
-      description: "Access to various tractors and agricultural machinery"
+      title: "Wide Range of Pre-owned Equipment",
+      description: "Access to various pre-owned tractors and agricultural machinery"
     },
     {
       icon: <Shield className="h-8 w-8 text-primary" />,

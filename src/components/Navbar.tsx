@@ -14,7 +14,7 @@ const Navbar = () => {
 
   const navItems = {
     en: ["Home", "About", "Services", "Buy", "Sell", "Contact"],
-    kn: ["ಮುಖಪುಟ", "ಬಗ್ಗೆ", "ಸೇವೆಗಳು", "ಖರೀದಿ", "ಮಾರಾಟ", "ಸಂಪರ್ಕಿಸಿ"]
+    kn: ["ಮುಖಪುಟ", "ಬಗ್ಗೆ", "ಸೇವೆಗಳು", "ಖರೀದಿಸಿ", "ಮಾರಾಟ ಮಾಡಿ", "ಸಂಪರ್ಕಿಸಿ"]
   };
 
   const paths = ["/", "/about", "/services", "/buy", "/sell", "/contact"];
