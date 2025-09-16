@@ -1,11 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tractor, Shield, Users, Award, TrendingUp, Headphones, ArrowRight, BarChart3, FileText } from "lucide-react";
-import { Link } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const features = [
     {
       icon: <Tractor className="h-8 w-8 text-primary" />,
@@ -70,16 +71,20 @@ const Home = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/auth">
-                <Button size="lg" className="bg-primary hover:bg-primary-hover text-primary-foreground">
-                  Login to Portal <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-              <Link to="/auth">
-                <Button size="lg" variant="outline">
-                  Register as Seller/Buyer
-                </Button>
-              </Link>
+              <Button 
+                size="lg" 
+                className="bg-primary hover:bg-primary-hover text-primary-foreground"
+                onClick={() => navigate("/auth")}
+              >
+                Login to Portal <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                onClick={() => navigate("/auth")}
+              >
+                Register as Seller/Buyer
+              </Button>
             </div>
 
             {/* Contact Numbers */}
