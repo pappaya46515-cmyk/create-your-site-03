@@ -1,6 +1,6 @@
 import { Facebook, Twitter, Instagram, Youtube, MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
-import omGaneshLogo from "@/assets/om-ganesh-logo.png";
+import omGaneshLogo from "@/assets/om-ganesh-official-logo.jpg";
 
 const Footer = () => {
   return (
@@ -13,15 +13,15 @@ const Footer = () => {
               <img 
                 src={omGaneshLogo} 
                 alt="Om Ganesh" 
-                className="h-10 w-10 object-contain"
+                className="h-12 w-auto object-contain"
               />
               <div>
-                <h3 className="text-lg font-bold">Om Ganesh</h3>
-                <p className="text-sm opacity-80">Tractors & Equipment</p>
+                <h3 className="text-lg font-bold">Om Ganesh Trailer</h3>
+                <p className="text-sm opacity-80">ESTD-1988</p>
               </div>
             </div>
             <p className="text-sm opacity-80 mb-4">
-              Empowering farmers with quality agricultural equipment and transparent services since establishment.
+              Empowering farmers with quality agricultural equipment and transparent services since 1988.
             </p>
             <div className="flex space-x-3">
               <a href="#" className="p-2 bg-primary/10 hover:bg-primary/20 rounded-full transition-colors">

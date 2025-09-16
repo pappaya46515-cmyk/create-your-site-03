@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Target, Eye, Heart, Award } from "lucide-react";
-import omGaneshLogo from "@/assets/om-ganesh-logo.png";
+import omGaneshLogo from "@/assets/om-ganesh-official-logo.jpg";
 
 const About = () => {
   return (
@@ -16,7 +16,7 @@ const About = () => {
             <img 
               src={omGaneshLogo} 
               alt="Om Ganesh" 
-              className="h-24 w-24 mx-auto mb-6 object-contain"
+              className="h-32 w-auto mx-auto mb-6 object-contain"
             />
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               About Om Ganesh Tractors

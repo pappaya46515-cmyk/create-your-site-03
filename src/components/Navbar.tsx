@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, Phone, Globe2 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import omGaneshLogo from "@/assets/om-ganesh-logo.png";
+import omGaneshLogo from "@/assets/om-ganesh-official-logo.jpg";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,11 +28,11 @@ const Navbar = () => {
             <img 
               src={omGaneshLogo} 
               alt="Om Ganesh" 
-              className="h-10 w-10 object-contain"
+              className="h-12 w-auto object-contain"
             />
             <div>
-              <h1 className="text-xl font-bold text-primary">Om Ganesh</h1>
-              <p className="text-xs text-muted-foreground">Tractors & Equipment</p>
+              <h1 className="text-xl font-bold text-primary">Om Ganesh Trailer</h1>
+              <p className="text-xs text-muted-foreground">ESTD-1988</p>
             </div>
           </Link>
 
