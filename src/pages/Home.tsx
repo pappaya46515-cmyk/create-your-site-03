@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tractor, Shield, Users, Award, TrendingUp, Headphones, ArrowRight, BarChart3, FileText } from "lucide-react";
 
 const Home = () => {
-  const navigate = useNavigate();
+  
   const features = [
     {
       icon: <Tractor className="h-8 w-8 text-primary" />,
@@ -71,25 +71,15 @@ const Home = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-primary hover:bg-primary-hover text-primary-foreground"
-                onClick={() => {
-                  console.log("Login button clicked, navigating to /auth");
-                  navigate("/auth");
-                }}
-              >
-                Login to Portal <ArrowRight className="ml-2 h-4 w-4" />
+              <Button asChild size="lg" className="bg-primary hover:bg-primary-hover text-primary-foreground">
+                <Link to="/auth" onClick={() => console.log("Login link clicked -> /auth")}> 
+                  Login to Portal <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                onClick={() => {
-                  console.log("Register button clicked, navigating to /auth");
-                  navigate("/auth");
-                }}
-              >
-                Register as Seller/Buyer
+              <Button asChild size="lg" variant="outline">
+                <Link to="/auth" onClick={() => console.log("Register link clicked -> /auth")}> 
+                  Register as Seller/Buyer
+                </Link>
               </Button>
             </div>
 
