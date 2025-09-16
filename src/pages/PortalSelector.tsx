@@ -32,20 +32,9 @@ const PortalSelector = () => {
       const roles = data?.map(r => r.role) || [];
       setUserRoles(roles);
 
-      // If user has only one role, redirect directly
-      if (roles.length === 1) {
-        switch (roles[0]) {
-          case "admin":
-            navigate("/admin");
-            break;
-          case "seller":
-            navigate("/seller-portal");
-            break;
-          case "buyer":
-            navigate("/buyer-portal");
-            break;
-        }
-      }
+      // Always show selector so users can add roles
+      // (Removed auto-redirect when only one role)
+
     } catch (error) {
       console.error("Error fetching roles:", error);
     } finally {
