@@ -74,14 +74,20 @@ const Home = () => {
               <Button 
                 size="lg" 
                 className="bg-primary hover:bg-primary-hover text-primary-foreground"
-                onClick={() => navigate("/auth")}
+                onClick={() => {
+                  console.log("Login button clicked, navigating to /auth");
+                  navigate("/auth");
+                }}
               >
                 Login to Portal <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button 
                 size="lg" 
                 variant="outline"
-                onClick={() => navigate("/auth")}
+                onClick={() => {
+                  console.log("Register button clicked, navigating to /auth");
+                  navigate("/auth");
+                }}
               >
                 Register as Seller/Buyer
               </Button>
