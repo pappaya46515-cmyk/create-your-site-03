@@ -10,7 +10,8 @@ import {
   Tractor,
   FileText,
   BarChart3,
-  Bell
+  Bell,
+  ArrowLeftRight
 } from "lucide-react";
 import kamthaLogo from "@/assets/om-ganesh-official-logo.jpg";
 
@@ -106,8 +107,16 @@ const DashboardLayout = ({ children, userRole }: DashboardLayoutProps) => {
 
         <div className="absolute bottom-0 w-full p-4 border-t border-border">
           <Button
+            variant="outline"
+            className="w-full justify-start mb-2"
+            onClick={() => navigate("/portal-select")}
+          >
+            <ArrowLeftRight className="h-5 w-5 mr-3" />
+            {sidebarOpen && "Switch Portal"}
+          </Button>
+          <Button
             variant="ghost"
-            className="w-full justify-start"
+            className="w-full justify-start text-destructive hover:text-destructive"
             onClick={handleLogout}
           >
             <LogOut className="h-5 w-5 mr-3" />

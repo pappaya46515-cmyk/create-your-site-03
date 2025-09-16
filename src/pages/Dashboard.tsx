@@ -45,15 +45,18 @@ const Dashboard = () => {
       const { data, error } = await supabase
         .from("user_roles")
         .select("role")
-        .eq("user_id", userId)
-        .maybeSingle();
+        .eq("user_id", userId);
 
       if (error) throw error;
 
-        if (data) {
-          setUserRole(data.role);
-          // Redirect based on role
-          switch (data.role) {
+      if (data && data.length > 0) {
+        // If user has multiple roles, let them choose
+        if (data.length > 1) {
+          navigate("/portal-select");
+        } else {
+          setUserRole(data[0].role);
+          // Redirect based on single role
+          switch (data[0].role) {
             case "admin":
               navigate("/admin");
               break;
@@ -66,10 +69,11 @@ const Dashboard = () => {
             default:
               navigate("/role-select");
           }
-        } else {
-          // No role assigned, let user choose
-          navigate("/role-select");
         }
+      } else {
+        // No role assigned, let user choose
+        navigate("/role-select");
+      }
     } catch (error) {
       console.error("Error fetching user role:", error);
       navigate("/role-select");
