@@ -11,7 +11,8 @@ import {
   FileText,
   BarChart3,
   Bell,
-  ArrowLeftRight
+  ArrowLeftRight,
+  Plus
 } from "lucide-react";
 import kamthaLogo from "@/assets/om-ganesh-official-logo.jpg";
 
@@ -36,15 +37,15 @@ const DashboardLayout = ({ children, userRole }: DashboardLayoutProps) => {
           { icon: LayoutDashboard, label: "Dashboard", path: "/admin" },
           { icon: Tractor, label: "Vehicle Stock", path: "/admin/vehicles" },
           { icon: User, label: "Users", path: "/admin/users" },
-          { icon: FileText, label: "Agreements", path: "/admin/agreements" },
+          { icon: FileText, label: "Documents", path: "/admin/documents" },
           { icon: BarChart3, label: "Analytics", path: "/admin/analytics" },
           { icon: Bell, label: "Notifications", path: "/admin/notifications" },
         ];
       case "seller":
         return [
           { icon: LayoutDashboard, label: "Dashboard", path: "/seller-portal" },
-          { icon: Tractor, label: "My Vehicles", path: "/seller-portal/vehicles" },
-          { icon: FileText, label: "Documents", path: "/seller-portal/documents" },
+          { icon: Tractor, label: "My Vehicles", path: "/seller-portal/listings" },
+          { icon: Plus, label: "Add Vehicle", path: "/seller-portal/add-vehicle" },
           { icon: Bell, label: "Notifications", path: "/seller-portal/notifications" },
         ];
       case "buyer":
