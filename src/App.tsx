@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import AdminPortal from "./pages/AdminPortal";
 import SellerPortal from "./pages/SellerPortal";
 import BuyerPortal from "./pages/BuyerPortal";
+import BuyerNotifications from "./pages/buyer/BuyerNotifications";
 import RoleSelect from "./pages/RoleSelect";
 import PortalSelector from "./pages/PortalSelector";
 import VehicleBrowse from "./pages/buyer/VehicleBrowse";
@@ -17,10 +18,12 @@ import SavedVehicles from "./pages/buyer/SavedVehicles";
 import AddVehicle from "./pages/seller/AddVehicle";
 import MyListings from "./pages/seller/MyListings";
 import VehicleDocuments from "./pages/seller/VehicleDocuments";
+import SellerNotifications from "./pages/seller/SellerNotifications";
 import UserManagement from "./pages/admin/UserManagement";
 import VehicleManagement from "./pages/admin/VehicleManagement";
 import DocumentVerification from "./pages/admin/DocumentVerification";
 import Analytics from "./pages/admin/Analytics";
+import AdminNotifications from "./pages/admin/AdminNotifications";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -80,6 +83,11 @@ const App = () => (
               <SavedVehicles />
             </ProtectedRoute>
           } />
+          <Route path="/buyer-portal/notifications" element={
+            <ProtectedRoute requiredRole="buyer">
+              <BuyerNotifications />
+            </ProtectedRoute>
+          } />
           <Route path="/seller-portal/add-vehicle" element={
             <ProtectedRoute requiredRole="seller">
               <AddVehicle />
@@ -93,6 +101,11 @@ const App = () => (
           <Route path="/seller-portal/vehicles/:vehicleId/documents" element={
             <ProtectedRoute requiredRole="seller">
               <VehicleDocuments />
+            </ProtectedRoute>
+          } />
+          <Route path="/seller-portal/notifications" element={
+            <ProtectedRoute requiredRole="seller">
+              <SellerNotifications />
             </ProtectedRoute>
           } />
           <Route path="/admin/users" element={
@@ -113,6 +126,11 @@ const App = () => (
           <Route path="/admin/analytics" element={
             <ProtectedRoute requiredRole="admin">
               <Analytics />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/notifications" element={
+            <ProtectedRoute requiredRole="admin">
+              <AdminNotifications />
             </ProtectedRoute>
           } />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
