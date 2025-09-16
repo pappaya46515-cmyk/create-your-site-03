@@ -118,9 +118,9 @@ const SellerPortal = () => {
                 <Link to="/seller-portal/listings">
                   <Button className="w-full">View My Sales</Button>
                 </Link>
-                <Button className="w-full" variant="outline" disabled>
-                  Download Reports
-                </Button>
+                <Link to="/seller-portal/listings">
+                  <Button className="w-full" variant="outline">View Reports</Button>
+                </Link>
               </CardContent>
             </Card>
 
