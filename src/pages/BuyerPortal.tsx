@@ -59,7 +59,11 @@ const BuyerPortal = () => {
           </div>
 
           <div className="mb-8">
-            <Button size="lg" className="w-full md:w-auto">
+            <Button 
+              size="lg" 
+              className="w-full md:w-auto"
+              onClick={() => navigate("/buyer-portal/browse")}
+            >
               <Search className="mr-2 h-4 w-4" />
               Browse All Vehicles
             </Button>
