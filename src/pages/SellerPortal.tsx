@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { LogOut, Plus, Package, Eye, FileText, DollarSign } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 
@@ -69,54 +69,76 @@ const SellerPortal = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <Card>
               <CardHeader>
-                <CardTitle>My Listings</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <Package className="h-5 w-5" />
+                  My Listings
+                </CardTitle>
                 <CardDescription>Manage your vehicle inventory</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full mb-2">View All Listings</Button>
-                <Button className="w-full mb-2" variant="outline">Active (12)</Button>
-                <Button className="w-full mb-2" variant="outline">Pending (3)</Button>
-                <Button className="w-full" variant="outline">Sold (8)</Button>
+              <CardContent className="space-y-2">
+                <Link to="/seller-portal/listings">
+                  <Button className="w-full">View All Listings</Button>
+                </Link>
+                <Link to="/seller-portal/add-vehicle">
+                  <Button className="w-full" variant="outline">Add New Vehicle</Button>
+                </Link>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Document Management</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5" />
+                  Document Management
+                </CardTitle>
                 <CardDescription>Upload and manage vehicle documents</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full mb-2">Upload Documents</Button>
-                <Button className="w-full mb-2" variant="outline">RC Certificates</Button>
-                <Button className="w-full mb-2" variant="outline">Insurance Papers</Button>
-                <Button className="w-full" variant="outline">Forms 29/30</Button>
+              <CardContent className="space-y-2">
+                <Link to="/seller-portal/listings">
+                  <Button className="w-full">Manage Documents</Button>
+                </Link>
+                <p className="text-sm text-muted-foreground text-center">
+                  Add a vehicle first, then upload documents
+                </p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Buyer Inquiries</CardTitle>
-                <CardDescription>Respond to interested buyers</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button className="w-full mb-2">New Inquiries (5)</Button>
-                <Button className="w-full mb-2" variant="outline">Ongoing Chats</Button>
-                <Button className="w-full" variant="outline">Inquiry History</Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Sales & Analytics</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <DollarSign className="h-5 w-5" />
+                  Sales Summary
+                </CardTitle>
                 <CardDescription>Track your performance</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full mb-2">Sales Report</Button>
-                <Button className="w-full mb-2" variant="outline">View Analytics</Button>
-                <Button className="w-full" variant="outline">Download Statements</Button>
+              <CardContent className="space-y-2">
+                <Link to="/seller-portal/listings">
+                  <Button className="w-full">View My Sales</Button>
+                </Link>
+                <Button className="w-full" variant="outline" disabled>
+                  Download Reports
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Eye className="h-5 w-5" />
+                  Quick Actions
+                </CardTitle>
+                <CardDescription>Common tasks</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <Link to="/seller-portal/add-vehicle">
+                  <Button className="w-full" variant="outline">Add Vehicle</Button>
+                </Link>
+                <Link to="/contact">
+                  <Button className="w-full" variant="outline">Get Support</Button>
+                </Link>
               </CardContent>
             </Card>
           </div>

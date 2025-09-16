@@ -15,6 +15,7 @@ import VehicleBrowse from "./pages/buyer/VehicleBrowse";
 import BuyerPurchases from "./pages/buyer/BuyerPurchases";
 import SavedVehicles from "./pages/buyer/SavedVehicles";
 import AddVehicle from "./pages/seller/AddVehicle";
+import MyListings from "./pages/seller/MyListings";
 import VehicleDocuments from "./pages/seller/VehicleDocuments";
 import UserManagement from "./pages/admin/UserManagement";
 import VehicleManagement from "./pages/admin/VehicleManagement";
@@ -82,6 +83,11 @@ const App = () => (
           <Route path="/seller-portal/add-vehicle" element={
             <ProtectedRoute requiredRole="seller">
               <AddVehicle />
+            </ProtectedRoute>
+          } />
+          <Route path="/seller-portal/listings" element={
+            <ProtectedRoute requiredRole="seller">
+              <MyListings />
             </ProtectedRoute>
           } />
           <Route path="/seller-portal/vehicles/:vehicleId/documents" element={
