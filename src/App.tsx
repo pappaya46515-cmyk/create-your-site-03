@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
+import AdminPortal from "./pages/AdminPortal";
+import SellerPortal from "./pages/SellerPortal";
+import BuyerPortal from "./pages/BuyerPortal";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +26,21 @@ const App = () => (
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin" element={
+            <ProtectedRoute requiredRole="admin">
+              <AdminPortal />
+            </ProtectedRoute>
+          } />
+          <Route path="/seller-portal" element={
+            <ProtectedRoute requiredRole="seller">
+              <SellerPortal />
+            </ProtectedRoute>
+          } />
+          <Route path="/buyer-portal" element={
+            <ProtectedRoute requiredRole="buyer">
+              <BuyerPortal />
             </ProtectedRoute>
           } />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
