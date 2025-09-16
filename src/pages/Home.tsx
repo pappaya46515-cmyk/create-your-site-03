@@ -1,57 +1,115 @@
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
 import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Tractor, Shield, Users, Award, TrendingUp, Headphones } from "lucide-react";
+import { Tractor, Shield, Users, Award, TrendingUp, Headphones, ArrowRight, BarChart3, FileText } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const features = [
     {
       icon: <Tractor className="h-8 w-8 text-primary" />,
-      title: "Wide Range of Pre-owned Equipment",
-      description: "Access to various pre-owned tractors and agricultural machinery"
+      title: "Vehicle Stock Management",
+      description: "Complete digital platform for managing tractors and commercial vehicles"
     },
     {
       icon: <Shield className="h-8 w-8 text-primary" />,
-      title: "Verified & Authentic",
-      description: "All equipment verified by Kamtha executives"
+      title: "Document Verification",
+      description: "RC, Insurance, Forms 29/30, NOC - all documents verified and stored"
     },
     {
       icon: <Users className="h-8 w-8 text-primary" />,
-      title: "11,000+ Farmers",
-      description: "Trusted by thousands of farmers across Karnataka"
+      title: "11,000+ Farmers Served",
+      description: "Trusted platform connecting buyers and sellers across Karnataka"
+    },
+    {
+      icon: <FileText className="h-8 w-8 text-primary" />,
+      title: "Agreement Generation",
+      description: "Automated PDF agreements with complete documentation"
+    },
+    {
+      icon: <BarChart3 className="h-8 w-8 text-primary" />,
+      title: "Analytics & Reports",
+      description: "Track stock movement, buyer interests, and market trends"
     },
     {
       icon: <Award className="h-8 w-8 text-primary" />,
-      title: "Quality Assurance",
-      description: "Only the best quality equipment listed"
-    },
-    {
-      icon: <TrendingUp className="h-8 w-8 text-primary" />,
-      title: "Best Prices",
-      description: "Competitive and transparent pricing"
-    },
-    {
-      icon: <Headphones className="h-8 w-8 text-primary" />,
-      title: "24/7 Support",
-      description: "Always available customer service"
+      title: "Minimum ₹2.5L Value",
+      description: "Quality assured with minimum deal value enforcement"
     }
   ];
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <Hero />
+      
+      {/* Hero Section */}
+      <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-gradient-earth">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, hsl(var(--primary)) 35px, hsl(var(--primary)) 70px)`,
+          }} />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center max-w-4xl mx-auto">
+            {/* Tagline in Kannada */}
+            <div className="mb-6 inline-block">
+              <p className="text-xl md:text-2xl font-bold text-primary bg-card/90 backdrop-blur-sm px-6 py-3 rounded-full shadow-medium">
+                ಕರ್ನಾಟಕದಾದ್ಯಂತ 11000 ರೈತರಿಗೆ ಪಾರದರ್ಶಕತೆಯಿಂದ ಉಪಯೋಗಿಸಿದ ರೈತ ಉಪಕರಣಗಳ ಮಾರಾಟದ ವ್ಯವಸ್ಥೆ
+              </p>
+            </div>
+
+            {/* Main Heading */}
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
+              <span className="text-primary">Kamtha</span> Stock Management System
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+              Pre-owned Agri Machines and Transparent Service Across Karnataka
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/auth">
+                <Button size="lg" className="bg-primary hover:bg-primary-hover text-primary-foreground">
+                  Login to Portal <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              <Link to="/auth">
+                <Button size="lg" variant="outline">
+                  Register as Seller/Buyer
+                </Button>
+              </Link>
+            </div>
+
+            {/* Contact Numbers */}
+            <div className="mt-8 flex flex-wrap justify-center gap-6 text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Headphones className="h-5 w-5 text-primary" />
+                <a href="tel:9448147073" className="font-semibold hover:text-primary transition-colors">
+                  9448147073
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Headphones className="h-5 w-5 text-primary" />
+                <a href="tel:8496971246" className="hover:text-primary transition-colors">
+                  8496971246
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       
       {/* Features Section */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Why Choose Kamtha?
+              Complete Stock Management Platform
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              We are committed to providing transparent and reliable services to farmers across the region
+              Digital solution for vehicle stock management with document verification, agreement generation, and analytics
             </p>
           </div>
 
@@ -88,16 +146,16 @@ const Home = () => {
               <div className="text-primary-foreground/80">Farmers Served</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">500+</div>
-              <div className="text-primary-foreground/80">Equipment Listed</div>
+              <div className="text-4xl font-bold mb-2">₹2.5L+</div>
+              <div className="text-primary-foreground/80">Min Deal Value</div>
             </div>
             <div>
               <div className="text-4xl font-bold mb-2">100%</div>
-              <div className="text-primary-foreground/80">Verified Listings</div>
+              <div className="text-primary-foreground/80">Verified Documents</div>
             </div>
             <div>
               <div className="text-4xl font-bold mb-2">24/7</div>
-              <div className="text-primary-foreground/80">Customer Support</div>
+              <div className="text-primary-foreground/80">System Access</div>
             </div>
           </div>
         </div>

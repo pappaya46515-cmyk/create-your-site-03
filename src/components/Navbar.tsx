@@ -13,11 +13,11 @@ const Navbar = () => {
   };
 
   const navItems = {
-    en: ["Home", "About", "Services", "Buy", "Sell", "Contact"],
-    kn: ["ಮುಖಪುಟ", "ಬಗ್ಗೆ", "ಸೇವೆಗಳು", "ಖರೀದಿಸಿ", "ಮಾರಾಟ ಮಾಡಿ", "ಸಂಪರ್ಕಿಸಿ"]
+    en: ["Home", "Login"],
+    kn: ["ಮುಖಪುಟ", "ಲಾಗಿನ್"]
   };
 
-  const paths = ["/", "/about", "/services", "/buy", "/sell", "/contact"];
+  const paths = ["/", "/auth"];
 
   return (
     <nav className="sticky top-0 z-50 bg-card shadow-medium border-b border-border">
@@ -31,7 +31,7 @@ const Navbar = () => {
               className="h-12 w-auto object-contain"
             />
             <div>
-              <h1 className="text-xl font-bold text-primary">Kamtha Trailer</h1>
+              <h1 className="text-xl font-bold text-primary">Kamtha Stock System</h1>
               <p className="text-xs text-muted-foreground">ESTD-1988</p>
             </div>
           </Link>
