@@ -12,8 +12,14 @@ import BuyerPortal from "./pages/BuyerPortal";
 import RoleSelect from "./pages/RoleSelect";
 import PortalSelector from "./pages/PortalSelector";
 import VehicleBrowse from "./pages/buyer/VehicleBrowse";
+import BuyerPurchases from "./pages/buyer/BuyerPurchases";
+import SavedVehicles from "./pages/buyer/SavedVehicles";
 import AddVehicle from "./pages/seller/AddVehicle";
 import VehicleDocuments from "./pages/seller/VehicleDocuments";
+import UserManagement from "./pages/admin/UserManagement";
+import VehicleManagement from "./pages/admin/VehicleManagement";
+import DocumentVerification from "./pages/admin/DocumentVerification";
+import Analytics from "./pages/admin/Analytics";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -63,6 +69,16 @@ const App = () => (
               <VehicleBrowse />
             </ProtectedRoute>
           } />
+          <Route path="/buyer-portal/purchases" element={
+            <ProtectedRoute requiredRole="buyer">
+              <BuyerPurchases />
+            </ProtectedRoute>
+          } />
+          <Route path="/buyer-portal/saved" element={
+            <ProtectedRoute requiredRole="buyer">
+              <SavedVehicles />
+            </ProtectedRoute>
+          } />
           <Route path="/seller-portal/add-vehicle" element={
             <ProtectedRoute requiredRole="seller">
               <AddVehicle />
@@ -71,6 +87,26 @@ const App = () => (
           <Route path="/seller-portal/vehicles/:vehicleId/documents" element={
             <ProtectedRoute requiredRole="seller">
               <VehicleDocuments />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/users" element={
+            <ProtectedRoute requiredRole="admin">
+              <UserManagement />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/vehicles" element={
+            <ProtectedRoute requiredRole="admin">
+              <VehicleManagement />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/documents" element={
+            <ProtectedRoute requiredRole="admin">
+              <DocumentVerification />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/analytics" element={
+            <ProtectedRoute requiredRole="admin">
+              <Analytics />
             </ProtectedRoute>
           } />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

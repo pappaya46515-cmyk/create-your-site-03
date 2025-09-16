@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
-import { LogOut, Search, Heart, MessageCircle, FileText, TrendingUp } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { LogOut, Search, Heart, MessageCircle, FileText, TrendingUp, ShoppingBag } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 
 const BuyerPortal = () => {
@@ -69,53 +69,76 @@ const BuyerPortal = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <Card>
               <CardHeader>
-                <CardTitle>Vehicle Search</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <Search className="h-5 w-5" />
+                  Vehicle Search
+                </CardTitle>
                 <CardDescription>Find vehicles matching your needs</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full mb-2">Browse Tractors</Button>
-                <Button className="w-full mb-2" variant="outline">Commercial Vehicles</Button>
-                <Button className="w-full mb-2" variant="outline">Farm Equipment</Button>
-                <Button className="w-full" variant="outline">Advanced Search</Button>
+              <CardContent className="space-y-2">
+                <Link to="/buyer-portal/browse">
+                  <Button className="w-full">Browse All Vehicles</Button>
+                </Link>
+                <Link to="/buyer-portal/browse">
+                  <Button className="w-full" variant="outline">Advanced Search</Button>
+                </Link>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>My Favorites</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <Heart className="h-5 w-5" />
+                  My Favorites
+                </CardTitle>
                 <CardDescription>Vehicles you've saved for later</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full mb-2">View Saved (8)</Button>
-                <Button className="w-full mb-2" variant="outline">Compare Vehicles</Button>
-                <Button className="w-full" variant="outline">Share List</Button>
+              <CardContent className="space-y-2">
+                <Link to="/buyer-portal/saved">
+                  <Button className="w-full">View Saved Vehicles</Button>
+                </Link>
+                <Link to="/buyer-portal/browse">
+                  <Button className="w-full" variant="outline">Continue Browsing</Button>
+                </Link>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Inquiries & Messages</CardTitle>
-                <CardDescription>Communication with sellers</CardDescription>
+                <CardTitle className="flex items-center gap-2">
+                  <ShoppingBag className="h-5 w-5" />
+                  My Purchases
+                </CardTitle>
+                <CardDescription>View your purchased vehicles</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full mb-2">Active Chats (3)</Button>
-                <Button className="w-full mb-2" variant="outline">New Messages</Button>
-                <Button className="w-full" variant="outline">Chat History</Button>
+              <CardContent className="space-y-2">
+                <Link to="/buyer-portal/purchases">
+                  <Button className="w-full">View Purchases</Button>
+                </Link>
+                <Link to="/buyer-portal/purchases">
+                  <Button className="w-full" variant="outline">Download Agreements</Button>
+                </Link>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Purchase Documents</CardTitle>
-                <CardDescription>Agreements and paperwork</CardDescription>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5" />
+                  Quick Actions
+                </CardTitle>
+                <CardDescription>Common tasks and features</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full mb-2">View Agreements</Button>
-                <Button className="w-full mb-2" variant="outline">Pending Documents</Button>
-                <Button className="w-full" variant="outline">Download All</Button>
+              <CardContent className="space-y-2">
+                <Link to="/buyer-portal/browse">
+                  <Button className="w-full" variant="outline">Search Vehicles</Button>
+                </Link>
+                <Link to="/contact">
+                  <Button className="w-full" variant="outline">Contact Support</Button>
+                </Link>
               </CardContent>
             </Card>
 

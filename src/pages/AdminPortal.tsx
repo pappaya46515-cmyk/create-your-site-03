@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
-import { LogOut, Users, FileText, BarChart3, Settings } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { LogOut, Users, FileText, BarChart3, Settings, Car, Shield, TrendingUp } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 
 const AdminPortal = () => {
@@ -58,51 +58,76 @@ const AdminPortal = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <Card>
               <CardHeader>
-                <CardTitle>User Management</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-5 w-5" />
+                  User Management
+                </CardTitle>
                 <CardDescription>Manage buyers and sellers</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full mb-2">View All Users</Button>
-                <Button className="w-full mb-2" variant="outline">Pending Verifications</Button>
-                <Button className="w-full" variant="outline">User Reports</Button>
+              <CardContent className="space-y-2">
+                <Link to="/admin/users">
+                  <Button className="w-full">View All Users</Button>
+                </Link>
+                <Link to="/admin/users">
+                  <Button className="w-full" variant="outline">Manage Roles</Button>
+                </Link>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Vehicle Management</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <Car className="h-5 w-5" />
+                  Vehicle Management
+                </CardTitle>
                 <CardDescription>Oversee all vehicle listings</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full mb-2">All Listings</Button>
-                <Button className="w-full mb-2" variant="outline">Pending Approvals</Button>
-                <Button className="w-full" variant="outline">Flagged Items</Button>
+              <CardContent className="space-y-2">
+                <Link to="/admin/vehicles">
+                  <Button className="w-full">All Listings</Button>
+                </Link>
+                <Link to="/admin/vehicles">
+                  <Button className="w-full" variant="outline">Pending Approvals</Button>
+                </Link>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Document Verification</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5" />
+                  Document Verification
+                </CardTitle>
                 <CardDescription>Verify RC, insurance, and other documents</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full mb-2">Pending Documents</Button>
-                <Button className="w-full" variant="outline">Verification History</Button>
+              <CardContent className="space-y-2">
+                <Link to="/admin/documents">
+                  <Button className="w-full">Review Documents</Button>
+                </Link>
+                <Link to="/admin/documents">
+                  <Button className="w-full" variant="outline">Verification Queue</Button>
+                </Link>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Analytics & Reports</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5" />
+                  Analytics & Reports
+                </CardTitle>
                 <CardDescription>Platform insights and metrics</CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full mb-2">Sales Reports</Button>
-                <Button className="w-full mb-2" variant="outline">User Analytics</Button>
-                <Button className="w-full" variant="outline">Revenue Dashboard</Button>
+              <CardContent className="space-y-2">
+                <Link to="/admin/analytics">
+                  <Button className="w-full">View Analytics</Button>
+                </Link>
+                <Link to="/admin/analytics">
+                  <Button className="w-full" variant="outline">Revenue Dashboard</Button>
+                </Link>
               </CardContent>
             </Card>
           </div>
