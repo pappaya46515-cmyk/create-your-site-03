@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import AdminPortal from "./pages/AdminPortal";
 import SellerPortal from "./pages/SellerPortal";
 import BuyerPortal from "./pages/BuyerPortal";
+import RoleSelect from "./pages/RoleSelect";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -41,6 +42,11 @@ const App = () => (
           <Route path="/buyer-portal" element={
             <ProtectedRoute requiredRole="buyer">
               <BuyerPortal />
+            </ProtectedRoute>
+          } />
+          <Route path="/role-select" element={
+            <ProtectedRoute>
+              <RoleSelect />
             </ProtectedRoute>
           } />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

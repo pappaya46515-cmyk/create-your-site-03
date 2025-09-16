@@ -50,29 +50,29 @@ const Dashboard = () => {
 
       if (error) throw error;
 
-      if (data) {
-        setUserRole(data.role);
-        // Redirect based on role
-        switch (data.role) {
-          case "admin":
-            navigate("/admin");
-            break;
-          case "seller":
-            navigate("/seller-portal");
-            break;
-          case "buyer":
-            navigate("/buyer-portal");
-            break;
-          default:
-            navigate("/");
+        if (data) {
+          setUserRole(data.role);
+          // Redirect based on role
+          switch (data.role) {
+            case "admin":
+              navigate("/admin");
+              break;
+            case "seller":
+              navigate("/seller-portal");
+              break;
+            case "buyer":
+              navigate("/buyer-portal");
+              break;
+            default:
+              navigate("/role-select");
+          }
+        } else {
+          // No role assigned, let user choose
+          navigate("/role-select");
         }
-      } else {
-        // No role assigned, redirect to home
-        navigate("/");
-      }
     } catch (error) {
       console.error("Error fetching user role:", error);
-      navigate("/");
+      navigate("/role-select");
     } finally {
       setLoading(false);
     }
