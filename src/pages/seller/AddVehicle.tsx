@@ -21,8 +21,8 @@ const AddVehicle = () => {
   const [formData, setFormData] = useState({
     model_name: "",
     model_year: new Date().getFullYear(),
-    category: "tractor",
-    ownership_type: "first",
+    category: "tractor" as "tractor" | "other_vehicle",
+    ownership_type: "kamtha" as "kamtha" | "third_party",
     deal_value: 250000,
     slab_amount: 0,
     registration_number: "",
@@ -68,8 +68,6 @@ const AddVehicle = () => {
       // Type-safe form data
       const vehicleData = {
         ...formData,
-        category: formData.category as "tractor" | "other_vehicle",
-        ownership_type: formData.ownership_type as "first" | "second" | "third_plus",
         seller_id: user.id,
         status: "available" as const,
       };
@@ -154,7 +152,7 @@ const AddVehicle = () => {
                   <Label htmlFor="category">Category *</Label>
                   <Select 
                     value={formData.category}
-                    onValueChange={(value) => setFormData({ ...formData, category: value })}
+                    onValueChange={(value) => setFormData({ ...formData, category: value as "tractor" | "other_vehicle" })}
                   >
                     <SelectTrigger id="category">
                       <SelectValue />
@@ -170,15 +168,14 @@ const AddVehicle = () => {
                   <Label htmlFor="ownership">Ownership Type *</Label>
                   <Select 
                     value={formData.ownership_type}
-                    onValueChange={(value) => setFormData({ ...formData, ownership_type: value })}
+                    onValueChange={(value) => setFormData({ ...formData, ownership_type: value as "kamtha" | "third_party" })}
                   >
                     <SelectTrigger id="ownership">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="first">First Owner</SelectItem>
-                      <SelectItem value="second">Second Owner</SelectItem>
-                      <SelectItem value="third_plus">Third+ Owner</SelectItem>
+                      <SelectItem value="kamtha">Kamtha</SelectItem>
+                      <SelectItem value="third_party">Third Party</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
