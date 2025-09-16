@@ -105,14 +105,14 @@ const DashboardLayout = ({ children, userRole }: DashboardLayoutProps) => {
           </nav>
         </div>
 
-        <div className="absolute bottom-0 w-full p-4 border-t border-border">
+        <div className="absolute bottom-0 w-full p-4 border-t border-border space-y-2">
           <Button
-            variant="outline"
-            className="w-full justify-start mb-2"
+            variant="default"
+            className="w-full justify-start"
             onClick={() => navigate("/portal-select")}
           >
             <ArrowLeftRight className="h-5 w-5 mr-3" />
-            {sidebarOpen && "Switch Portal"}
+            {sidebarOpen && "Switch/Add Portal"}
           </Button>
           <Button
             variant="ghost"
