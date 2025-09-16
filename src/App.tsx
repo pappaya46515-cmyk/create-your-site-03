@@ -13,6 +13,7 @@ import RoleSelect from "./pages/RoleSelect";
 import PortalSelector from "./pages/PortalSelector";
 import VehicleBrowse from "./pages/buyer/VehicleBrowse";
 import AddVehicle from "./pages/seller/AddVehicle";
+import VehicleDocuments from "./pages/seller/VehicleDocuments";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -65,6 +66,11 @@ const App = () => (
           <Route path="/seller-portal/add-vehicle" element={
             <ProtectedRoute requiredRole="seller">
               <AddVehicle />
+            </ProtectedRoute>
+          } />
+          <Route path="/seller-portal/vehicles/:vehicleId/documents" element={
+            <ProtectedRoute requiredRole="seller">
+              <VehicleDocuments />
             </ProtectedRoute>
           } />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
