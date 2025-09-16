@@ -16,7 +16,7 @@ const Footer = () => {
                 className="h-12 w-auto object-contain"
               />
               <div>
-                <h3 className="text-lg font-bold">Om Ganesh Trailer</h3>
+                <h3 className="text-lg font-bold">Kamtha Trailer</h3>
                 <p className="text-sm opacity-80">ESTD-1988</p>
               </div>
             </div>
@@ -75,14 +75,14 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 flex-shrink-0" />
-                <span className="opacity-80">info@omganesh.com</span>
+                <span className="opacity-80">info@kamtha.com</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className="mt-8 pt-8 border-t border-border/20 text-center text-sm opacity-80">
-          <p>&copy; 2024 Om Ganesh Tractors. All rights reserved.</p>
+          <p>&copy; 2024 Kamtha Trailers. All rights reserved.</p>
         </div>
       </div>
     </footer>

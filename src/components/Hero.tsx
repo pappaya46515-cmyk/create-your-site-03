@@ -8,7 +8,7 @@ const Hero = () => {
 
   const handleGetStarted = () => {
     toast({
-      title: "Welcome to Om Ganesh!",
+      title: "Welcome to Kamtha!",
       description: "Choose your service type to continue.",
     });
   };
@@ -33,7 +33,7 @@ const Hero = () => {
 
           {/* Main Heading */}
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
-            Welcome to <span className="text-primary">Om Ganesh</span>
+            Welcome to <span className="text-primary">Kamtha</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
             Your Trusted Partner in Agricultural Equipment

@@ -31,7 +31,7 @@ const Navbar = () => {
               className="h-12 w-auto object-contain"
             />
             <div>
-              <h1 className="text-xl font-bold text-primary">Om Ganesh Trailer</h1>
+              <h1 className="text-xl font-bold text-primary">Kamtha Trailer</h1>
               <p className="text-xs text-muted-foreground">ESTD-1988</p>
             </div>
           </Link>

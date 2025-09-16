@@ -14,7 +14,7 @@ const Home = () => {
     {
       icon: <Shield className="h-8 w-8 text-primary" />,
       title: "Verified & Authentic",
-      description: "All equipment verified by Om Ganesh executives"
+      description: "All equipment verified by Kamtha executives"
     },
     {
       icon: <Users className="h-8 w-8 text-primary" />,
@@ -48,7 +48,7 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Why Choose Om Ganesh?
+              Why Choose Kamtha?
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               We are committed to providing transparent and reliable services to farmers across the region

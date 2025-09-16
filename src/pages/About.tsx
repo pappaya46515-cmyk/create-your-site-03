@@ -19,7 +19,7 @@ const About = () => {
               className="h-32 w-auto mx-auto mb-6 object-contain"
             />
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              About Om Ganesh Tractors
+              About Kamtha Trailers
             </h1>
             <p className="text-xl text-muted-foreground">
               Empowering farmers with quality agricultural equipment and transparent services
@@ -34,7 +34,7 @@ const About = () => {
           <div className="max-w-4xl mx-auto">
             <div className="prose prose-lg max-w-none">
               <p className="text-lg text-muted-foreground mb-6">
-                Om Ganesh Tractors has been a trusted name in agricultural equipment services, 
+                Kamtha Trailers has been a trusted name in agricultural equipment services, 
                 dedicated to serving the farming community with integrity and transparency. 
                 We understand the challenges farmers face and strive to provide accessible, 
                 reliable solutions for their equipment needs.
@@ -43,7 +43,7 @@ const About = () => {
               <h2 className="text-2xl font-bold text-foreground mb-4 mt-8">Our Journey</h2>
               <p className="text-muted-foreground mb-6">
                 Started with a vision to revolutionize the agricultural equipment market, 
-                Om Ganesh has grown to serve over 11,000 farmers across Karnataka. Our commitment 
+                Kamtha has grown to serve over 11,000 farmers across Karnataka. Our commitment 
                 to quality and service has made us the preferred choice for farmers looking to 
                 buy or sell agricultural equipment.
               </p>
