@@ -275,7 +275,11 @@ export type Database = {
           id: string
           model_name: string
           model_year: number | null
+          new_buyer_address: string | null
+          new_buyer_contact: string | null
+          new_buyer_name: string | null
           ownership_type: Database["public"]["Enums"]["ownership_type"]
+          property_owner: string | null
           rc_owner_address: string | null
           rc_owner_contact: string | null
           rc_owner_name: string | null
@@ -284,6 +288,7 @@ export type Database = {
           slab_amount: number | null
           sold_date: string | null
           status: Database["public"]["Enums"]["stock_status"] | null
+          stock_type: string | null
           updated_at: string | null
         }
         Insert: {
@@ -301,7 +306,11 @@ export type Database = {
           id?: string
           model_name: string
           model_year?: number | null
+          new_buyer_address?: string | null
+          new_buyer_contact?: string | null
+          new_buyer_name?: string | null
           ownership_type: Database["public"]["Enums"]["ownership_type"]
+          property_owner?: string | null
           rc_owner_address?: string | null
           rc_owner_contact?: string | null
           rc_owner_name?: string | null
@@ -310,6 +319,7 @@ export type Database = {
           slab_amount?: number | null
           sold_date?: string | null
           status?: Database["public"]["Enums"]["stock_status"] | null
+          stock_type?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -327,7 +337,11 @@ export type Database = {
           id?: string
           model_name?: string
           model_year?: number | null
+          new_buyer_address?: string | null
+          new_buyer_contact?: string | null
+          new_buyer_name?: string | null
           ownership_type?: Database["public"]["Enums"]["ownership_type"]
+          property_owner?: string | null
           rc_owner_address?: string | null
           rc_owner_contact?: string | null
           rc_owner_name?: string | null
@@ -336,6 +350,7 @@ export type Database = {
           slab_amount?: number | null
           sold_date?: string | null
           status?: Database["public"]["Enums"]["stock_status"] | null
+          stock_type?: string | null
           updated_at?: string | null
         }
         Relationships: []
