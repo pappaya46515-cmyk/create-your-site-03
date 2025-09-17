@@ -288,18 +288,20 @@ const AddVehicle = () => {
 
   return (
     <DashboardLayout userRole="seller">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <div className="mb-6">
+      <div className="container mx-auto px-4 py-4 sm:py-8 max-w-6xl">
+        <div className="mb-4 sm:mb-6">
           <Button 
             variant="outline" 
             onClick={() => navigate("/seller-portal")}
             className="mb-4"
+            size="sm"
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Dashboard
+            <ArrowLeft className="mr-1 sm:mr-2 h-4 w-4" />
+            <span className="hidden sm:inline">Back to Dashboard</span>
+            <span className="sm:hidden">Back</span>
           </Button>
-          <h1 className="text-3xl font-bold text-foreground">Add New Vehicle</h1>
-          <p className="text-muted-foreground">Complete all fields to create vehicle listing and agreement</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Add New Vehicle</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1 sm:mt-2">Complete all fields to create vehicle listing and agreement</p>
         </div>
 
         {!showAgreementPreview ? (
@@ -374,7 +376,7 @@ const AddVehicle = () => {
                 <CardDescription>Information about the seller</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="seller_name">Name *</Label>
                     <Input
@@ -422,7 +424,7 @@ const AddVehicle = () => {
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="seller_pincode">Pincode *</Label>
                     <Input
@@ -484,7 +486,7 @@ const AddVehicle = () => {
                 <CardDescription>Information about the buyer</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="buyer_name">Name *</Label>
                     <Input
@@ -532,7 +534,7 @@ const AddVehicle = () => {
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="buyer_pincode">Pincode *</Label>
                     <Input
@@ -594,7 +596,7 @@ const AddVehicle = () => {
                 <CardDescription>Vehicle identification details</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="vehicle_number">Vehicle Number *</Label>
                     <Input
@@ -691,7 +693,7 @@ const AddVehicle = () => {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="photo1">1. Photo to be uploaded</Label>
                     <div className="flex items-center gap-2">
@@ -733,7 +735,7 @@ const AddVehicle = () => {
 
                 <div className="space-y-2">
                   <Label>Available Documents</Label>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         id="original_rc"
@@ -805,15 +807,16 @@ const AddVehicle = () => {
             </Card>
 
             {/* Submit Button */}
-            <div className="flex justify-end gap-4">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => navigate("/seller-portal")}
+                className="w-full sm:w-auto"
               >
                 Cancel
               </Button>
-              <Button type="submit" disabled={loading}>
+              <Button type="submit" disabled={loading} className="w-full sm:w-auto">
                 {loading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -822,7 +825,8 @@ const AddVehicle = () => {
                 ) : (
                   <>
                     <Save className="mr-2 h-4 w-4" />
-                    Submit & Generate Agreement
+                    <span className="hidden sm:inline">Submit & Generate Agreement</span>
+                    <span className="sm:hidden">Submit</span>
                   </>
                 )}
               </Button>
@@ -843,7 +847,7 @@ const AddVehicle = () => {
                   </p>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                   <div>
                     <Label htmlFor="insurance_number">Insurance Number *</Label>
                     <Input
@@ -867,7 +871,7 @@ const AddVehicle = () => {
                   </div>
                 </div>
 
-                <div ref={agreementRef} className="p-8 bg-white text-black">
+                <div ref={agreementRef} className="p-4 sm:p-6 md:p-8 bg-white text-black overflow-x-auto">
                   <h2 className="text-2xl font-bold text-center mb-6">VEHICLE SALE AGREEMENT</h2>
                   <p className="text-center mb-8">Date: {new Date().toLocaleDateString()}</p>
                   
