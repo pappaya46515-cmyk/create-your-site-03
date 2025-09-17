@@ -127,17 +127,94 @@ const AddVehicle = () => {
           </Button>
           <h1 className="text-3xl font-bold text-foreground">Add New Vehicle</h1>
           <p className="text-muted-foreground">List your vehicle for sale</p>
+          
+          {/* Selected Seller Type Indicator */}
+          {formData.property_owner && (
+            <div className="mt-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
+              <p className="text-sm font-medium">
+                Seller Type: <span className="text-primary font-bold">
+                  {formData.property_owner === 'kamtha' ? 'Kamtha Owned Vehicle' : 'Third Party Vehicle'}
+                </span>
+              </p>
+            </div>
+          )}
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Stock Type & Property Ownership */}
+          {/* STEP 1: Seller Type Selection */}
+          <Card className="border-2 border-primary">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-xl">
+                <Home className="h-5 w-5" />
+                Step 1: Select Seller Type
+              </CardTitle>
+              <CardDescription className="text-base">
+                Please specify if this vehicle belongs to Kamtha or a Third Party seller
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card 
+                  className={`cursor-pointer transition-all hover:shadow-lg ${
+                    formData.property_owner === 'kamtha' 
+                      ? 'border-2 border-primary bg-primary/5' 
+                      : 'border hover:border-primary/50'
+                  }`}
+                  onClick={() => setFormData({ ...formData, property_owner: 'kamtha' })}
+                >
+                  <CardContent className="p-6 text-center">
+                    <div className="mb-2">
+                      <Home className="h-12 w-12 mx-auto text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-lg mb-1">Kamtha Owned</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Vehicle owned by Kamtha
+                    </p>
+                    <div className="mt-4">
+                      <Checkbox 
+                        checked={formData.property_owner === 'kamtha'}
+                        className="h-5 w-5"
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card 
+                  className={`cursor-pointer transition-all hover:shadow-lg ${
+                    formData.property_owner === 'party' 
+                      ? 'border-2 border-primary bg-primary/5' 
+                      : 'border hover:border-primary/50'
+                  }`}
+                  onClick={() => setFormData({ ...formData, property_owner: 'party' })}
+                >
+                  <CardContent className="p-6 text-center">
+                    <div className="mb-2">
+                      <User className="h-12 w-12 mx-auto text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-lg mb-1">Third Party</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Vehicle owned by Third Party seller
+                    </p>
+                    <div className="mt-4">
+                      <Checkbox 
+                        checked={formData.property_owner === 'party'}
+                        className="h-5 w-5"
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* STEP 2: Stock Type & Basic Information */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-xl">
                 <Package className="h-5 w-5" />
-                Stock Information
+                Step 2: Vehicle Information
               </CardTitle>
-              <CardDescription>Specify stock type and ownership</CardDescription>
+              <CardDescription>Specify stock type and basic details</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -161,32 +238,16 @@ const AddVehicle = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                
-                <div>
-                  <Label htmlFor="property_owner">Property Belongs To *</Label>
-                  <Select 
-                    value={formData.property_owner}
-                    onValueChange={(value) => setFormData({ ...formData, property_owner: value as "kamtha" | "party" })}
-                  >
-                    <SelectTrigger id="property_owner">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="kamtha">Kamtha</SelectItem>
-                      <SelectItem value="party">Party</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* RC Owner Details */}
+          {/* STEP 3: RC Owner Details */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-xl">
                 <User className="h-5 w-5" />
-                RC Owner Details
+                Step 3: RC Owner Details
               </CardTitle>
               <CardDescription>As per Registration Certificate</CardDescription>
             </CardHeader>
@@ -231,12 +292,12 @@ const AddVehicle = () => {
             </CardContent>
           </Card>
 
-          {/* New Buyer Details (Optional) */}
+          {/* STEP 4: New Buyer Details (Optional) */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-2 text-xl">
                 <User className="h-5 w-5" />
-                New Buyer Details
+                Step 4: New Buyer Details
               </CardTitle>
               <CardDescription>Optional - Fill when vehicle is sold</CardDescription>
             </CardHeader>

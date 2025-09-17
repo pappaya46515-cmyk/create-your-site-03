@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Search, Filter, Eye, Heart, MessageCircle, FileCheck, Loader2 } from "lucide-react";
@@ -17,6 +18,7 @@ interface Vehicle {
   model_year: number;
   category: string;
   ownership_type: string;
+  property_owner?: "kamtha" | "party";
   deal_value: number;
   slab_amount: number;
   registration_number: string;
@@ -63,7 +65,7 @@ const VehicleBrowse = () => {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setVehicles(data || []);
+      setVehicles((data || []) as Vehicle[]);
     } catch (error) {
       console.error("Error fetching vehicles:", error);
       toast({
@@ -351,6 +353,15 @@ const VehicleBrowse = () => {
                       <CardDescription>
                         {vehicle.model_year} • {vehicle.ownership_type.replace("_", " ")}
                       </CardDescription>
+                      {/* Display Seller Type */}
+                      {vehicle.property_owner && (
+                        <Badge 
+                          variant={vehicle.property_owner === 'kamtha' ? 'default' : 'secondary'}
+                          className="mt-2"
+                        >
+                          {vehicle.property_owner === 'kamtha' ? '✓ Kamtha Owned' : 'Third Party'}
+                        </Badge>
+                      )}
                     </div>
                     <Button
                       size="icon"
