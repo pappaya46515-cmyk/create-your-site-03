@@ -1,0 +1,247 @@
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/integrations/supabase/client";
+import { ArrowRight, IndianRupee, Calendar, MapPin, Phone, Loader2, Tractor, Truck } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
+
+interface Vehicle {
+  id: string;
+  model_name: string;
+  model_year: number;
+  category: string;
+  ownership_type: string;
+  property_owner?: string;
+  deal_value: number;
+  slab_amount: number;
+  registration_number: string;
+  has_original_rc: boolean;
+  has_duplicate_rc: boolean;
+  has_insurance: boolean;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+const LatestVehicles = () => {
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    fetchLatestVehicles();
+    
+    // Subscribe to real-time updates
+    const channel = supabase
+      .channel('vehicles-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'vehicles',
+          filter: 'status=eq.available'
+        },
+        () => {
+          fetchLatestVehicles();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const fetchLatestVehicles = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("vehicles")
+        .select("*")
+        .eq("status", "available")
+        .order("updated_at", { ascending: false })
+        .limit(6);
+
+      if (error) throw error;
+      setVehicles(data || []);
+    } catch (error) {
+      console.error("Error fetching vehicles:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatPrice = (price: number) => {
+    if (price >= 10000000) return `₹${(price / 10000000).toFixed(2)}Cr`;
+    if (price >= 100000) return `₹${(price / 100000).toFixed(2)}L`;
+    return `₹${price.toLocaleString("en-IN")}`;
+  };
+
+  const getTimeAgo = (date: string) => {
+    const now = new Date();
+    const updated = new Date(date);
+    const diffMs = now.getTime() - updated.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) return "Today";
+    if (diffDays === 1) return "Yesterday";
+    if (diffDays < 7) return `${diffDays} days ago`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+    return `${Math.floor(diffDays / 30)} months ago`;
+  };
+
+  const getCategoryIcon = (category: string) => {
+    return category === "tractor" ? 
+      <Tractor className="h-5 w-5" /> : 
+      <Truck className="h-5 w-5" />;
+  };
+
+  if (loading) {
+    return (
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (vehicles.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="py-16 bg-gradient-to-b from-background to-accent/5">
+      <div className="container mx-auto px-4">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Latest Pre-owned Equipment
+          </h2>
+          <p className="text-lg text-muted-foreground">
+            ಇತ್ತೀಚೆಗೆ ಸೇರಿಸಲಾದ ಉಪಕರಣಗಳು | Recently Added Equipment
+          </p>
+        </div>
+
+        {/* Vehicles Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {vehicles.map((vehicle) => (
+            <Card 
+              key={vehicle.id} 
+              className="hover:shadow-strong transition-all duration-300 hover:scale-105 overflow-hidden"
+            >
+              {/* Updated Badge */}
+              <div className="px-4 pt-4">
+                <Badge variant="secondary" className="mb-2">
+                  <Calendar className="h-3 w-3 mr-1" />
+                  Updated {getTimeAgo(vehicle.updated_at)}
+                </Badge>
+              </div>
+
+              <CardHeader>
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      {getCategoryIcon(vehicle.category)}
+                      {vehicle.model_name}
+                    </CardTitle>
+                    <CardDescription>
+                      {vehicle.model_year} Model • {vehicle.ownership_type}
+                    </CardDescription>
+                  </div>
+                </div>
+                
+                {/* Property Owner Badge */}
+                {vehicle.property_owner && (
+                  <Badge 
+                    variant={vehicle.property_owner === 'kamtha' ? 'default' : 'outline'}
+                    className="mt-2"
+                  >
+                    {vehicle.property_owner === 'kamtha' ? '✓ Kamtha Property' : 'Third Party'}
+                  </Badge>
+                )}
+              </CardHeader>
+
+              <CardContent className="space-y-4">
+                {/* Price Display */}
+                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Deal Value</p>
+                      <p className="text-2xl font-bold text-primary">
+                        {formatPrice(vehicle.deal_value)}
+                      </p>
+                    </div>
+                    {vehicle.slab_amount > 0 && (
+                      <div className="text-right">
+                        <p className="text-sm text-muted-foreground">Slab</p>
+                        <p className="text-lg font-semibold text-secondary">
+                          +{formatPrice(vehicle.slab_amount)}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Registration Number */}
+                {vehicle.registration_number && (
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <MapPin className="h-4 w-4" />
+                    <span>Reg: {vehicle.registration_number}</span>
+                  </div>
+                )}
+
+                {/* Document Status */}
+                <div className="flex flex-wrap gap-1">
+                  {vehicle.has_original_rc && (
+                    <Badge variant="outline" className="text-xs">RC Original</Badge>
+                  )}
+                  {vehicle.has_duplicate_rc && (
+                    <Badge variant="outline" className="text-xs">RC Duplicate</Badge>
+                  )}
+                  {vehicle.has_insurance && (
+                    <Badge variant="outline" className="text-xs">Insurance</Badge>
+                  )}
+                </div>
+
+                {/* Contact Numbers */}
+                <div className="bg-accent/10 p-3 rounded-lg space-y-1">
+                  <a 
+                    href="tel:9448147073" 
+                    className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+                  >
+                    <Phone className="h-4 w-4" />
+                    <span className="font-semibold">9448147073</span>
+                  </a>
+                  <a 
+                    href="tel:8496971246" 
+                    className="text-sm flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <Phone className="h-3 w-3" />
+                    <span>8496971246</span>
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* View All Button */}
+        <div className="text-center">
+          <Link to="/buy">
+            <Button size="lg" className="hover-scale">
+              View All Available Equipment
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default LatestVehicles;

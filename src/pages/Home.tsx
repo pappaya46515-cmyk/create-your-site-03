@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import LatestVehicles from "@/components/LatestVehicles";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -288,6 +289,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Latest Vehicles from Sellers */}
+      <LatestVehicles />
 
       {/* Available Vehicles Section */}
       <section className="py-16 bg-white/70 backdrop-blur-sm">
