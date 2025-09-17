@@ -9,12 +9,31 @@ const About = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      {/* Hero Section with Brand Colors */}
-      <section className="py-16 bg-gradient-to-br from-red-600 to-red-700 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
+      {/* Hero Section with Consistent Brand Colors and Tractor Background */}
+      <section className="py-16 bg-gradient-to-br from-primary to-secondary relative overflow-hidden">
+        {/* Tractor Background Pattern */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-black/30"></div>
+          {/* Tractor icons as background pattern */}
+          <div className="absolute inset-0 opacity-10">
+            {[...Array(20)].map((_, i) => (
+              <Tractor 
+                key={i} 
+                className="absolute text-white"
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  left: `${(i % 5) * 25}%`,
+                  top: `${Math.floor(i / 5) * 30}%`,
+                  transform: `rotate(${i * 15}deg)`
+                }}
+              />
+            ))}
+          </div>
+        </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="bg-white rounded-lg p-4 inline-block mb-6">
+            <div className="bg-white/95 backdrop-blur rounded-lg p-4 inline-block mb-6">
               <img 
                 src={omGaneshLogo} 
                 alt="Om Ganesh Tractors" 
@@ -24,20 +43,20 @@ const About = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               OM GANESH TRACTORS
             </h1>
-            <div className="text-2xl md:text-3xl font-bold text-yellow-400 mb-4">
+            <div className="text-2xl md:text-3xl font-bold text-accent mb-4">
               MASSEY FERGUSON
             </div>
             <p className="text-xl text-white/90">
               38 Years of Excellence in Agricultural Equipment & Services
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-4">
-              <div className="bg-white/10 backdrop-blur px-6 py-3 rounded-lg">
+              <div className="bg-white/10 backdrop-blur px-6 py-3 rounded-lg border border-white/20">
                 <p className="text-white font-semibold">Since 1988</p>
               </div>
-              <div className="bg-white/10 backdrop-blur px-6 py-3 rounded-lg">
+              <div className="bg-white/10 backdrop-blur px-6 py-3 rounded-lg border border-white/20">
                 <p className="text-white font-semibold">5 Districts</p>
               </div>
-              <div className="bg-white/10 backdrop-blur px-6 py-3 rounded-lg">
+              <div className="bg-white/10 backdrop-blur px-6 py-3 rounded-lg border border-white/20">
                 <p className="text-white font-semibold">11,000+ Farmers Served</p>
               </div>
             </div>
@@ -58,14 +77,14 @@ const About = () => {
               <p className="text-center mt-2 font-semibold">Om Ganesh Group</p>
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg">
-              <div className="w-full h-48 bg-red-100 dark:bg-red-900 flex items-center justify-center rounded">
-                <Tractor className="h-20 w-20 text-red-600 dark:text-red-400" />
+              <div className="w-full h-48 bg-primary/10 dark:bg-primary/20 flex items-center justify-center rounded">
+                <Tractor className="h-20 w-20 text-primary" />
               </div>
               <p className="text-center mt-2 font-semibold">Massey Ferguson Dealership</p>
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg">
-              <div className="w-full h-48 bg-green-100 dark:bg-green-900 flex items-center justify-center rounded">
-                <Building2 className="h-20 w-20 text-green-600 dark:text-green-400" />
+              <div className="w-full h-48 bg-secondary/10 dark:bg-secondary/20 flex items-center justify-center rounded">
+                <Building2 className="h-20 w-20 text-secondary" />
               </div>
               <p className="text-center mt-2 font-semibold">Manufacturing Excellence</p>
             </div>
@@ -82,8 +101,8 @@ const About = () => {
               <h2 className="text-3xl font-bold text-foreground mb-6">Our Leadership</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Card className="overflow-hidden">
-                  <div className="h-48 bg-gradient-to-br from-red-100 to-red-50 dark:from-red-900 dark:to-red-800 flex items-center justify-center">
-                    <Users className="h-24 w-24 text-red-600 dark:text-red-400 opacity-50" />
+                  <div className="h-48 bg-gradient-to-br from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 flex items-center justify-center">
+                    <Users className="h-24 w-24 text-primary opacity-50" />
                   </div>
                   <CardContent className="p-6">
                     <h3 className="font-bold text-xl mb-2">Mr. Bhaskar Kamath</h3>
@@ -97,8 +116,8 @@ const About = () => {
                 </Card>
                 
                 <Card className="overflow-hidden">
-                  <div className="h-48 bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900 dark:to-blue-800 flex items-center justify-center">
-                    <Users className="h-24 w-24 text-blue-600 dark:text-blue-400 opacity-50" />
+                  <div className="h-48 bg-gradient-to-br from-secondary/10 to-secondary/5 dark:from-secondary/20 dark:to-secondary/10 flex items-center justify-center">
+                    <Users className="h-24 w-24 text-secondary opacity-50" />
                   </div>
                   <CardContent className="p-6">
                     <h3 className="font-bold text-xl mb-2">Mr. Harsha B Kamath</h3>
