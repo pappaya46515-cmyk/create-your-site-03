@@ -1,49 +1,13 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { Tractor, Shield, Users, Award, TrendingUp, Headphones, ArrowRight, BarChart3, FileText, Upload, Camera, Sparkles, Star, CheckCircle } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Tractor, Shield, Users, Award, TrendingUp, Headphones, ArrowRight, BarChart3, FileText, Upload, Sparkles, Star, CheckCircle } from "lucide-react";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      const totalImages = uploadedImages.length + files.length;
-      if (totalImages > 5) {
-        toast({
-          title: "Upload Limit",
-          description: "Maximum 5 photos allowed",
-          variant: "destructive"
-        });
-        return;
-      }
-      
-      const newImages: string[] = [];
-      for (let i = 0; i < files.length; i++) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          if (event.target?.result) {
-            newImages.push(event.target.result as string);
-            if (newImages.length === files.length) {
-              setUploadedImages([...uploadedImages, ...newImages]);
-            }
-          }
-        };
-        reader.readAsDataURL(files[i]);
-      }
-    }
-  };
 
   const slides = [
     {
@@ -72,31 +36,6 @@ const Home = () => {
     }
   ];
 
-  const tractorModels = [
-    "Mahindra 575 DI",
-    "Mahindra 475 DI",
-    "John Deere 5310",
-    "Swaraj 744 FE",
-    "Sonalika DI 750",
-    "Massey Ferguson 241",
-    "New Holland 3630",
-    "Kubota MU4501",
-    "Eicher 485",
-    "TAFE 1002"
-  ];
-
-  const modelTypes = [
-    "2WD Tractor",
-    "4WD Tractor",
-    "Mini Tractor",
-    "Rotavator",
-    "Cultivator",
-    "Plough",
-    "Harrow",
-    "Seed Drill",
-    "Harvester",
-    "Thresher"
-  ];
 
   const features = [
     {
@@ -215,72 +154,9 @@ const Home = () => {
                       </div>
                       <h3 className="text-2xl font-bold text-gray-800">Sell Your Pre-owned</h3>
                     </div>
-                    
-                    {/* Upload Photos Section */}
-                    <div className="mb-4">
-                      <Label className="text-sm font-semibold text-gray-700">Upload Photos (Max 5)</Label>
-                      <div className="mt-2">
-                        <div className="flex gap-2 flex-wrap mb-2">
-                          {uploadedImages.map((img, idx) => (
-                            <div key={idx} className="relative w-20 h-20 rounded-lg overflow-hidden border-2 border-purple-300">
-                              <img src={img} alt={`Upload ${idx + 1}`} className="w-full h-full object-cover" />
-                              <button
-                                className="absolute top-0 right-0 bg-red-500 text-white rounded-bl-lg p-1"
-                                onClick={() => setUploadedImages(uploadedImages.filter((_, i) => i !== idx))}
-                              >
-                                ×
-                              </button>
-                            </div>
-                          ))}
-                          {uploadedImages.length < 5 && (
-                            <label className="w-20 h-20 border-2 border-dashed border-purple-300 rounded-lg flex items-center justify-center cursor-pointer hover:border-purple-500 transition-colors">
-                              <Camera className="h-6 w-6 text-purple-400" />
-                              <input
-                                type="file"
-                                multiple
-                                accept="image/*"
-                                className="hidden"
-                                onChange={handleImageUpload}
-                              />
-                            </label>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Model Name Dropdown */}
-                    <div className="mb-4">
-                      <Label className="text-sm font-semibold text-gray-700">Model Name</Label>
-                      <Select>
-                        <SelectTrigger className="mt-1">
-                          <SelectValue placeholder="Select tractor model" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {tractorModels.map((model) => (
-                            <SelectItem key={model} value={model}>
-                              {model}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Model Type Dropdown */}
-                    <div className="mb-6">
-                      <Label className="text-sm font-semibold text-gray-700">Model Type</Label>
-                      <Select>
-                        <SelectTrigger className="mt-1">
-                          <SelectValue placeholder="Select equipment type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {modelTypes.map((type) => (
-                            <SelectItem key={type} value={type}>
-                              {type}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
+                    <p className="text-gray-600 mb-6">
+                      List your pre-owned tractors and equipment with complete documentation and reach verified buyers
+                    </p>
 
                     <Button 
                       size="lg"
