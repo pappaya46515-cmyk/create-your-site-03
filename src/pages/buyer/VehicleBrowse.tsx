@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { Search, Filter, Eye, Heart, MessageCircle, FileCheck, Loader2 } from "lucide-react";
+import { Search, Filter, Loader2, IndianRupee, X } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useToast } from "@/hooks/use-toast";
 import { useBuyerTracking } from "@/hooks/useBuyerTracking";
+import BuyerInfoModal from "@/components/BuyerInfoModal";
+import VehicleCard from "@/components/VehicleCard";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Vehicle {
   id: string;
@@ -47,7 +48,10 @@ const VehicleBrowse = () => {
   const [category, setCategory] = useState("all");
   const [ownershipType, setOwnershipType] = useState("all");
   const [priceRange, setPriceRange] = useState([250000, 5000000]);
+  const [slabRange, setSlabRange] = useState([0, 100000]);
   const [yearFilter, setYearFilter] = useState("");
+  const [showBuyerModal, setShowBuyerModal] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
     fetchVehicles();
@@ -56,7 +60,7 @@ const VehicleBrowse = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [vehicles, searchTerm, category, ownershipType, priceRange, yearFilter]);
+  }, [vehicles, searchTerm, category, ownershipType, priceRange, slabRange, yearFilter]);
 
   const fetchVehicles = async () => {
     try {
@@ -102,6 +106,12 @@ const VehicleBrowse = () => {
   const applyFilters = () => {
     let filtered = [...vehicles];
 
+    // Check if first search - show modal
+    if (!hasSearched && (searchTerm || category !== "all")) {
+      setShowBuyerModal(true);
+      setHasSearched(true);
+    }
+
     // Search filter
     if (searchTerm) {
       filtered = filtered.filter(v => 
@@ -123,6 +133,11 @@ const VehicleBrowse = () => {
     // Price range filter
     filtered = filtered.filter(v => 
       v.deal_value >= priceRange[0] && v.deal_value <= priceRange[1]
+    );
+
+    // Slab amount filter
+    filtered = filtered.filter(v => 
+      v.slab_amount >= slabRange[0] && v.slab_amount <= slabRange[1]
     );
 
     // Year filter
@@ -235,14 +250,29 @@ const VehicleBrowse = () => {
     return `₹${price.toLocaleString("en-IN")}`;
   };
 
-  const getDocumentCount = (vehicle: Vehicle) => {
-    let count = 0;
-    if (vehicle.has_original_rc || vehicle.has_duplicate_rc) count++;
-    if (vehicle.has_insurance) count++;
-    if (vehicle.has_form_29) count++;
-    if (vehicle.has_form_30) count++;
-    if (vehicle.has_noc) count++;
-    return count;
+  const handleBuyerInfo = async (name: string, phone: string) => {
+    setShowBuyerModal(false);
+    
+    // Store buyer info in localStorage for session
+    localStorage.setItem('buyerInfo', JSON.stringify({ name, phone }));
+    
+    // Send WhatsApp notification about search
+    const searchDetails = `
+Search Query: ${searchTerm || 'All'}
+Category: ${category}
+Price Range: ${formatPrice(priceRange[0])} - ${formatPrice(priceRange[1])}
+Slab Range: ${formatPrice(slabRange[0])} - ${formatPrice(slabRange[1])}
+Results Found: ${filteredVehicles.length}
+    `.trim();
+    
+    // Send search details to WhatsApp (this would need actual WhatsApp API integration)
+    const whatsappMessage = `New search by ${name} (${phone}):\n${searchDetails}`;
+    console.log('WhatsApp message:', whatsappMessage);
+    
+    toast({
+      title: "Search Registered",
+      description: "Your search details have been recorded. You'll receive updates on WhatsApp.",
+    });
   };
 
   if (loading) {
@@ -338,13 +368,32 @@ const VehicleBrowse = () => {
 
                 {/* Price Range */}
                 <div className="col-span-full">
-                  <Label>Price Range: {formatPrice(priceRange[0])} - {formatPrice(priceRange[1])}</Label>
+                  <Label className="flex items-center gap-2">
+                    <IndianRupee className="h-4 w-4" />
+                    Price Range: {formatPrice(priceRange[0])} - {formatPrice(priceRange[1])}
+                  </Label>
                   <Slider
                     value={priceRange}
                     onValueChange={setPriceRange}
                     min={250000}
                     max={5000000}
                     step={50000}
+                    className="mt-2"
+                  />
+                </div>
+
+                {/* Slab Amount Range - PROMINENT */}
+                <div className="col-span-full bg-accent/10 p-4 rounded-lg">
+                  <Label className="flex items-center gap-2 text-lg font-semibold">
+                    <IndianRupee className="h-5 w-5" />
+                    Slab Amount: {formatPrice(slabRange[0])} - {formatPrice(slabRange[1])}
+                  </Label>
+                  <Slider
+                    value={slabRange}
+                    onValueChange={setSlabRange}
+                    min={0}
+                    max={100000}
+                    step={5000}
                     className="mt-2"
                   />
                 </div>
@@ -355,76 +404,22 @@ const VehicleBrowse = () => {
           {/* Vehicle Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredVehicles.map((vehicle) => (
-              <Card key={vehicle.id} className="hover:shadow-strong transition-shadow">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-lg">{vehicle.model_name}</CardTitle>
-                      <CardDescription>
-                        {vehicle.model_year} • {vehicle.ownership_type === 'kamtha' ? 'Kamtha' : 'Third Party'}
-                      </CardDescription>
-                      {/* Display Ownership Type */}
-                      <Badge 
-                        variant={vehicle.ownership_type === 'kamtha' ? 'default' : 'secondary'}
-                        className="mt-2"
-                      >
-                        {vehicle.ownership_type === 'kamtha' ? '✓ Kamtha Property' : 'Non-Kamtha (Third Party)'}
-                      </Badge>
-                    </div>
-                    <Button
-                      size="icon"
-                      variant={savedVehicles.has(vehicle.id) ? "default" : "outline"}
-                      onClick={() => toggleSaveVehicle(vehicle.id)}
-                    >
-                      <Heart className={`h-4 w-4 ${savedVehicles.has(vehicle.id) ? "fill-current" : ""}`} />
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-2xl font-bold text-primary">
-                        {formatPrice(vehicle.deal_value)}
-                      </span>
-                      {vehicle.slab_amount && (
-                        <span className="text-sm text-muted-foreground">
-                          +{formatPrice(vehicle.slab_amount)} slab
-                        </span>
-                      )}
-                    </div>
-
-                    {vehicle.registration_number && (
-                      <div className="text-sm text-muted-foreground">
-                        Reg: {vehicle.registration_number}
-                      </div>
-                    )}
-
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <FileCheck className="h-4 w-4" />
-                      <span>{getDocumentCount(vehicle)} documents available</span>
-                    </div>
-
-                    <div className="flex gap-2">
-                      <Button 
-                        className="flex-1"
-                        onClick={() => navigate(`/buyer-portal/vehicle/${vehicle.id}`)}
-                      >
-                        <Eye className="mr-2 h-4 w-4" />
-                        View Details
-                      </Button>
-                      <Button 
-                        variant="outline"
-                        size="icon"
-                        onClick={() => navigate(`/buyer-portal/contact/${vehicle.id}`)}
-                      >
-                        <MessageCircle className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <VehicleCard
+                key={vehicle.id}
+                vehicle={vehicle}
+                isSaved={savedVehicles.has(vehicle.id)}
+                onToggleSave={() => toggleSaveVehicle(vehicle.id)}
+                onViewDetails={() => navigate(`/buyer-portal/vehicle/${vehicle.id}`)}
+              />
             ))}
           </div>
+
+          {/* Buyer Info Modal */}
+          <BuyerInfoModal
+            open={showBuyerModal}
+            onClose={() => setShowBuyerModal(false)}
+            onSubmit={handleBuyerInfo}
+          />
 
           {filteredVehicles.length === 0 && (
             <Card className="text-center py-12">
@@ -438,6 +433,7 @@ const VehicleBrowse = () => {
                     setCategory("all");
                     setOwnershipType("all");
                     setPriceRange([250000, 5000000]);
+                    setSlabRange([0, 100000]);
                     setYearFilter("");
                   }}
                 >
