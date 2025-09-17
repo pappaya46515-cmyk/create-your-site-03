@@ -101,7 +101,7 @@ const PortalSelector = () => {
                 <CardDescription>Browse and purchase vehicles</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full">
+                <Button className="w-full" onClick={() => navigate("/buyer-portal")}> 
                   Enter Buyer Portal <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </CardContent>
@@ -136,7 +136,7 @@ const PortalSelector = () => {
                 <CardDescription>List and manage your vehicles</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full">
+                <Button className="w-full" onClick={() => navigate("/seller-portal")}> 
                   Enter Seller Portal <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </CardContent>
@@ -171,7 +171,7 @@ const PortalSelector = () => {
                 <CardDescription>Manage the entire platform</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full">
+                <Button className="w-full" onClick={() => navigate("/admin")}> 
                   Enter Admin Portal <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </CardContent>
