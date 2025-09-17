@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, Package, Shield, ArrowRight, Loader2 } from "lucide-react";
+import { User, Package, Shield, ArrowRight, Loader2, Home } from "lucide-react";
 
 const PortalSelector = () => {
   const navigate = useNavigate();
@@ -73,6 +73,18 @@ const PortalSelector = () => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <div className="max-w-4xl w-full">
+        {/* Back to Home Button */}
+        <div className="mb-6">
+          <Button 
+            variant="outline" 
+            onClick={() => navigate("/")}
+            className="gap-2"
+          >
+            <Home className="h-4 w-4" />
+            Back to Home
+          </Button>
+        </div>
+
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Select Portal</h1>
           <p className="text-muted-foreground">Choose how you want to use the system</p>
@@ -166,6 +178,14 @@ const PortalSelector = () => {
             </Card>
           )}
         </div>
+
+        {/* Help Text for Admin */}
+        {!userRoles.includes("admin") && (
+          <div className="mt-6 text-center text-sm text-muted-foreground">
+            <p>Admin access is granted by system administrators only.</p>
+            <p>Contact support if you need admin privileges.</p>
+          </div>
+        )}
       </div>
     </div>
   );
