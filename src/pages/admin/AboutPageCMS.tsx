@@ -42,7 +42,7 @@ const AboutPageCMS = () => {
   const fileInputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
   
   // Predefined leadership team with fixed names and roles
-  const [leadership, setLeadership] = useState<LeadershipMember[]>([
+  const defaultLeadership: LeadershipMember[] = [
     {
       id: 'bhaskar-kamath',
       name: 'Mr. Bhaskar Kamath',
@@ -75,7 +75,9 @@ const AboutPageCMS = () => {
       photo_url: null,
       order_index: 3
     }
-  ]);
+  ];
+  
+  const [leadership, setLeadership] = useState<LeadershipMember[]>(defaultLeadership);
   const [awards, setAwards] = useState<Award[]>([]);
   const [branches, setBranches] = useState<Branch[]>([]);
   const [companyInfo, setCompanyInfo] = useState({
@@ -97,49 +99,45 @@ const AboutPageCMS = () => {
   const loadAllData = async () => {
     setLoading(true);
     try {
-      // Load existing photos for predefined team members
-      const { data: leadershipData } = await supabase
-        .from("leadership_team")
-        .select("*")
-        .in("id", ['bhaskar-kamath', 'harsha-kamath', 'shalini-kamath', 'vishwas-kamath']);
-      
-      if (leadershipData && leadershipData.length > 0) {
-        // Update predefined members with their photos from database
-        setLeadership(prev => prev.map(member => {
-          const dbMember = leadershipData.find(d => d.id === member.id);
-          return dbMember ? { ...member, photo_url: dbMember.photo_url } : member;
-        }));
-      } else {
-        // If no data exists, insert the predefined members
-        for (const member of leadership) {
-          await supabase
-            .from("leadership_team")
-            .upsert({
-              id: member.id,
-              name: member.name,
-              designation: member.designation,
-              description: member.description,
-              photo_url: member.photo_url,
-              order_index: member.order_index
-            });
-        }
-      }
-
-      // Ensure predefined members exist in database
-      const existingIds = leadershipData ? leadershipData.map(d => d.id) : [];
-      const missingMembers = leadership.filter(m => !existingIds.includes(m.id));
-      
-      for (const member of missingMembers) {
-        await supabase
+      // First, ensure predefined members exist in database
+      for (const member of defaultLeadership) {
+        const { error } = await supabase
           .from("leadership_team")
-          .insert({
+          .upsert({
             id: member.id,
             name: member.name,
             designation: member.designation,
             description: member.description,
-            photo_url: member.photo_url,
             order_index: member.order_index
+          }, {
+            onConflict: 'id'
           });
+        
+        if (error) {
+          console.error('Error upserting member:', error);
+        }
+      }
+      
+      // Now load existing data including photos
+      const { data: leadershipData, error: loadError } = await supabase
+        .from("leadership_team")
+        .select("*")
+        .in("id", ['bhaskar-kamath', 'harsha-kamath', 'shalini-kamath', 'vishwas-kamath'])
+        .order("order_index");
+      
+      if (loadError) {
+        console.error('Error loading leadership data:', loadError);
+        toast({
+          title: "Error",
+          description: "Failed to load leadership data",
+          variant: "destructive"
+        });
+      } else if (leadershipData) {
+        // Update state with photos from database
+        setLeadership(defaultLeadership.map(member => {
+          const dbMember = leadershipData.find(d => d.id === member.id);
+          return dbMember ? { ...member, photo_url: dbMember.photo_url } : member;
+        }));
       }
 
       // Load awards
@@ -210,19 +208,25 @@ const AboutPageCMS = () => {
     try {
       // Find the member to get their name for the filename
       const member = leadership.find(m => m.id === memberId);
-      if (!member) throw new Error("Member not found");
+      if (!member) {
+        throw new Error("Member not found");
+      }
 
-      // Create a unique filename based on member name and timestamp
-      const safeName = member.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
-      const fileName = `leadership/${safeName}-${Date.now()}.${file.name.split('.').pop()}`;
+      // Create a unique filename based on member ID and timestamp
+      const fileExt = file.name.split('.').pop();
+      const fileName = `leadership/${memberId}-${Date.now()}.${fileExt}`;
       
       // Delete old photo if exists
       if (member.photo_url) {
-        const oldFileName = member.photo_url.split('/').pop();
-        if (oldFileName) {
-          await supabase.storage
+        const oldPath = member.photo_url.split('/').slice(-2).join('/');
+        if (oldPath.startsWith('leadership/')) {
+          const { error: deleteError } = await supabase.storage
             .from("vehicle-images")
-            .remove([`leadership/${oldFileName}`]);
+            .remove([oldPath]);
+          
+          if (deleteError) {
+            console.warn('Could not delete old photo:', deleteError);
+          }
         }
       }
 
@@ -234,13 +238,16 @@ const AboutPageCMS = () => {
           cacheControl: '3600'
         });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('Upload error:', uploadError);
+        throw uploadError;
+      }
 
       const { data: { publicUrl } } = supabase.storage
         .from("vehicle-images")
         .getPublicUrl(fileName);
 
-      // Update in database with proper identification
+      // Update in database
       const { error: updateError } = await supabase
         .from("leadership_team")
         .update({ 
@@ -249,7 +256,10 @@ const AboutPageCMS = () => {
         })
         .eq("id", memberId);
 
-      if (updateError) throw updateError;
+      if (updateError) {
+        console.error('Database update error:', updateError);
+        throw updateError;
+      }
 
       // Update local state immediately for responsive UI
       setLeadership(prev => prev.map(m => 
@@ -258,18 +268,18 @@ const AboutPageCMS = () => {
           : m
       ));
 
-      // Reload data to ensure sync
-      await loadAllData();
-
       toast({
         title: "Success",
-        description: `Photo updated for ${member.name}`
+        description: `Photo uploaded successfully for ${member.name}`
       });
-    } catch (error) {
+      
+      // Reload data to ensure sync
+      await loadAllData();
+    } catch (error: any) {
       console.error("Error uploading photo:", error);
       toast({
         title: "Upload Failed",
-        description: "Failed to upload photo. Please try again.",
+        description: error.message || "Failed to upload photo. Please try again.",
         variant: "destructive"
       });
     } finally {
