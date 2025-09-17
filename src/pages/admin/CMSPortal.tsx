@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileText, Image, Settings, Globe, Phone, Mail, MapPin, Save, Plus, Trash2, Edit } from "lucide-react";
+import { FileText, Image, Settings, Globe, Phone, Mail, MapPin, Save, Plus, Trash2, Edit, Users } from "lucide-react";
+import { Link } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useToast } from "@/hooks/use-toast";
 
@@ -98,6 +99,31 @@ const CMSPortal = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold">Content Management System</h1>
           <p className="text-muted-foreground">Manage website content and settings</p>
+        </div>
+
+        {/* Quick Links */}
+        <div className="mb-6">
+          <Card>
+            <CardContent className="p-6">
+              <h2 className="text-lg font-semibold mb-4">Page Management</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Link to="/admin/cms/about">
+                  <Button variant="outline" className="w-full justify-start">
+                    <Users className="h-4 w-4 mr-2" />
+                    About Page
+                  </Button>
+                </Link>
+                <Button variant="outline" className="w-full justify-start" disabled>
+                  <FileText className="h-4 w-4 mr-2" />
+                  Services Page (Coming Soon)
+                </Button>
+                <Button variant="outline" className="w-full justify-start" disabled>
+                  <Globe className="h-4 w-4 mr-2" />
+                  Contact Page (Coming Soon)
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         <Tabs defaultValue="settings" className="space-y-6">
