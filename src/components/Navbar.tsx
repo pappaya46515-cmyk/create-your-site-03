@@ -1,23 +1,43 @@
 import { Button } from "@/components/ui/button";
 import { Menu, Phone, Globe2 } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import omGaneshLogo from "@/assets/om-ganesh-official-logo.jpg";
+import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [language, setLanguage] = useState<"en" | "kn">("en");
+  const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === "en" ? "kn" : "en");
   };
 
   const navItems = {
-    en: ["Home", "About Us", "Services", "Login"],
-    kn: ["ಮುಖಪುಟ", "ನಮ್ಮ ಬಗ್ಗೆ", "ಸೇವೆಗಳು", "ಲಾಗಿನ್"]
+    en: ["Home", "About Us", "Services"],
+    kn: ["ಮುಖಪುಟ", "ನಮ್ಮ ಬಗ್ಗೆ", "ಸೇವೆಗಳು"]
   };
 
-  const paths = ["/", "/about", "/services", "/auth"];
+  const paths = ["/", "/about", "/services"];
+
+  useEffect(() => {
+    // Initialize auth state
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    navigate("/");
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-card shadow-medium border-b border-border">
@@ -70,6 +90,25 @@ const Navbar = () => {
               <span className="hidden sm:inline">1800-XXX-XXXX</span>
             </Button>
 
+            {/* Auth Controls */}
+            {user ? (
+              <div className="hidden md:flex items-center gap-2">
+                <span className="text-sm text-muted-foreground max-w-[160px] truncate" title={user.email}>
+                  {user.email}
+                </span>
+                <Button variant="outline" size="sm" onClick={() => navigate('/portal-select')}>
+                  Portal
+                </Button>
+                <Button variant="ghost" size="sm" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <Link to="/auth" className="hidden md:block">
+                <Button size="sm">Login</Button>
+              </Link>
+            )}
+
             {/* Mobile Menu Button */}
             <Button
               variant="ghost"
@@ -105,6 +144,39 @@ const Navbar = () => {
                 <Globe2 className="h-4 w-4 mr-2" />
                 {language === "en" ? "ಕನ್ನಡ" : "English"}
               </Button>
+
+              {user ? (
+                <>
+                  <div className="px-4 py-2 text-sm text-muted-foreground truncate" title={user.email}>
+                    {user.email}
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="justify-start mx-4"
+                    onClick={() => { navigate('/portal-select'); setIsMenuOpen(false); }}
+                  >
+                    Portal
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="justify-start mx-4"
+                    onClick={() => { handleLogout(); setIsMenuOpen(false); }}
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <Link
+                  to="/auth"
+                  className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-all"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Login
+                </Link>
+              )}
+
             </div>
           </div>
         )}
