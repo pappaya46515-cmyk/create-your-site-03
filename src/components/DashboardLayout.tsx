@@ -106,24 +106,6 @@ const DashboardLayout = ({ children, userRole }: DashboardLayoutProps) => {
           </nav>
         </div>
 
-        <div className="absolute bottom-0 w-full p-4 border-t border-border space-y-2">
-          <Button
-            variant="default"
-            className="w-full justify-start"
-            onClick={() => navigate("/portal-select")}
-          >
-            <ArrowLeftRight className="h-5 w-5 mr-3" />
-            {sidebarOpen && "Switch/Add Portal"}
-          </Button>
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-destructive hover:text-destructive"
-            onClick={handleLogout}
-          >
-            <LogOut className="h-5 w-5 mr-3" />
-            {sidebarOpen && "Logout"}
-          </Button>
-        </div>
       </aside>
 
       {/* Main Content */}
