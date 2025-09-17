@@ -87,6 +87,7 @@ const About = () => {
             Our Legacy
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* First Card - Keep as is */}
             <div className="bg-white dark:bg-card rounded-2xl p-6 shadow-card hover-lift animate-fade-in" style={{animationDelay: '0.1s'}}>
               <img 
                 src={omGaneshLogo} 
@@ -95,17 +96,45 @@ const About = () => {
               />
               <p className="text-center mt-4 font-bold text-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Om Ganesh Group</p>
             </div>
-            <div className="bg-white dark:bg-card rounded-2xl p-6 shadow-card hover-lift animate-fade-in" style={{animationDelay: '0.2s'}}>
-              <div className="w-full h-56 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center rounded-lg">
-                <Tractor className="h-24 w-24 text-primary animate-float" />
+            
+            {/* Second Card - Redesigned */}
+            <div className="bg-gradient-to-br from-primary/5 via-background to-secondary/5 dark:from-primary/10 dark:to-secondary/10 rounded-2xl p-6 shadow-card hover-lift animate-fade-in border border-primary/10" style={{animationDelay: '0.2s'}}>
+              <div className="relative h-56 overflow-hidden rounded-lg">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/30 flex items-center justify-center">
+                  <Tractor className="h-32 w-32 text-white drop-shadow-2xl animate-float" />
+                </div>
+                <div className="absolute top-2 right-2 bg-white/90 px-3 py-1 rounded-full">
+                  <span className="text-xs font-bold text-primary">Since 1988</span>
+                </div>
               </div>
-              <p className="text-center mt-4 font-bold text-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Massey Ferguson Dealership</p>
+              <div className="mt-4">
+                <p className="text-center font-bold text-lg mb-2">Massey Ferguson Dealership</p>
+                <div className="flex justify-center gap-2">
+                  <div className="bg-primary/10 px-2 py-1 rounded text-xs font-medium">Tractors</div>
+                  <div className="bg-secondary/10 px-2 py-1 rounded text-xs font-medium">Parts</div>
+                  <div className="bg-accent/10 px-2 py-1 rounded text-xs font-medium">Service</div>
+                </div>
+              </div>
             </div>
-            <div className="bg-white dark:bg-card rounded-2xl p-6 shadow-card hover-lift animate-fade-in" style={{animationDelay: '0.3s'}}>
-              <div className="w-full h-56 bg-gradient-to-br from-secondary/20 to-accent/20 flex items-center justify-center rounded-lg">
-                <Building2 className="h-24 w-24 text-secondary animate-float" style={{animationDelay: '0.5s'}} />
+            
+            {/* Third Card - Redesigned */}
+            <div className="bg-gradient-to-bl from-secondary/5 via-background to-primary/5 dark:from-secondary/10 dark:to-primary/10 rounded-2xl p-6 shadow-card hover-lift animate-fade-in border border-secondary/10" style={{animationDelay: '0.3s'}}>
+              <div className="relative h-56 overflow-hidden rounded-lg">
+                <div className="absolute inset-0 bg-gradient-to-tl from-secondary/30 to-primary/30 flex flex-col items-center justify-center">
+                  <Building2 className="h-24 w-24 text-white drop-shadow-2xl mb-2 animate-float" style={{animationDelay: '0.5s'}} />
+                  <Factory className="h-16 w-16 text-white/70 drop-shadow-xl animate-float" style={{animationDelay: '0.7s'}} />
+                </div>
+                <div className="absolute top-2 left-2 bg-white/90 px-3 py-1 rounded-full">
+                  <span className="text-xs font-bold text-secondary">ISO Certified</span>
+                </div>
               </div>
-              <p className="text-center mt-4 font-bold text-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Manufacturing Excellence</p>
+              <div className="mt-4">
+                <p className="text-center font-bold text-lg mb-2">Manufacturing Excellence</p>
+                <div className="text-center">
+                  <p className="text-xs text-muted-foreground">Trailers • Trollies • Agri Equipment</p>
+                  <p className="text-xs font-semibold text-primary mt-1">11,000+ Units Delivered</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
