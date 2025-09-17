@@ -9,10 +9,12 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Tractor, Shield, Users, Award, TrendingUp, Headphones, ArrowRight, BarChart3, FileText, Upload, Sparkles, Star, CheckCircle, MapPin, Calendar, IndianRupee, Phone, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Home = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t, language } = useLanguage();
   const [vehicles, setVehicles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
@@ -113,27 +115,27 @@ const Home = () => {
 
   const slides = [
     {
-      title: "11,000+ Farmers Served",
-      subtitle: "Trusted Platform Across Karnataka",
-      description: "Connecting buyers and sellers with transparency",
+      title: t('farmersServed'),
+      subtitle: t('trustedPlatform'),
+      description: t('connectingBuyersSellers'),
       bgColor: "bg-gradient-to-r from-purple-600 to-blue-600"
     },
     {
-      title: "100% Document Verification",
-      subtitle: "RC, Insurance, Forms 29/30, NOC",
-      description: "All documents verified and stored digitally",
+      title: t('documentVerification'),
+      subtitle: t('documentTypes'),
+      description: t('documentsVerified'),
       bgColor: "bg-gradient-to-r from-blue-600 to-teal-600"
     },
     {
-      title: "Minimum ₹2.5L Deal Value",
-      subtitle: "Quality Assured Equipment",
-      description: "Premium pre-owned agricultural machinery",
+      title: t('minDealValue'),
+      subtitle: t('qualityAssured'),
+      description: t('premiumEquipment'),
       bgColor: "bg-gradient-to-r from-teal-600 to-purple-600"
     },
     {
-      title: "Complete Stock Management",
-      subtitle: "Digital Platform for Dealers",
-      description: "Track inventory, generate agreements, analytics",
+      title: t('stockManagement'),
+      subtitle: t('digitalPlatform'),
+      description: t('trackInventory'),
       bgColor: "bg-gradient-to-r from-purple-600 to-pink-600"
     }
   ];
@@ -184,7 +186,7 @@ const Home = () => {
           <div className="text-center mb-8">
             <div className="inline-block relative">
               <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-teal-600 bg-clip-text text-transparent animate-pulse">
-                KAMTHA
+                {language === 'en' ? 'KAMTHA' : 'ಕಂಠ'}
               </h1>
               <div className="absolute -top-4 -right-4">
                 <Sparkles className="h-8 w-8 text-yellow-400 animate-spin" />
@@ -194,10 +196,10 @@ const Home = () => {
               </div>
             </div>
             <p className="text-2xl md:text-3xl font-bold text-purple-600 mt-4">
-              ಕರ್ನಾಟಕದಾದ್ಯಂತ ರೈತರಿಗೆ ಸೇವೆ
+              {language === 'en' ? 'Serving farmers across Karnataka' : 'ಕರ್ನಾಟಕದಾದ್ಯಂತ ರೈತರಿಗೆ ಸೇವೆ'}
             </p>
             <p className="text-lg text-gray-600 mt-2">
-              Pre-owned Agricultural Equipment Marketplace
+              {t('tagline')}
             </p>
           </div>
 
@@ -231,17 +233,17 @@ const Home = () => {
                   <div className="p-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full mr-4">
                     <Users className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-800">Buy Pre-owned Equipment</h3>
+                  <h3 className="text-2xl font-bold text-gray-800">{t('buyPreowned')}</h3>
                 </div>
                 <p className="text-gray-600 mb-6">
-                  Browse verified pre-owned tractors and agricultural equipment with complete documentation
+                  {t('buyDescription')}
                 </p>
                 <Button 
                   size="lg"
                   className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
                   onClick={() => navigate("/register/buyer")}
                 >
-                  Start Buying <ArrowRight className="ml-2 h-5 w-5" />
+                  {t('startBuying')} <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </CardContent>
             </Card>
@@ -253,17 +255,17 @@ const Home = () => {
                   <div className="p-3 bg-gradient-to-r from-teal-600 to-purple-600 rounded-full mr-4">
                     <Tractor className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-800">Sell Your Pre-owned</h3>
+                  <h3 className="text-2xl font-bold text-gray-800">{t('sellPreowned')}</h3>
                 </div>
                 <p className="text-gray-600 mb-6">
-                  List your pre-owned tractors and equipment with complete documentation and reach verified buyers
+                  {t('sellDescription')}
                 </p>
                 <Button 
                   size="lg"
                   className="w-full bg-gradient-to-r from-teal-600 to-purple-600 hover:from-teal-700 hover:to-purple-700 text-white"
                   onClick={() => navigate("/register/seller")}
                 >
-                  List Your Equipment <Upload className="ml-2 h-5 w-5" />
+                  {t('listEquipment')} <Upload className="ml-2 h-5 w-5" />
                 </Button>
               </CardContent>
             </Card>

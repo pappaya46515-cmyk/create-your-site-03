@@ -4,22 +4,24 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import omGaneshLogo from "@/assets/om-ganesh-official-logo.jpg";
 import { supabase } from "@/integrations/supabase/client";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [language, setLanguage] = useState<"en" | "kn">("en");
   const [user, setUser] = useState<any>(null);
   const [userRoles, setUserRoles] = useState<string[]>([]);
   const navigate = useNavigate();
+  const { language, setLanguage, t } = useLanguage();
 
   const toggleLanguage = () => {
-    setLanguage(prev => prev === "en" ? "kn" : "en");
+    setLanguage(language === "en" ? "kn" : "en");
   };
 
-  const navItems = {
-    en: ["Home", "About Us", "Services"],
-    kn: ["ಮುಖಪುಟ", "ನಮ್ಮ ಬಗ್ಗೆ", "ಸೇವೆಗಳು"]
-  };
+  const navItems = [
+    t("home"),
+    t("aboutUs"),
+    t("services")
+  ];
 
   const paths = ["/", "/about", "/services"];
 
@@ -79,7 +81,7 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
-            {navItems[language].map((item, index) => (
+            {navItems.map((item, index) => (
               <Link
                 key={item}
                 to={paths[index]}
@@ -119,26 +121,26 @@ const Navbar = () => {
                 </span>
                 {userRoles.includes('admin') && (
                   <Button variant="outline" size="sm" onClick={() => navigate('/portal-select')}>
-                    Portal
+                    {t('portal')}
                   </Button>
                 )}
                 {userRoles.includes('seller') && !userRoles.includes('admin') && (
                   <Button variant="outline" size="sm" onClick={() => navigate('/seller-portal')}>
-                    Seller Portal
+                    {t('sellerPortal')}
                   </Button>
                 )}
                 {userRoles.includes('buyer') && !userRoles.includes('admin') && !userRoles.includes('seller') && (
                   <Button variant="outline" size="sm" onClick={() => navigate('/buyer-portal')}>
-                    Buyer Portal
+                    {t('buyerPortal')}
                   </Button>
                 )}
                 <Button variant="ghost" size="sm" onClick={handleLogout}>
-                  Logout
+                  {t('logout')}
                 </Button>
               </div>
             ) : (
               <Link to="/auth" className="hidden md:block">
-                <Button size="sm">Login</Button>
+                <Button size="sm">{t('login')}</Button>
               </Link>
             )}
 
@@ -158,7 +160,7 @@ const Navbar = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col space-y-2">
-              {navItems[language].map((item, index) => (
+              {navItems.map((item, index) => (
                 <Link
                   key={item}
                   to={paths[index]}
@@ -190,7 +192,7 @@ const Navbar = () => {
                       className="justify-start mx-4"
                       onClick={() => { navigate('/portal-select'); setIsMenuOpen(false); }}
                     >
-                      Portal
+                      {t('portal')}
                     </Button>
                   )}
                   {userRoles.includes('seller') && !userRoles.includes('admin') && (
@@ -200,7 +202,7 @@ const Navbar = () => {
                       className="justify-start mx-4"
                       onClick={() => { navigate('/seller-portal'); setIsMenuOpen(false); }}
                     >
-                      Seller Portal
+                      {t('sellerPortal')}
                     </Button>
                   )}
                   {userRoles.includes('buyer') && !userRoles.includes('admin') && !userRoles.includes('seller') && (
@@ -210,7 +212,7 @@ const Navbar = () => {
                       className="justify-start mx-4"
                       onClick={() => { navigate('/buyer-portal'); setIsMenuOpen(false); }}
                     >
-                      Buyer Portal
+                      {t('buyerPortal')}
                     </Button>
                   )}
                   <Button
@@ -219,7 +221,7 @@ const Navbar = () => {
                     className="justify-start mx-4"
                     onClick={() => { handleLogout(); setIsMenuOpen(false); }}
                   >
-                    Logout
+                    {t('logout')}
                   </Button>
                 </>
               ) : (
@@ -228,7 +230,7 @@ const Navbar = () => {
                   className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-all"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Login
+                  {t('login')}
                 </Link>
               )}
             </div>
