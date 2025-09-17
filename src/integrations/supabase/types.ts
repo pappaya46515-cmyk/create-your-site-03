@@ -386,7 +386,11 @@ export type Database = {
       app_role: "admin" | "seller" | "buyer"
       ownership_type: "kamtha" | "third_party"
       stock_status: "available" | "pending" | "sold" | "archived"
-      vehicle_category: "tractor" | "other_vehicle"
+      vehicle_category:
+        | "tractor"
+        | "commercial"
+        | "agriculture"
+        | "other_vehicle"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -517,7 +521,12 @@ export const Constants = {
       app_role: ["admin", "seller", "buyer"],
       ownership_type: ["kamtha", "third_party"],
       stock_status: ["available", "pending", "sold", "archived"],
-      vehicle_category: ["tractor", "other_vehicle"],
+      vehicle_category: [
+        "tractor",
+        "commercial",
+        "agriculture",
+        "other_vehicle",
+      ],
     },
   },
 } as const

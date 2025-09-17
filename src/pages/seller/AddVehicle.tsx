@@ -26,8 +26,8 @@ const AddVehicle = () => {
     // Basic Info
     model_name: "",
     model_year: new Date().getFullYear(),
-    category: "tractor" as "tractor" | "commercial" | "agriculture",
-    ownership_type: "first" as "first" | "second" | "third" | "multiple",
+    category: "tractor" as "tractor" | "commercial" | "agriculture" | "other_vehicle",
+    ownership_type: "kamtha" as "kamtha" | "third_party",
     deal_value: 250000,
     slab_amount: 0,
     registration_number: "",
@@ -311,7 +311,7 @@ const AddVehicle = () => {
                   <Label htmlFor="category">Category *</Label>
                   <Select 
                     value={formData.category}
-                    onValueChange={(value) => setFormData({ ...formData, category: value as "tractor" | "commercial" | "agriculture" })}
+                    onValueChange={(value) => setFormData({ ...formData, category: value as "tractor" | "commercial" | "agriculture" | "other_vehicle" })}
                   >
                     <SelectTrigger id="category">
                       <SelectValue />
@@ -320,6 +320,7 @@ const AddVehicle = () => {
                       <SelectItem value="tractor">Tractor</SelectItem>
                       <SelectItem value="commercial">Commercial Vehicle</SelectItem>
                       <SelectItem value="agriculture">Agriculture Equipment</SelectItem>
+                      <SelectItem value="other_vehicle">Other Vehicle</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -328,16 +329,14 @@ const AddVehicle = () => {
                   <Label htmlFor="ownership">Ownership Type *</Label>
                   <Select 
                     value={formData.ownership_type}
-                    onValueChange={(value) => setFormData({ ...formData, ownership_type: value as "first" | "second" | "third" | "multiple" })}
+                    onValueChange={(value) => setFormData({ ...formData, ownership_type: value as "kamtha" | "third_party" })}
                   >
                     <SelectTrigger id="ownership">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="first">First Owner</SelectItem>
-                      <SelectItem value="second">Second Owner</SelectItem>
-                      <SelectItem value="third">Third Owner</SelectItem>
-                      <SelectItem value="multiple">Multiple Owners</SelectItem>
+                      <SelectItem value="kamtha">Kamtha</SelectItem>
+                      <SelectItem value="third_party">Third Party</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
