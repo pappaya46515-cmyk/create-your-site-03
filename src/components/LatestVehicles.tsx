@@ -62,7 +62,7 @@ const LatestVehicles = () => {
         .select("*")
         .eq("status", "available")
         .order("updated_at", { ascending: false })
-        .limit(6);
+        .limit(12);
 
       if (error) throw error;
       setVehicles(data || []);
@@ -104,10 +104,10 @@ const LatestVehicles = () => {
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Latest Pre-owned Equipment
+            Available Pre-owned Equipment
           </h2>
           <p className="text-lg text-muted-foreground">
-            ಇತ್ತೀಚೆಗೆ ಸೇರಿಸಲಾದ ಉಪಕರಣಗಳು | Recently Added Equipment
+            ಲಭ್ಯವಿರುವ ಉಪಕರಣಗಳು | Browse Our Available Equipment
           </p>
         </div>
 
