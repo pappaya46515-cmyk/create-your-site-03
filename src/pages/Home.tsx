@@ -215,94 +215,82 @@ const Home = () => {
                       </div>
                       <h3 className="text-2xl font-bold text-gray-800">Sell Your Pre-owned</h3>
                     </div>
-              </CardContent>
-            </Card>
-
-            {/* Sell Pre-owned Section */}
-            <Card className="border-2 border-teal-200 hover:border-teal-400 transition-all duration-300 hover:shadow-2xl">
-              <CardContent className="p-8">
-                <div className="flex items-center mb-6">
-                  <div className="p-3 bg-gradient-to-r from-teal-600 to-purple-600 rounded-full mr-4">
-                    <Tractor className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-800">Sell Your Pre-owned</h3>
-                </div>
-                
-                {/* Upload Photos Section */}
-                <div className="mb-4">
-                  <Label className="text-sm font-semibold text-gray-700">Upload Photos (Max 5)</Label>
-                  <div className="mt-2">
-                    <div className="flex gap-2 flex-wrap mb-2">
-                      {uploadedImages.map((img, idx) => (
-                        <div key={idx} className="relative w-20 h-20 rounded-lg overflow-hidden border-2 border-purple-300">
-                          <img src={img} alt={`Upload ${idx + 1}`} className="w-full h-full object-cover" />
-                          <button
-                            className="absolute top-0 right-0 bg-red-500 text-white rounded-bl-lg p-1"
-                            onClick={() => setUploadedImages(uploadedImages.filter((_, i) => i !== idx))}
-                          >
-                            ×
-                          </button>
+                    
+                    {/* Upload Photos Section */}
+                    <div className="mb-4">
+                      <Label className="text-sm font-semibold text-gray-700">Upload Photos (Max 5)</Label>
+                      <div className="mt-2">
+                        <div className="flex gap-2 flex-wrap mb-2">
+                          {uploadedImages.map((img, idx) => (
+                            <div key={idx} className="relative w-20 h-20 rounded-lg overflow-hidden border-2 border-purple-300">
+                              <img src={img} alt={`Upload ${idx + 1}`} className="w-full h-full object-cover" />
+                              <button
+                                className="absolute top-0 right-0 bg-red-500 text-white rounded-bl-lg p-1"
+                                onClick={() => setUploadedImages(uploadedImages.filter((_, i) => i !== idx))}
+                              >
+                                ×
+                              </button>
+                            </div>
+                          ))}
+                          {uploadedImages.length < 5 && (
+                            <label className="w-20 h-20 border-2 border-dashed border-purple-300 rounded-lg flex items-center justify-center cursor-pointer hover:border-purple-500 transition-colors">
+                              <Camera className="h-6 w-6 text-purple-400" />
+                              <input
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                className="hidden"
+                                onChange={handleImageUpload}
+                              />
+                            </label>
+                          )}
                         </div>
-                      ))}
-                      {uploadedImages.length < 5 && (
-                        <label className="w-20 h-20 border-2 border-dashed border-purple-300 rounded-lg flex items-center justify-center cursor-pointer hover:border-purple-500 transition-colors">
-                          <Camera className="h-6 w-6 text-purple-400" />
-                          <input
-                            type="file"
-                            multiple
-                            accept="image/*"
-                            className="hidden"
-                            onChange={handleImageUpload}
-                          />
-                        </label>
-                      )}
+                      </div>
                     </div>
-                  </div>
-                </div>
 
-                {/* Model Name Dropdown */}
-                <div className="mb-4">
-                  <Label className="text-sm font-semibold text-gray-700">Model Name</Label>
-                  <Select>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="Select tractor model" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {tractorModels.map((model) => (
-                        <SelectItem key={model} value={model}>
-                          {model}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                    {/* Model Name Dropdown */}
+                    <div className="mb-4">
+                      <Label className="text-sm font-semibold text-gray-700">Model Name</Label>
+                      <Select>
+                        <SelectTrigger className="mt-1">
+                          <SelectValue placeholder="Select tractor model" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {tractorModels.map((model) => (
+                            <SelectItem key={model} value={model}>
+                              {model}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-                {/* Model Type Dropdown */}
-                <div className="mb-6">
-                  <Label className="text-sm font-semibold text-gray-700">Model Type</Label>
-                  <Select>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="Select equipment type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {modelTypes.map((type) => (
-                        <SelectItem key={type} value={type}>
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                    {/* Model Type Dropdown */}
+                    <div className="mb-6">
+                      <Label className="text-sm font-semibold text-gray-700">Model Type</Label>
+                      <Select>
+                        <SelectTrigger className="mt-1">
+                          <SelectValue placeholder="Select equipment type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {modelTypes.map((type) => (
+                            <SelectItem key={type} value={type}>
+                              {type}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-                <Button 
-                  size="lg"
-                  className="w-full bg-gradient-to-r from-teal-600 to-purple-600 hover:from-teal-700 hover:to-purple-700 text-white"
-                  onClick={() => navigate("/register/seller")}
-                >
-                  List Your Equipment <Upload className="ml-2 h-5 w-5" />
-                </Button>
-              </CardContent>
-            </Card>
+                    <Button 
+                      size="lg"
+                      className="w-full bg-gradient-to-r from-teal-600 to-purple-600 hover:from-teal-700 hover:to-purple-700 text-white"
+                      onClick={() => navigate("/register/seller")}
+                    >
+                      List Your Equipment <Upload className="ml-2 h-5 w-5" />
+                    </Button>
+                  </CardContent>
+                </Card>
           </div>
 
           {/* Contact Numbers */}
