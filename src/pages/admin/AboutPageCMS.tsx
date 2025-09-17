@@ -11,7 +11,8 @@ import { Upload, Save, Users, Trophy, Building2, MapPin, Plus, Trash2, Edit, Loa
 import DashboardLayout from "@/components/DashboardLayout";
 
 interface LeadershipMember {
-  id: string;
+  id: string; // UUID from DB
+  slug?: string; // stable key for UI
   name: string;
   designation: string;
   description: string;
@@ -41,10 +42,10 @@ const AboutPageCMS = () => {
   const [uploading, setUploading] = useState<string | null>(null);
   const fileInputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
   
-  // Predefined leadership team with fixed names and roles
   const defaultLeadership: LeadershipMember[] = [
     {
-      id: 'bhaskar-kamath',
+      id: "",
+      slug: 'bhaskar-kamath',
       name: 'Mr. Bhaskar Kamath',
       designation: 'CEO & Founder',
       description: 'Leader with over 20 years of experience in agricultural machinery',
@@ -52,7 +53,8 @@ const AboutPageCMS = () => {
       order_index: 0
     },
     {
-      id: 'harsha-kamath',
+      id: "",
+      slug: 'harsha-kamath',
       name: 'Mr. Harsha Kamath',
       designation: 'Operations Manager',
       description: 'Expert in logistics and operations management',
@@ -60,7 +62,8 @@ const AboutPageCMS = () => {
       order_index: 1
     },
     {
-      id: 'shalini-kamath',
+      id: "",
+      slug: 'shalini-kamath',
       name: 'Mrs. Shalini Kamath',
       designation: 'Finance Head',
       description: 'Financial strategist ensuring sustainable growth',
@@ -68,7 +71,8 @@ const AboutPageCMS = () => {
       order_index: 2
     },
     {
-      id: 'vishwas-kamath',
+      id: "",
+      slug: 'vishwas-kamath',
       name: 'Mr. Vishwas Kamath',
       designation: 'Technical Director',
       description: 'Technical expert in agricultural equipment and machinery',
@@ -99,46 +103,41 @@ const AboutPageCMS = () => {
   const loadAllData = async () => {
     setLoading(true);
     try {
-      // First, ensure predefined members exist in database
-      for (const member of defaultLeadership) {
-        const { error } = await supabase
-          .from("leadership_team")
-          .upsert({
-            id: member.id,
-            name: member.name,
-            designation: member.designation,
-            description: member.description,
-            order_index: member.order_index
-          }, {
-            onConflict: 'id'
-          });
-        
-        if (error) {
-          console.error('Error upserting member:', error);
-        }
-      }
-      
-      // Now load existing data including photos
-      const { data: leadershipData, error: loadError } = await supabase
+      // Load existing leadership by names and ensure they exist
+      const names = defaultLeadership.map((m) => m.name);
+      const { data: existing, error: loadLeadersErr } = await supabase
         .from("leadership_team")
         .select("*")
-        .in("id", ['bhaskar-kamath', 'harsha-kamath', 'shalini-kamath', 'vishwas-kamath'])
-        .order("order_index");
-      
-      if (loadError) {
-        console.error('Error loading leadership data:', loadError);
-        toast({
-          title: "Error",
-          description: "Failed to load leadership data",
-          variant: "destructive"
-        });
-      } else if (leadershipData) {
-        // Update state with photos from database
-        setLeadership(defaultLeadership.map(member => {
-          const dbMember = leadershipData.find(d => d.id === member.id);
-          return dbMember ? { ...member, photo_url: dbMember.photo_url } : member;
-        }));
+        .in("name", names);
+
+      if (loadLeadersErr) {
+        console.error('Error loading leadership data:', loadLeadersErr);
+        throw loadLeadersErr;
       }
+
+      const updatedMembers: LeadershipMember[] = [];
+      for (const def of defaultLeadership) {
+        const match = existing?.find((r) => r.name === def.name && r.designation === def.designation);
+        if (match) {
+          updatedMembers.push({ ...def, id: match.id, photo_url: match.photo_url });
+        } else {
+          const { data: inserted, error: insertErr } = await supabase
+            .from("leadership_team")
+            .insert({
+              name: def.name,
+              designation: def.designation,
+              description: def.description,
+              order_index: def.order_index
+            })
+            .select()
+            .single();
+          if (insertErr) throw insertErr;
+          updatedMembers.push({ ...def, id: inserted.id, photo_url: inserted.photo_url || null });
+        }
+      }
+
+      setLeadership(updatedMembers);
+
 
       // Load awards
       const { data: awardsData } = await supabase
@@ -556,7 +555,7 @@ const AboutPageCMS = () => {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {leadership.map((member) => (
-                    <Card key={member.id} className="relative">
+                    <Card key={member.id || member.slug} className="relative">
                       <CardContent className="p-6">
                         <div className="space-y-4">
                           {/* Photo Upload Area */}
@@ -587,7 +586,7 @@ const AboutPageCMS = () => {
                             )}
                             
                             <input
-                              ref={el => fileInputRefs.current[member.id] = el}
+                              ref={el => fileInputRefs.current[member.slug || member.id] = el}
                               type="file"
                               accept="image/*"
                               className="hidden"
@@ -595,6 +594,10 @@ const AboutPageCMS = () => {
                                 const file = e.target.files?.[0];
                                 if (file) {
                                   e.target.value = ''; // Reset input
+                                  if (!member.id) {
+                                    toast({ title: 'Please wait', description: 'Initializing member. Try again in a moment.' });
+                                    return;
+                                  }
                                   handlePhotoUpload(file, member.id);
                                 }
                               }}
@@ -604,8 +607,8 @@ const AboutPageCMS = () => {
                               size="sm" 
                               variant={member.photo_url ? "default" : "secondary"}
                               className="absolute bottom-2 right-2"
-                              onClick={() => fileInputRefs.current[member.id]?.click()}
-                              disabled={uploading === member.id}
+                              onClick={() => fileInputRefs.current[member.slug || member.id]?.click()}
+                              disabled={!member.id || uploading === member.id}
                             >
                               {uploading === member.id ? (
                                 <Loader2 className="h-4 w-4 mr-1 animate-spin" />
