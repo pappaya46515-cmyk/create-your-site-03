@@ -138,30 +138,15 @@ const Navbar = () => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-48">
-                      {userRoles.includes('admin') && (
-                        <>
-                          <DropdownMenuItem onClick={() => navigate('/admin')}>
-                            Admin Portal
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => navigate('/admin/cms')}>
-                            CMS Portal
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => navigate('/admin/analytics')}>
-                            Analytics
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                        </>
-                      )}
-                      {userRoles.includes('seller') && (
-                        <DropdownMenuItem onClick={() => navigate('/seller-portal')}>
-                          Seller Portal
-                        </DropdownMenuItem>
-                      )}
-                      {userRoles.includes('buyer') && (
-                        <DropdownMenuItem onClick={() => navigate('/buyer-portal')}>
-                          Buyer Portal
-                        </DropdownMenuItem>
-                      )}
+                      <DropdownMenuItem onClick={() => navigate('/admin')}>
+                        Admin Portal
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => navigate('/admin/cms')}>
+                        CMS Portal
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => navigate('/admin/analytics')}>
+                        Analytics
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 )}
@@ -223,54 +208,30 @@ const Navbar = () => {
                     <div className="px-4 py-2">
                       <p className="text-xs text-muted-foreground mb-2">Switch Portal</p>
                       <div className="space-y-1">
-                        {userRoles.includes('admin') && (
-                          <>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="w-full justify-start"
-                              onClick={() => { navigate('/admin'); setIsMenuOpen(false); }}
-                            >
-                              Admin Portal
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="w-full justify-start"
-                              onClick={() => { navigate('/admin/cms'); setIsMenuOpen(false); }}
-                            >
-                              CMS Portal
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="w-full justify-start"
-                              onClick={() => { navigate('/admin/analytics'); setIsMenuOpen(false); }}
-                            >
-                              Analytics
-                            </Button>
-                          </>
-                        )}
-                        {userRoles.includes('seller') && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="w-full justify-start"
-                            onClick={() => { navigate('/seller-portal'); setIsMenuOpen(false); }}
-                          >
-                            Seller Portal
-                          </Button>
-                        )}
-                        {userRoles.includes('buyer') && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="w-full justify-start"
-                            onClick={() => { navigate('/buyer-portal'); setIsMenuOpen(false); }}
-                          >
-                            Buyer Portal
-                          </Button>
-                        )}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-full justify-start"
+                          onClick={() => { navigate('/admin'); setIsMenuOpen(false); }}
+                        >
+                          Admin Portal
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-full justify-start"
+                          onClick={() => { navigate('/admin/cms'); setIsMenuOpen(false); }}
+                        >
+                          CMS Portal
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-full justify-start"
+                          onClick={() => { navigate('/admin/analytics'); setIsMenuOpen(false); }}
+                        >
+                          Analytics
+                        </Button>
                       </div>
                     </div>
                   )}
