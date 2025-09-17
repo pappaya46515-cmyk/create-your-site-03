@@ -27,6 +27,7 @@ import VehicleManagement from "./pages/admin/VehicleManagement";
 import DocumentVerification from "./pages/admin/DocumentVerification";
 import Analytics from "./pages/admin/Analytics";
 import AdminNotifications from "./pages/admin/AdminNotifications";
+import CMSPortal from "./pages/admin/CMSPortal";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -137,6 +138,11 @@ const App = () => (
             <Route path="/admin/notifications" element={
               <ProtectedRoute requiredRole="admin">
                 <AdminNotifications />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/cms" element={
+              <ProtectedRoute requiredRole="admin">
+                <CMSPortal />
               </ProtectedRoute>
             } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

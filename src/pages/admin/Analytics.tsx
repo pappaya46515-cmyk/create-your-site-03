@@ -23,17 +23,37 @@ const Analytics = () => {
 
   const fetchAnalytics = async () => {
     try {
+      // Fetch unique users count
+      const { data: uniqueUsers } = await supabase
+        .from("user_roles")
+        .select("user_id")
+        .eq("user_id", "user_id"); // This gets distinct users
+
+      const uniqueUserIds = new Set(uniqueUsers?.map(u => u.user_id) || []);
+      const actualUserCount = uniqueUserIds.size;
+
       // Fetch user counts by role
       const { data: rolesData } = await supabase
         .from("user_roles")
-        .select("role");
+        .select("role, user_id");
 
+      // Count unique users per role
       const usersByRole = { admin: 0, seller: 0, buyer: 0 };
+      const roleUsers = {
+        admin: new Set<string>(),
+        seller: new Set<string>(),
+        buyer: new Set<string>()
+      };
+
       rolesData?.forEach(r => {
-        if (r.role in usersByRole) {
-          usersByRole[r.role as keyof typeof usersByRole]++;
+        if (r.role in roleUsers) {
+          roleUsers[r.role as keyof typeof roleUsers].add(r.user_id);
         }
       });
+
+      usersByRole.admin = roleUsers.admin.size;
+      usersByRole.seller = roleUsers.seller.size;
+      usersByRole.buyer = roleUsers.buyer.size;
 
       // Fetch vehicle stats
       const { data: vehiclesData } = await supabase
@@ -121,23 +141,36 @@ const Analytics = () => {
             <Card>
               <CardHeader>
                 <CardTitle>User Distribution</CardTitle>
-                <CardDescription>Breakdown by role</CardDescription>
+                <CardDescription>Unique users by role type</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span>Admins</span>
-                    <span className="font-bold">{stats.usersByRole.admin}</span>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+                    <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                      {stats.usersByRole.admin}
+                    </p>
+                    <p className="text-sm text-muted-foreground">Admin Users</p>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span>Sellers</span>
-                    <span className="font-bold">{stats.usersByRole.seller}</span>
+                  <div className="text-center p-4 bg-green-50 dark:bg-green-950 rounded-lg">
+                    <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+                      {stats.usersByRole.seller}
+                    </p>
+                    <p className="text-sm text-muted-foreground">Unique Sellers</p>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span>Buyers</span>
-                    <span className="font-bold">{stats.usersByRole.buyer}</span>
+                  <div className="text-center p-4 bg-purple-50 dark:bg-purple-950 rounded-lg">
+                    <p className="text-3xl font-bold text-purple-600 dark:text-purple-400">
+                      {stats.usersByRole.buyer}
+                    </p>
+                    <p className="text-sm text-muted-foreground">Unique Buyers</p>
                   </div>
                 </div>
+                {stats.totalUsers === 1 && (
+                  <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-950 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                    <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                      <span className="font-semibold">⚠️ Note:</span> Currently showing test data from a single user account with multiple roles. Real data will show unique users per role.
+                    </p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </>

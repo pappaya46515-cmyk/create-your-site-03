@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate, Link } from "react-router-dom";
-import { LogOut, Users, FileText, BarChart3, Settings, Car, Shield, TrendingUp, Home } from "lucide-react";
+import { LogOut, Users, FileText, BarChart3, Settings, Car, Shield, TrendingUp, Home, Edit3 } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 
 const AdminPortal = () => {
@@ -136,6 +136,24 @@ const AdminPortal = () => {
                 </Link>
                 <Link to="/admin/analytics">
                   <Button className="w-full" variant="outline">Revenue Dashboard</Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Edit3 className="h-5 w-5" />
+                  CMS Portal
+                </CardTitle>
+                <CardDescription>Manage website content</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <Link to="/admin/cms">
+                  <Button className="w-full">Content Management</Button>
+                </Link>
+                <Link to="/admin/cms">
+                  <Button className="w-full" variant="outline">Site Settings</Button>
                 </Link>
               </CardContent>
             </Card>
