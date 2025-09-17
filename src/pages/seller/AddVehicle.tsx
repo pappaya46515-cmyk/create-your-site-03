@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Save, ArrowLeft, Upload, FileText, Printer, Download } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
@@ -208,6 +209,7 @@ const AddVehicle = () => {
         model_year: formData.model_year,
         category: formData.category,
         ownership_type: formData.ownership_type,
+        property_owner: formData.ownership_type, // Set property_owner same as ownership_type
         deal_value: formData.deal_value,
         registration_number: formData.registration_number,
         engine_number: formData.engine_number,
@@ -302,6 +304,36 @@ const AddVehicle = () => {
 
         {!showAgreementPreview ? (
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Property Type Selection */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">Property Type Selection</CardTitle>
+                <CardDescription>
+                  Select whether this is a Kamtha or Non-Kamtha (Third Party) property
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <RadioGroup
+                  value={formData.ownership_type}
+                  onValueChange={(value) => setFormData({ ...formData, ownership_type: value as "kamtha" | "third_party" })}
+                  className="flex flex-col space-y-2"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="kamtha" id="kamtha" />
+                    <Label htmlFor="kamtha" className="font-medium cursor-pointer">
+                      Kamtha Property
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="third_party" id="third_party" />
+                    <Label htmlFor="third_party" className="font-medium cursor-pointer">
+                      Non-Kamtha (Third Party) Property
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </CardContent>
+            </Card>
+
             {/* Deal Value Validation */}
             <Card className={errors.deal_value ? "border-destructive" : ""}>
               <CardHeader>

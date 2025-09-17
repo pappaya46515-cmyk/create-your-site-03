@@ -351,17 +351,15 @@ const VehicleBrowse = () => {
                     <div>
                       <CardTitle className="text-lg">{vehicle.model_name}</CardTitle>
                       <CardDescription>
-                        {vehicle.model_year} • {vehicle.ownership_type.replace("_", " ")}
+                        {vehicle.model_year} • {vehicle.ownership_type === 'kamtha' ? 'Kamtha' : 'Third Party'}
                       </CardDescription>
-                      {/* Display Seller Type */}
-                      {vehicle.property_owner && (
-                        <Badge 
-                          variant={vehicle.property_owner === 'kamtha' ? 'default' : 'secondary'}
-                          className="mt-2"
-                        >
-                          {vehicle.property_owner === 'kamtha' ? '✓ Kamtha Owned' : 'Third Party'}
-                        </Badge>
-                      )}
+                      {/* Display Ownership Type */}
+                      <Badge 
+                        variant={vehicle.ownership_type === 'kamtha' ? 'default' : 'secondary'}
+                        className="mt-2"
+                      >
+                        {vehicle.ownership_type === 'kamtha' ? '✓ Kamtha Property' : 'Non-Kamtha (Third Party)'}
+                      </Badge>
                     </div>
                     <Button
                       size="icon"
