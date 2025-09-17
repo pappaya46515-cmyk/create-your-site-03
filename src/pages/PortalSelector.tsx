@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, Package, Shield, ArrowRight, Loader2, Home } from "lucide-react";
+import { User, Package, Shield, ArrowRight, Loader2, Home, Crown } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const PortalSelector = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [loading, setLoading] = useState(true);
   const [userRoles, setUserRoles] = useState<string[]>([]);
 
@@ -58,6 +60,40 @@ const PortalSelector = () => {
       navigate(role === "seller" ? "/seller-portal" : "/buyer-portal");
     } catch (error) {
       console.error("Error adding role:", error);
+      setLoading(false);
+    }
+  };
+
+  const becomeAdmin = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.rpc('bootstrap_admin');
+      
+      if (error) throw error;
+      
+      if (data) {
+        toast({
+          title: "Success!",
+          description: "You are now an admin. Refreshing...",
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      } else {
+        toast({
+          title: "Admin Already Exists",
+          description: "An admin user already exists in the system.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error("Error becoming admin:", error);
+      toast({
+        title: "Error",
+        description: "Failed to become admin. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
       setLoading(false);
     }
   };
@@ -181,9 +217,20 @@ const PortalSelector = () => {
 
         {/* Help Text for Admin */}
         {!userRoles.includes("admin") && (
-          <div className="mt-6 text-center text-sm text-muted-foreground">
-            <p>Admin access is granted by system administrators only.</p>
-            <p>Contact support if you need admin privileges.</p>
+          <div className="mt-6 text-center">
+            <div className="text-sm text-muted-foreground mb-4">
+              <p>Admin access is granted by system administrators only.</p>
+              <p>Contact support if you need admin privileges.</p>
+            </div>
+            <Button 
+              variant="outline"
+              onClick={becomeAdmin}
+              disabled={loading}
+              className="gap-2"
+            >
+              <Crown className="h-4 w-4" />
+              Become First Admin (One-time setup)
+            </Button>
           </div>
         )}
       </div>
