@@ -41,8 +41,41 @@ const AboutPageCMS = () => {
   const [uploading, setUploading] = useState<string | null>(null);
   const fileInputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
   
-  // State for all data
-  const [leadership, setLeadership] = useState<LeadershipMember[]>([]);
+  // Predefined leadership team with fixed names and roles
+  const [leadership, setLeadership] = useState<LeadershipMember[]>([
+    {
+      id: 'bhaskar-kamath',
+      name: 'Mr. Bhaskar Kamath',
+      designation: 'CEO & Founder',
+      description: 'Leader with over 20 years of experience in agricultural machinery',
+      photo_url: null,
+      order_index: 0
+    },
+    {
+      id: 'harsha-kamath',
+      name: 'Mr. Harsha Kamath',
+      designation: 'Operations Manager',
+      description: 'Expert in logistics and operations management',
+      photo_url: null,
+      order_index: 1
+    },
+    {
+      id: 'shalini-kamath',
+      name: 'Mrs. Shalini Kamath',
+      designation: 'Finance Head',
+      description: 'Financial strategist ensuring sustainable growth',
+      photo_url: null,
+      order_index: 2
+    },
+    {
+      id: 'vishwas-kamath',
+      name: 'Mr. Vishwas Kamath',
+      designation: 'Technical Director',
+      description: 'Technical expert in agricultural equipment and machinery',
+      photo_url: null,
+      order_index: 3
+    }
+  ]);
   const [awards, setAwards] = useState<Award[]>([]);
   const [branches, setBranches] = useState<Branch[]>([]);
   const [companyInfo, setCompanyInfo] = useState({
@@ -64,14 +97,49 @@ const AboutPageCMS = () => {
   const loadAllData = async () => {
     setLoading(true);
     try {
-      // Load leadership team
+      // Load existing photos for predefined team members
       const { data: leadershipData } = await supabase
         .from("leadership_team")
         .select("*")
-        .order("order_index");
+        .in("id", ['bhaskar-kamath', 'harsha-kamath', 'shalini-kamath', 'vishwas-kamath']);
       
-      if (leadershipData) {
-        setLeadership(leadershipData);
+      if (leadershipData && leadershipData.length > 0) {
+        // Update predefined members with their photos from database
+        setLeadership(prev => prev.map(member => {
+          const dbMember = leadershipData.find(d => d.id === member.id);
+          return dbMember ? { ...member, photo_url: dbMember.photo_url } : member;
+        }));
+      } else {
+        // If no data exists, insert the predefined members
+        for (const member of leadership) {
+          await supabase
+            .from("leadership_team")
+            .upsert({
+              id: member.id,
+              name: member.name,
+              designation: member.designation,
+              description: member.description,
+              photo_url: member.photo_url,
+              order_index: member.order_index
+            });
+        }
+      }
+
+      // Ensure predefined members exist in database
+      const existingIds = leadershipData ? leadershipData.map(d => d.id) : [];
+      const missingMembers = leadership.filter(m => !existingIds.includes(m.id));
+      
+      for (const member of missingMembers) {
+        await supabase
+          .from("leadership_team")
+          .insert({
+            id: member.id,
+            name: member.name,
+            designation: member.designation,
+            description: member.description,
+            photo_url: member.photo_url,
+            order_index: member.order_index
+          });
       }
 
       // Load awards
@@ -230,66 +298,7 @@ const AboutPageCMS = () => {
     }
   };
 
-  // Add new leadership member
-  const addLeadershipMember = async () => {
-    try {
-      const newMember = {
-        name: "New Team Member",
-        designation: "Position",
-        description: "Description",
-        photo_url: null,
-        order_index: leadership.length
-      };
-
-      const { data, error } = await supabase
-        .from("leadership_team")
-        .insert(newMember)
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      if (data) {
-        setLeadership([...leadership, data]);
-        toast({
-          title: "Success",
-          description: "New team member added"
-        });
-      }
-    } catch (error) {
-      console.error("Error adding member:", error);
-      toast({
-        title: "Error",
-        description: "Failed to add team member",
-        variant: "destructive"
-      });
-    }
-  };
-
-  // Delete leadership member
-  const deleteLeadershipMember = async (id: string) => {
-    try {
-      const { error } = await supabase
-        .from("leadership_team")
-        .delete()
-        .eq("id", id);
-
-      if (error) throw error;
-
-      setLeadership(prev => prev.filter(m => m.id !== id));
-      toast({
-        title: "Success",
-        description: "Team member removed"
-      });
-    } catch (error) {
-      console.error("Error deleting member:", error);
-      toast({
-        title: "Error",
-        description: "Failed to remove team member",
-        variant: "destructive"
-      });
-    }
-  };
+  // Removed add/delete functions since we have fixed leadership members
 
   // Save award
   const saveAward = async (award: Award) => {
@@ -597,68 +606,14 @@ const AboutPageCMS = () => {
                             </Button>
                           </div>
 
-                          {/* Member Details */}
+                          {/* Member Details - Read Only */}
                           <div className="space-y-2">
-                            <div>
-                              <Label htmlFor={`name-${member.id}`} className="text-sm font-medium">
-                                Name *
-                              </Label>
-                              <Input
-                                id={`name-${member.id}`}
-                                value={member.name}
-                                onChange={(e) => {
-                                  setLeadership(prev => prev.map(m => 
-                                    m.id === member.id ? { ...m, name: e.target.value } : m
-                                  ));
-                                }}
-                                placeholder="Enter name"
-                                required
-                              />
-                            </div>
-                            <div>
-                              <Label htmlFor={`designation-${member.id}`} className="text-sm font-medium">
-                                Designation/Role *
-                              </Label>
-                              <Input
-                                id={`designation-${member.id}`}
-                                value={member.designation}
-                                onChange={(e) => {
-                                  setLeadership(prev => prev.map(m => 
-                                    m.id === member.id ? { ...m, designation: e.target.value } : m
-                                  ));
-                                }}
-                                placeholder="Enter designation"
-                                required
-                              />
-                            </div>
-                            <div>
-                              <Label htmlFor={`description-${member.id}`} className="text-sm font-medium">
-                                Description
-                              </Label>
-                              <Textarea
-                                id={`description-${member.id}`}
-                                value={member.description || ""}
-                                onChange={(e) => {
-                                  setLeadership(prev => prev.map(m => 
-                                    m.id === member.id ? { ...m, description: e.target.value } : m
-                                  ));
-                                }}
-                                placeholder="Enter description"
-                                rows={3}
-                              />
-                            </div>
-                            <div className="flex justify-between items-center pt-2">
-                              <div className="text-xs text-muted-foreground">
-                                ID: {member.id.slice(0, 8)}...
+                            <div className="bg-muted/50 p-3 rounded-lg">
+                              <h3 className="text-lg font-semibold text-foreground">{member.name}</h3>
+                              <p className="text-sm text-muted-foreground">{member.designation}</p>
+                              <div className="mt-2">
+                                <p className="text-sm text-muted-foreground">{member.description}</p>
                               </div>
-                              <Button
-                                variant="destructive"
-                                size="sm"
-                                onClick={() => deleteLeadershipMember(member.id)}
-                              >
-                                <Trash2 className="h-4 w-4 mr-1" />
-                                Remove
-                              </Button>
                             </div>
                           </div>
                         </div>
@@ -666,14 +621,6 @@ const AboutPageCMS = () => {
                     </Card>
                   ))}
                 </div>
-                <Button 
-                  className="mt-4" 
-                  variant="outline"
-                  onClick={addLeadershipMember}
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Team Member
-                </Button>
               </CardContent>
             </Card>
           </TabsContent>
