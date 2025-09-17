@@ -182,27 +182,39 @@ const Home = () => {
             </Carousel>
           </div>
 
-          {/* Service Options - Buy and Sell */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {/* Buy Pre-owned Section */}
-            <Card className="border-2 border-purple-200 hover:border-purple-400 transition-all duration-300 hover:shadow-2xl">
-              <CardContent className="p-8">
-                <div className="flex items-center mb-6">
-                  <div className="p-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full mr-4">
-                    <Users className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-800">Buy Pre-owned Equipment</h3>
-                </div>
-                <p className="text-gray-600 mb-6">
-                  Browse verified pre-owned tractors and agricultural equipment with complete documentation
-                </p>
-                <Button 
-                  size="lg"
-                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
-                  onClick={() => navigate("/auth")}
-                >
-                  Start Buying <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+              {/* Service Options - Buy and Sell */}
+              <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                {/* Buy Pre-owned Section */}
+                <Card className="border-2 border-purple-200 hover:border-purple-400 transition-all duration-300 hover:shadow-2xl">
+                  <CardContent className="p-8">
+                    <div className="flex items-center mb-6">
+                      <div className="p-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full mr-4">
+                        <Users className="h-8 w-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-gray-800">Buy Pre-owned Equipment</h3>
+                    </div>
+                    <p className="text-gray-600 mb-6">
+                      Browse verified pre-owned tractors and agricultural equipment with complete documentation
+                    </p>
+                    <Button 
+                      size="lg"
+                      className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+                      onClick={() => navigate("/register/buyer")}
+                    >
+                      Start Buying <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Sell Pre-owned Section */}
+                <Card className="border-2 border-teal-200 hover:border-teal-400 transition-all duration-300 hover:shadow-2xl">
+                  <CardContent className="p-8">
+                    <div className="flex items-center mb-6">
+                      <div className="p-3 bg-gradient-to-r from-teal-600 to-purple-600 rounded-full mr-4">
+                        <Tractor className="h-8 w-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-gray-800">Sell Your Pre-owned</h3>
+                    </div>
               </CardContent>
             </Card>
 
@@ -285,7 +297,7 @@ const Home = () => {
                 <Button 
                   size="lg"
                   className="w-full bg-gradient-to-r from-teal-600 to-purple-600 hover:from-teal-700 hover:to-purple-700 text-white"
-                  onClick={() => navigate("/auth")}
+                  onClick={() => navigate("/register/seller")}
                 >
                   List Your Equipment <Upload className="ml-2 h-5 w-5" />
                 </Button>

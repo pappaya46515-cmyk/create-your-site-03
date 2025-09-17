@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
+import BuyerRegister from "./pages/BuyerRegister";
+import SellerRegister from "./pages/SellerRegister";
 import Dashboard from "./pages/Dashboard";
 import AdminPortal from "./pages/AdminPortal";
 import SellerPortal from "./pages/SellerPortal";
@@ -38,6 +40,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/register/buyer" element={<BuyerRegister />} />
+          <Route path="/register/seller" element={<SellerRegister />} />
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />
