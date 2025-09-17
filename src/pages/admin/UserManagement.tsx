@@ -38,59 +38,38 @@ const UserManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      // Fetch all users with their roles
+      // Fetch all users using the admin function
+      const { data: authUsersData, error: authError } = await supabase
+        .rpc('get_all_users');
+
+      if (authError) throw authError;
+
+      // Fetch all user roles
       const { data: rolesData, error: rolesError } = await supabase
         .from("user_roles")
         .select("user_id, role");
 
       if (rolesError) throw rolesError;
 
-      // Get unique user IDs
-      const userIds = [...new Set(rolesData?.map(r => r.user_id) || [])];
-      
-      // Fetch user details from auth.users via RPC or service role
-      const { data: { users: authUsers }, error: authError } = await supabase.auth.admin.listUsers();
+      // Map users with their roles
+      const usersWithRoles = authUsersData?.map(user => {
+        const userRoles = rolesData?.filter(r => r.user_id === user.id).map(r => r.role) || [];
+        return {
+          id: user.id,
+          email: user.email || "",
+          created_at: user.created_at,
+          last_sign_in_at: user.last_sign_in_at || "",
+          roles: userRoles,
+          email_confirmed_at: user.email_confirmed_at
+        };
+      }) || [];
 
-      if (authError) {
-        // Fallback to using user_roles data only
-        const usersMap = new Map<string, UserData>();
-        
-        rolesData?.forEach(roleData => {
-          if (!usersMap.has(roleData.user_id)) {
-            usersMap.set(roleData.user_id, {
-              id: roleData.user_id,
-              email: `User ${roleData.user_id.slice(0, 8)}`,
-              created_at: new Date().toISOString(),
-              last_sign_in_at: new Date().toISOString(),
-              roles: [],
-              email_confirmed_at: null
-            });
-          }
-          usersMap.get(roleData.user_id)?.roles.push(roleData.role);
-        });
-
-        setUsers(Array.from(usersMap.values()));
-      } else {
-        // Map auth users with their roles
-        const usersWithRoles = authUsers?.map(user => {
-          const userRoles = rolesData?.filter(r => r.user_id === user.id).map(r => r.role) || [];
-          return {
-            id: user.id,
-            email: user.email || "",
-            created_at: user.created_at,
-            last_sign_in_at: user.last_sign_in_at || "",
-            roles: userRoles,
-            email_confirmed_at: user.email_confirmed_at
-          };
-        }) || [];
-
-        setUsers(usersWithRoles);
-      }
+      setUsers(usersWithRoles);
     } catch (error) {
       console.error("Error fetching users:", error);
       toast({
         title: "Error",
-        description: "Failed to fetch users",
+        description: "Failed to fetch users. Make sure you have admin access.",
         variant: "destructive"
       });
     } finally {

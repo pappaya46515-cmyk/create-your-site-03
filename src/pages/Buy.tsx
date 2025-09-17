@@ -1,16 +1,31 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, MapPin, Calendar, IndianRupee, Phone, Eye } from "lucide-react";
+import { Search, Filter, MapPin, Calendar, IndianRupee, Phone, Eye, LogIn } from "lucide-react";
 import { useState } from "react";
 
 const Buy = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [priceRange, setPriceRange] = useState("all");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsAuthenticated(!!session);
+      setLoading(false);
+    };
+    checkAuth();
+  }, []);
 
   // Sample equipment data (in production, this would come from a database)
   const equipment = [
@@ -62,6 +77,10 @@ const Buy = () => {
     const matchesType = filterType === "all" || item.type.toLowerCase() === filterType;
     return matchesSearch && matchesType;
   });
+
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -166,14 +185,27 @@ const Buy = () => {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <Button className="flex-1 bg-primary hover:bg-primary-hover text-primary-foreground" size="sm">
-                      <Eye className="h-4 w-4 mr-1" />
-                      View Details
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      <Phone className="h-4 w-4 mr-1" />
-                      Contact
-                    </Button>
+                    {isAuthenticated ? (
+                      <>
+                        <Button className="flex-1 bg-primary hover:bg-primary-hover text-primary-foreground" size="sm">
+                          <Eye className="h-4 w-4 mr-1" />
+                          View Details
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          <Phone className="h-4 w-4 mr-1" />
+                          Contact
+                        </Button>
+                      </>
+                    ) : (
+                      <Button 
+                        className="w-full" 
+                        size="sm"
+                        onClick={() => navigate("/auth")}
+                      >
+                        <LogIn className="h-4 w-4 mr-1" />
+                        Login to View
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>
