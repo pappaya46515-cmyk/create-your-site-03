@@ -1,10 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { Menu, Phone, Globe2 } from "lucide-react";
+import { Menu, Phone, Globe2, Building2, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import omGaneshLogo from "@/assets/om-ganesh-official-logo.jpg";
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -119,21 +126,46 @@ const Navbar = () => {
                 <span className="text-sm text-muted-foreground max-w-[160px] truncate" title={user.email}>
                   {user.email}
                 </span>
-                {userRoles.includes('admin') && (
-                  <Button variant="outline" size="sm" onClick={() => navigate('/portal-select')}>
-                    {t('portal')}
-                  </Button>
+                
+                {/* Portal Switcher Dropdown */}
+                {(userRoles.includes('admin') || userRoles.includes('seller') || userRoles.includes('buyer')) && (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="sm">
+                        <Building2 className="h-4 w-4 mr-2" />
+                        Switch Portal
+                        <ChevronDown className="h-4 w-4 ml-2" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-48">
+                      {userRoles.includes('admin') && (
+                        <>
+                          <DropdownMenuItem onClick={() => navigate('/admin')}>
+                            Admin Portal
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => navigate('/admin/cms')}>
+                            CMS Portal
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => navigate('/admin/analytics')}>
+                            Analytics
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                        </>
+                      )}
+                      {userRoles.includes('seller') && (
+                        <DropdownMenuItem onClick={() => navigate('/seller-portal')}>
+                          Seller Portal
+                        </DropdownMenuItem>
+                      )}
+                      {userRoles.includes('buyer') && (
+                        <DropdownMenuItem onClick={() => navigate('/buyer-portal')}>
+                          Buyer Portal
+                        </DropdownMenuItem>
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 )}
-                {userRoles.includes('seller') && !userRoles.includes('admin') && (
-                  <Button variant="outline" size="sm" onClick={() => navigate('/seller-portal')}>
-                    {t('sellerPortal')}
-                  </Button>
-                )}
-                {userRoles.includes('buyer') && !userRoles.includes('admin') && !userRoles.includes('seller') && (
-                  <Button variant="outline" size="sm" onClick={() => navigate('/buyer-portal')}>
-                    {t('buyerPortal')}
-                  </Button>
-                )}
+                
                 <Button variant="ghost" size="sm" onClick={handleLogout}>
                   {t('logout')}
                 </Button>
@@ -185,36 +217,64 @@ const Navbar = () => {
                   <div className="px-4 py-2 text-sm text-muted-foreground truncate" title={user.email}>
                     {user.email}
                   </div>
-                  {userRoles.includes('admin') && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="justify-start mx-4"
-                      onClick={() => { navigate('/portal-select'); setIsMenuOpen(false); }}
-                    >
-                      {t('portal')}
-                    </Button>
+                  
+                  {/* Portal Switcher for Mobile */}
+                  {(userRoles.includes('admin') || userRoles.includes('seller') || userRoles.includes('buyer')) && (
+                    <div className="px-4 py-2">
+                      <p className="text-xs text-muted-foreground mb-2">Switch Portal</p>
+                      <div className="space-y-1">
+                        {userRoles.includes('admin') && (
+                          <>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="w-full justify-start"
+                              onClick={() => { navigate('/admin'); setIsMenuOpen(false); }}
+                            >
+                              Admin Portal
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="w-full justify-start"
+                              onClick={() => { navigate('/admin/cms'); setIsMenuOpen(false); }}
+                            >
+                              CMS Portal
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="w-full justify-start"
+                              onClick={() => { navigate('/admin/analytics'); setIsMenuOpen(false); }}
+                            >
+                              Analytics
+                            </Button>
+                          </>
+                        )}
+                        {userRoles.includes('seller') && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full justify-start"
+                            onClick={() => { navigate('/seller-portal'); setIsMenuOpen(false); }}
+                          >
+                            Seller Portal
+                          </Button>
+                        )}
+                        {userRoles.includes('buyer') && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full justify-start"
+                            onClick={() => { navigate('/buyer-portal'); setIsMenuOpen(false); }}
+                          >
+                            Buyer Portal
+                          </Button>
+                        )}
+                      </div>
+                    </div>
                   )}
-                  {userRoles.includes('seller') && !userRoles.includes('admin') && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="justify-start mx-4"
-                      onClick={() => { navigate('/seller-portal'); setIsMenuOpen(false); }}
-                    >
-                      {t('sellerPortal')}
-                    </Button>
-                  )}
-                  {userRoles.includes('buyer') && !userRoles.includes('admin') && !userRoles.includes('seller') && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="justify-start mx-4"
-                      onClick={() => { navigate('/buyer-portal'); setIsMenuOpen(false); }}
-                    >
-                      {t('buyerPortal')}
-                    </Button>
-                  )}
+                  
                   <Button
                     variant="ghost"
                     size="sm"

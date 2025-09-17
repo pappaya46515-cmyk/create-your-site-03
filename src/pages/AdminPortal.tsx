@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,6 +9,48 @@ import DashboardLayout from "@/components/DashboardLayout";
 const AdminPortal = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    activeListings: 0,
+    totalTransactions: 0,
+    pendingApprovals: 0
+  });
+
+  useEffect(() => {
+    fetchRealStats();
+  }, []);
+
+  const fetchRealStats = async () => {
+    try {
+      // Fetch real user count
+      const { data: users } = await supabase
+        .from("user_roles")
+        .select("user_id");
+      const uniqueUsers = new Set(users?.map(u => u.user_id) || []);
+      
+      // Fetch real vehicle stats
+      const { data: vehicles } = await supabase
+        .from("vehicles")
+        .select("status");
+      
+      const activeListings = vehicles?.filter(v => v.status === "available").length || 0;
+      const soldVehicles = vehicles?.filter(v => v.status === "sold").length || 0;
+      
+      // Fetch real document count (could be pending approvals)
+      const { count: docCount } = await supabase
+        .from("vehicle_documents")
+        .select("*", { count: "exact" });
+
+      setStats({
+        totalUsers: uniqueUsers.size,
+        activeListings,
+        totalTransactions: soldVehicles,
+        pendingApprovals: docCount || 0
+      });
+    } catch (error) {
+      console.error("Error fetching stats:", error);
+    }
+  };
 
   const handleLogout = async () => {
     setLoading(true);
@@ -16,11 +58,11 @@ const AdminPortal = () => {
     navigate("/");
   };
 
-  const stats = [
-    { icon: <Users className="h-8 w-8" />, title: "Total Users", value: "11,234" },
-    { icon: <FileText className="h-8 w-8" />, title: "Active Listings", value: "342" },
-    { icon: <BarChart3 className="h-8 w-8" />, title: "Transactions", value: "1,456" },
-    { icon: <Settings className="h-8 w-8" />, title: "Pending Approvals", value: "23" },
+  const statCards = [
+    { icon: <Users className="h-8 w-8" />, title: "Total Users", value: stats.totalUsers },
+    { icon: <FileText className="h-8 w-8" />, title: "Active Listings", value: stats.activeListings },
+    { icon: <BarChart3 className="h-8 w-8" />, title: "Transactions", value: stats.totalTransactions },
+    { icon: <Settings className="h-8 w-8" />, title: "Pending Approvals", value: stats.pendingApprovals },
   ];
 
   return (
@@ -52,7 +94,7 @@ const AdminPortal = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {stats.map((stat, index) => (
+            {statCards.map((stat, index) => (
               <Card key={index}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
