@@ -98,22 +98,6 @@ const LatestVehicles = () => {
       <Truck className="h-5 w-5" />;
   };
 
-  if (loading) {
-    return (
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (vehicles.length === 0) {
-    return null;
-  }
-
   return (
     <section className="py-16 bg-gradient-to-b from-background to-accent/5">
       <div className="container mx-auto px-4">
@@ -127,118 +111,132 @@ const LatestVehicles = () => {
           </p>
         </div>
 
-        {/* Vehicles Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {vehicles.map((vehicle) => (
-            <Card 
-              key={vehicle.id} 
-              className="hover:shadow-strong transition-all duration-300 hover:scale-105 overflow-hidden"
-            >
-              {/* Updated Badge */}
-              <div className="px-4 pt-4">
-                <Badge variant="secondary" className="mb-2">
-                  <Calendar className="h-3 w-3 mr-1" />
-                  Updated {getTimeAgo(vehicle.updated_at)}
-                </Badge>
-              </div>
-
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <CardTitle className="text-lg flex items-center gap-2">
-                      {getCategoryIcon(vehicle.category)}
-                      {vehicle.model_name}
-                    </CardTitle>
-                    <CardDescription>
-                      {vehicle.model_year} Model • {vehicle.ownership_type}
-                    </CardDescription>
+        {loading ? (
+          <div className="flex justify-center py-8">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        ) : vehicles.length === 0 ? (
+          <div className="text-center py-12">
+            <Tractor className="h-24 w-24 text-muted-foreground/30 mx-auto mb-4" />
+            <p className="text-xl text-muted-foreground">No equipment listed yet</p>
+            <p className="text-muted-foreground mt-2">Check back soon for new listings!</p>
+          </div>
+        ) : (
+          <>
+            {/* Vehicles Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {vehicles.map((vehicle) => (
+                <Card 
+                  key={vehicle.id} 
+                  className="hover:shadow-strong transition-all duration-300 hover:scale-105 overflow-hidden"
+                >
+                  {/* Updated Badge */}
+                  <div className="px-4 pt-4">
+                    <Badge variant="secondary" className="mb-2">
+                      <Calendar className="h-3 w-3 mr-1" />
+                      Updated {getTimeAgo(vehicle.updated_at)}
+                    </Badge>
                   </div>
-                </div>
-                
-                {/* Property Owner Badge */}
-                {vehicle.property_owner && (
-                  <Badge 
-                    variant={vehicle.property_owner === 'kamtha' ? 'default' : 'outline'}
-                    className="mt-2"
-                  >
-                    {vehicle.property_owner === 'kamtha' ? '✓ Kamtha Property' : 'Third Party'}
-                  </Badge>
-                )}
-              </CardHeader>
 
-              <CardContent className="space-y-4">
-                {/* Price Display */}
-                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Deal Value</p>
-                      <p className="text-2xl font-bold text-primary">
-                        {formatPrice(vehicle.deal_value)}
-                      </p>
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <CardTitle className="text-lg flex items-center gap-2">
+                          {getCategoryIcon(vehicle.category)}
+                          {vehicle.model_name}
+                        </CardTitle>
+                        <CardDescription>
+                          {vehicle.model_year} Model • {vehicle.ownership_type}
+                        </CardDescription>
+                      </div>
                     </div>
-                    {vehicle.slab_amount > 0 && (
-                      <div className="text-right">
-                        <p className="text-sm text-muted-foreground">Slab</p>
-                        <p className="text-lg font-semibold text-secondary">
-                          +{formatPrice(vehicle.slab_amount)}
-                        </p>
+                    
+                    {/* Property Owner Badge */}
+                    {vehicle.property_owner && (
+                      <Badge 
+                        variant={vehicle.property_owner === 'kamtha' ? 'default' : 'outline'}
+                        className="mt-2"
+                      >
+                        {vehicle.property_owner === 'kamtha' ? '✓ Kamtha Property' : 'Third Party'}
+                      </Badge>
+                    )}
+                  </CardHeader>
+
+                  <CardContent className="space-y-4">
+                    {/* Price Display */}
+                    <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-muted-foreground">Deal Value</p>
+                          <p className="text-2xl font-bold text-primary">
+                            {formatPrice(vehicle.deal_value)}
+                          </p>
+                        </div>
+                        {vehicle.slab_amount > 0 && (
+                          <div className="text-right">
+                            <p className="text-sm text-muted-foreground">Slab</p>
+                            <p className="text-lg font-semibold text-secondary">
+                              +{formatPrice(vehicle.slab_amount)}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Registration Number */}
+                    {vehicle.registration_number && (
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <MapPin className="h-4 w-4" />
+                        <span>Reg: {vehicle.registration_number}</span>
                       </div>
                     )}
-                  </div>
-                </div>
 
-                {/* Registration Number */}
-                {vehicle.registration_number && (
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <MapPin className="h-4 w-4" />
-                    <span>Reg: {vehicle.registration_number}</span>
-                  </div>
-                )}
+                    {/* Document Status */}
+                    <div className="flex flex-wrap gap-1">
+                      {vehicle.has_original_rc && (
+                        <Badge variant="outline" className="text-xs">RC Original</Badge>
+                      )}
+                      {vehicle.has_duplicate_rc && (
+                        <Badge variant="outline" className="text-xs">RC Duplicate</Badge>
+                      )}
+                      {vehicle.has_insurance && (
+                        <Badge variant="outline" className="text-xs">Insurance</Badge>
+                      )}
+                    </div>
 
-                {/* Document Status */}
-                <div className="flex flex-wrap gap-1">
-                  {vehicle.has_original_rc && (
-                    <Badge variant="outline" className="text-xs">RC Original</Badge>
-                  )}
-                  {vehicle.has_duplicate_rc && (
-                    <Badge variant="outline" className="text-xs">RC Duplicate</Badge>
-                  )}
-                  {vehicle.has_insurance && (
-                    <Badge variant="outline" className="text-xs">Insurance</Badge>
-                  )}
-                </div>
+                    {/* Contact Numbers */}
+                    <div className="bg-accent/10 p-3 rounded-lg space-y-1">
+                      <a 
+                        href="tel:9448147073" 
+                        className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+                      >
+                        <Phone className="h-4 w-4" />
+                        <span className="font-semibold">9448147073</span>
+                      </a>
+                      <a 
+                        href="tel:8496971246" 
+                        className="text-sm flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <Phone className="h-3 w-3" />
+                        <span>8496971246</span>
+                      </a>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
 
-                {/* Contact Numbers */}
-                <div className="bg-accent/10 p-3 rounded-lg space-y-1">
-                  <a 
-                    href="tel:9448147073" 
-                    className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
-                  >
-                    <Phone className="h-4 w-4" />
-                    <span className="font-semibold">9448147073</span>
-                  </a>
-                  <a 
-                    href="tel:8496971246" 
-                    className="text-sm flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    <Phone className="h-3 w-3" />
-                    <span>8496971246</span>
-                  </a>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* View All Button */}
-        <div className="text-center">
-          <Link to="/buy">
-            <Button size="lg" className="hover-scale">
-              View All Available Equipment
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </Link>
-        </div>
+            {/* View All Button */}
+            <div className="text-center">
+              <Link to="/buy">
+                <Button size="lg" className="hover-scale">
+                  View All Available Equipment
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
