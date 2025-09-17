@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Upload, Save, Users, Trophy, Building2, MapPin, Plus, Trash2, Edit } from "lucide-react";
+import { Upload, Save, Users, Trophy, Building2, MapPin, Plus, Trash2, Edit, Loader2, Image } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 
 interface LeadershipMember {
@@ -24,6 +24,7 @@ interface Award {
   title: string;
   year: string;
   organization: string;
+  order_index: number;
 }
 
 interface Branch {
@@ -31,74 +32,88 @@ interface Branch {
   location: string;
   address: string;
   contact: string;
+  order_index: number;
 }
 
 const AboutPageCMS = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState<string | null>(null);
+  const fileInputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
   
-  // Leadership state
-  const [leadership, setLeadership] = useState<LeadershipMember[]>([
-    {
-      id: "1",
-      name: "Mr. Bhaskar Kamath",
-      designation: "CMD - Om Ganesh Group",
-      description: "Our visionary founder who started 38 years back with freelance sales of tractors.",
-      photo_url: null,
-      order_index: 1
-    },
-    {
-      id: "2",
-      name: "Mr. Harsha B Kamath",
-      designation: "CEO - Om Ganesh Group",
-      description: "A mechanical engineer with AutoCAD expertise from Bangalore.",
-      photo_url: null,
-      order_index: 2
-    },
-    {
-      id: "3",
-      name: "Mrs. Shalini Kamath",
-      designation: "Director",
-      description: "A pillar of moral support, managing business operations.",
-      photo_url: null,
-      order_index: 3
-    },
-    {
-      id: "4",
-      name: "Mr. Vishwas Kamath",
-      designation: "Managing Partner",
-      description: "With vast IT industry experience, manages Channagiri TAFE dealership.",
-      photo_url: null,
-      order_index: 4
-    }
-  ]);
-
-  // Awards state
-  const [awards, setAwards] = useState<Award[]>([
-    { id: "1", title: "Best Customer Relation Award", year: "2005-06", organization: "Govt of Karnataka" },
-    { id: "2", title: "Excellence in Manufacturing", year: "2010-11", organization: "Chamber of Commerce, Shimoga" },
-    { id: "3", title: "Star Dealer Award", year: "2000-2013", organization: "TAFE" }
-  ]);
-
-  // Branches state
-  const [branches, setBranches] = useState<Branch[]>([
-    { id: "1", location: "Shimoga", address: "Shankar Mutt Road (HQ)", contact: "" },
-    { id: "2", location: "Shikaripura", address: "", contact: "" },
-    { id: "3", location: "Chanagiri", address: "", contact: "" },
-    { id: "4", location: "Honnali", address: "", contact: "" },
-    { id: "5", location: "Anvati", address: "", contact: "" },
-    { id: "6", location: "Udupi", address: "", contact: "" },
-    { id: "7", location: "Sagar", address: "", contact: "" }
-  ]);
-
-  // Company info state
+  // State for all data
+  const [leadership, setLeadership] = useState<LeadershipMember[]>([]);
+  const [awards, setAwards] = useState<Award[]>([]);
+  const [branches, setBranches] = useState<Branch[]>([]);
   const [companyInfo, setCompanyInfo] = useState({
-    tagline: "38 Years of Excellence in Agricultural Equipment & Services",
-    mission: "To provide transparent and reliable agricultural equipment services",
-    vision: "To be the most trusted platform for agricultural equipment",
-    values: "Integrity, transparency, and farmer-first approach",
-    kannada_tagline: "ಕರ್ನಾಟಕದಾದ್ಯಂತ 11,000+ ರೈತರಿಗೆ ಪಾರದರ್ಶಕತೆಯಿಂದ ಉಪಯೋಗಿಸಿದ ರೈತ ಉಪಕರಣಗಳ ಮಾರಾಟದ ವ್ಯವಸ್ಥೆ"
+    id: "",
+    tagline: "",
+    mission: "",
+    vision: "",
+    values: "",
+    kannada_tagline: "",
+    hero_image_url: "",
+    team_photo_url: ""
   });
+
+  // Load data on mount
+  useEffect(() => {
+    loadAllData();
+  }, []);
+
+  const loadAllData = async () => {
+    setLoading(true);
+    try {
+      // Load leadership team
+      const { data: leadershipData } = await supabase
+        .from("leadership_team")
+        .select("*")
+        .order("order_index");
+      
+      if (leadershipData) {
+        setLeadership(leadershipData);
+      }
+
+      // Load awards
+      const { data: awardsData } = await supabase
+        .from("company_awards")
+        .select("*")
+        .order("order_index");
+      
+      if (awardsData) {
+        setAwards(awardsData);
+      }
+
+      // Load branches
+      const { data: branchesData } = await supabase
+        .from("branch_locations")
+        .select("*")
+        .order("order_index");
+      
+      if (branchesData) {
+        setBranches(branchesData);
+      }
+
+      // Load company info
+      const { data: companyData } = await supabase
+        .from("company_info")
+        .select("*")
+        .single();
+      
+      if (companyData) {
+        setCompanyInfo(companyData);
+      }
+    } catch (error) {
+      console.error("Error loading data:", error);
+      toast({
+        title: "Error",
+        description: "Failed to load data",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Photo upload handler for leadership
   const handlePhotoUpload = async (file: File, memberId: string) => {
@@ -122,7 +137,7 @@ const AboutPageCMS = () => {
       return;
     }
 
-    setLoading(true);
+    setUploading(memberId);
 
     try {
       const fileName = `leadership/${memberId}-${Date.now()}.${file.name.split('.').pop()}`;
@@ -136,7 +151,15 @@ const AboutPageCMS = () => {
         .from("vehicle-images")
         .getPublicUrl(fileName);
 
-      // Update leadership member with photo URL
+      // Update in database
+      const { error: updateError } = await supabase
+        .from("leadership_team")
+        .update({ photo_url: publicUrl })
+        .eq("id", memberId);
+
+      if (updateError) throw updateError;
+
+      // Update local state
       setLeadership(prev => prev.map(member => 
         member.id === memberId 
           ? { ...member, photo_url: publicUrl }
@@ -155,69 +178,300 @@ const AboutPageCMS = () => {
         variant: "destructive"
       });
     } finally {
-      setLoading(false);
+      setUploading(null);
     }
   };
 
-  // Gallery photo upload
-  const handleGalleryUpload = async (file: File, category: string) => {
-    if (!file) return;
+  // Save leadership member
+  const saveLeadershipMember = async (member: LeadershipMember) => {
+    try {
+      const { error } = await supabase
+        .from("leadership_team")
+        .upsert({
+          id: member.id,
+          name: member.name,
+          designation: member.designation,
+          description: member.description,
+          photo_url: member.photo_url,
+          order_index: member.order_index
+        });
 
-    if (!file.type.startsWith("image/")) {
+      if (error) throw error;
+    } catch (error) {
+      console.error("Error saving member:", error);
+      throw error;
+    }
+  };
+
+  // Add new leadership member
+  const addLeadershipMember = async () => {
+    try {
+      const newMember = {
+        name: "New Team Member",
+        designation: "Position",
+        description: "Description",
+        photo_url: null,
+        order_index: leadership.length
+      };
+
+      const { data, error } = await supabase
+        .from("leadership_team")
+        .insert(newMember)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      if (data) {
+        setLeadership([...leadership, data]);
+        toast({
+          title: "Success",
+          description: "New team member added"
+        });
+      }
+    } catch (error) {
+      console.error("Error adding member:", error);
       toast({
-        title: "Invalid File",
-        description: "Please upload an image file",
+        title: "Error",
+        description: "Failed to add team member",
         variant: "destructive"
       });
-      return;
     }
+  };
 
-    setLoading(true);
-
+  // Delete leadership member
+  const deleteLeadershipMember = async (id: string) => {
     try {
-      const fileName = `gallery/${category}-${Date.now()}.${file.name.split('.').pop()}`;
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from("vehicle-images")
-        .upload(fileName, file);
+      const { error } = await supabase
+        .from("leadership_team")
+        .delete()
+        .eq("id", id);
 
-      if (uploadError) throw uploadError;
+      if (error) throw error;
 
+      setLeadership(prev => prev.filter(m => m.id !== id));
       toast({
         title: "Success",
-        description: `${category} photo uploaded successfully`
+        description: "Team member removed"
       });
     } catch (error) {
-      console.error("Error uploading gallery photo:", error);
+      console.error("Error deleting member:", error);
       toast({
-        title: "Upload Failed",
-        description: "Failed to upload gallery photo",
+        title: "Error",
+        description: "Failed to remove team member",
         variant: "destructive"
       });
-    } finally {
-      setLoading(false);
+    }
+  };
+
+  // Save award
+  const saveAward = async (award: Award) => {
+    try {
+      const { error } = await supabase
+        .from("company_awards")
+        .upsert({
+          id: award.id,
+          title: award.title,
+          year: award.year,
+          organization: award.organization,
+          order_index: award.order_index
+        });
+
+      if (error) throw error;
+    } catch (error) {
+      console.error("Error saving award:", error);
+      throw error;
+    }
+  };
+
+  // Add new award
+  const addAward = async () => {
+    try {
+      const newAward = {
+        title: "New Award",
+        year: new Date().getFullYear().toString(),
+        organization: "Organization",
+        order_index: awards.length
+      };
+
+      const { data, error } = await supabase
+        .from("company_awards")
+        .insert(newAward)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      if (data) {
+        setAwards([...awards, data]);
+        toast({
+          title: "Success",
+          description: "New award added"
+        });
+      }
+    } catch (error) {
+      console.error("Error adding award:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add award",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Delete award
+  const deleteAward = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from("company_awards")
+        .delete()
+        .eq("id", id);
+
+      if (error) throw error;
+
+      setAwards(prev => prev.filter(a => a.id !== id));
+      toast({
+        title: "Success",
+        description: "Award removed"
+      });
+    } catch (error) {
+      console.error("Error deleting award:", error);
+      toast({
+        title: "Error",
+        description: "Failed to remove award",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Similar functions for branches
+  const addBranch = async () => {
+    try {
+      const newBranch = {
+        location: "New Location",
+        address: "",
+        contact: "",
+        order_index: branches.length
+      };
+
+      const { data, error } = await supabase
+        .from("branch_locations")
+        .insert(newBranch)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      if (data) {
+        setBranches([...branches, data]);
+        toast({
+          title: "Success",
+          description: "New branch added"
+        });
+      }
+    } catch (error) {
+      console.error("Error adding branch:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add branch",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const deleteBranch = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from("branch_locations")
+        .delete()
+        .eq("id", id);
+
+      if (error) throw error;
+
+      setBranches(prev => prev.filter(b => b.id !== id));
+      toast({
+        title: "Success",
+        description: "Branch removed"
+      });
+    } catch (error) {
+      console.error("Error deleting branch:", error);
+      toast({
+        title: "Error",
+        description: "Failed to remove branch",
+        variant: "destructive"
+      });
     }
   };
 
   // Save all changes
-  const handleSaveChanges = async () => {
+  const handleSaveAll = async () => {
     setLoading(true);
     try {
-      // Here you would save to database
-      // For now, just show success message
+      // Save all leadership members
+      for (const member of leadership) {
+        await saveLeadershipMember(member);
+      }
+
+      // Save all awards
+      for (const award of awards) {
+        await saveAward(award);
+      }
+
+      // Save all branches
+      for (const branch of branches) {
+        const { error } = await supabase
+          .from("branch_locations")
+          .upsert({
+            id: branch.id,
+            location: branch.location,
+            address: branch.address,
+            contact: branch.contact,
+            order_index: branch.order_index
+          });
+        if (error) throw error;
+      }
+
+      // Save company info
+      const { error: companyError } = await supabase
+        .from("company_info")
+        .upsert({
+          id: companyInfo.id || undefined,
+          tagline: companyInfo.tagline,
+          mission: companyInfo.mission,
+          vision: companyInfo.vision,
+          values: companyInfo.values,
+          kannada_tagline: companyInfo.kannada_tagline,
+          hero_image_url: companyInfo.hero_image_url,
+          team_photo_url: companyInfo.team_photo_url
+        });
+
+      if (companyError) throw companyError;
+
       toast({
         title: "Success",
-        description: "About page content updated successfully"
+        description: "All changes saved successfully"
       });
     } catch (error) {
+      console.error("Error saving changes:", error);
       toast({
         title: "Error",
-        description: "Failed to save changes",
+        description: "Failed to save some changes",
         variant: "destructive"
       });
     } finally {
       setLoading(false);
     }
   };
+
+  if (loading && leadership.length === 0) {
+    return (
+      <DashboardLayout userRole="admin">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <Loader2 className="h-8 w-8 animate-spin" />
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout userRole="admin">
@@ -227,8 +481,12 @@ const AboutPageCMS = () => {
             <h1 className="text-3xl font-bold text-foreground">About Page Management</h1>
             <p className="text-muted-foreground">Manage content and photos for the About Us page</p>
           </div>
-          <Button onClick={handleSaveChanges} disabled={loading}>
-            <Save className="h-4 w-4 mr-2" />
+          <Button onClick={handleSaveAll} disabled={loading}>
+            {loading ? (
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            ) : (
+              <Save className="h-4 w-4 mr-2" />
+            )}
             Save All Changes
           </Button>
         </div>
@@ -268,22 +526,32 @@ const AboutPageCMS = () => {
                                 <Users className="h-12 w-12 text-gray-400" />
                               </div>
                             )}
-                            <label className="absolute bottom-2 right-2">
-                              <input
-                                type="file"
-                                accept="image/*"
-                                className="hidden"
-                                onChange={(e) => {
-                                  const file = e.target.files?.[0];
-                                  if (file) handlePhotoUpload(file, member.id);
-                                }}
-                                disabled={loading}
-                              />
-                              <Button size="sm" variant="secondary">
+                            
+                            <input
+                              ref={el => fileInputRefs.current[member.id] = el}
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) handlePhotoUpload(file, member.id);
+                              }}
+                            />
+                            
+                            <Button 
+                              size="sm" 
+                              variant="secondary"
+                              className="absolute bottom-2 right-2"
+                              onClick={() => fileInputRefs.current[member.id]?.click()}
+                              disabled={uploading === member.id}
+                            >
+                              {uploading === member.id ? (
+                                <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                              ) : (
                                 <Upload className="h-4 w-4 mr-1" />
-                                Upload Photo
-                              </Button>
-                            </label>
+                              )}
+                              Upload Photo
+                            </Button>
                           </div>
 
                           {/* Member Details */}
@@ -307,7 +575,7 @@ const AboutPageCMS = () => {
                               placeholder="Designation"
                             />
                             <Textarea
-                              value={member.description}
+                              value={member.description || ""}
                               onChange={(e) => {
                                 setLeadership(prev => prev.map(m => 
                                   m.id === member.id ? { ...m, description: e.target.value } : m
@@ -316,6 +584,14 @@ const AboutPageCMS = () => {
                               placeholder="Description"
                               rows={3}
                             />
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => deleteLeadershipMember(member.id)}
+                            >
+                              <Trash2 className="h-4 w-4 mr-1" />
+                              Remove
+                            </Button>
                           </div>
                         </div>
                       </CardContent>
@@ -325,117 +601,11 @@ const AboutPageCMS = () => {
                 <Button 
                   className="mt-4" 
                   variant="outline"
-                  onClick={() => {
-                    const newMember: LeadershipMember = {
-                      id: Date.now().toString(),
-                      name: "",
-                      designation: "",
-                      description: "",
-                      photo_url: null,
-                      order_index: leadership.length + 1
-                    };
-                    setLeadership([...leadership, newMember]);
-                  }}
+                  onClick={addLeadershipMember}
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Team Member
                 </Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Photo Gallery Tab */}
-          <TabsContent value="gallery">
-            <Card>
-              <CardHeader>
-                <CardTitle>Photo Gallery</CardTitle>
-                <CardDescription>Upload photos for different sections of the About page</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {/* Hero Banner */}
-                  <Card>
-                    <CardContent className="p-6">
-                      <h3 className="font-semibold mb-4">Hero Banner</h3>
-                      <div className="w-full h-32 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center mb-4">
-                        <Building2 className="h-8 w-8 text-gray-400" />
-                      </div>
-                      <label>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) handleGalleryUpload(file, "hero");
-                          }}
-                          disabled={loading}
-                        />
-                        <Button variant="outline" className="w-full">
-                          <Upload className="h-4 w-4 mr-2" />
-                          Upload Hero Image
-                        </Button>
-                      </label>
-                    </CardContent>
-                  </Card>
-
-                  {/* Team Photo */}
-                  <Card>
-                    <CardContent className="p-6">
-                      <h3 className="font-semibold mb-4">Team Photo</h3>
-                      <div className="w-full h-32 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center mb-4">
-                        <Users className="h-8 w-8 text-gray-400" />
-                      </div>
-                      <label>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            if (file) handleGalleryUpload(file, "team");
-                          }}
-                          disabled={loading}
-                        />
-                        <Button variant="outline" className="w-full">
-                          <Upload className="h-4 w-4 mr-2" />
-                          Upload Team Photo
-                        </Button>
-                      </label>
-                    </CardContent>
-                  </Card>
-
-                  {/* Facility Photos */}
-                  <Card>
-                    <CardContent className="p-6">
-                      <h3 className="font-semibold mb-4">Facility Photos</h3>
-                      <div className="w-full h-32 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center mb-4">
-                        <Building2 className="h-8 w-8 text-gray-400" />
-                      </div>
-                      <label>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          multiple
-                          className="hidden"
-                          onChange={(e) => {
-                            const files = e.target.files;
-                            if (files) {
-                              Array.from(files).forEach(file => 
-                                handleGalleryUpload(file, "facility")
-                              );
-                            }
-                          }}
-                          disabled={loading}
-                        />
-                        <Button variant="outline" className="w-full">
-                          <Upload className="h-4 w-4 mr-2" />
-                          Upload Facility Photos
-                        </Button>
-                      </label>
-                    </CardContent>
-                  </Card>
-                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -463,7 +633,7 @@ const AboutPageCMS = () => {
                         className="flex-1"
                       />
                       <Input
-                        value={award.year}
+                        value={award.year || ""}
                         onChange={(e) => {
                           setAwards(prev => prev.map(a => 
                             a.id === award.id ? { ...a, year: e.target.value } : a
@@ -473,7 +643,7 @@ const AboutPageCMS = () => {
                         className="w-32"
                       />
                       <Input
-                        value={award.organization}
+                        value={award.organization || ""}
                         onChange={(e) => {
                           setAwards(prev => prev.map(a => 
                             a.id === award.id ? { ...a, organization: e.target.value } : a
@@ -485,7 +655,7 @@ const AboutPageCMS = () => {
                       <Button
                         size="icon"
                         variant="ghost"
-                        onClick={() => setAwards(prev => prev.filter(a => a.id !== award.id))}
+                        onClick={() => deleteAward(award.id)}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -493,15 +663,7 @@ const AboutPageCMS = () => {
                   ))}
                   <Button 
                     variant="outline"
-                    onClick={() => {
-                      const newAward: Award = {
-                        id: Date.now().toString(),
-                        title: "",
-                        year: "",
-                        organization: ""
-                      };
-                      setAwards([...awards, newAward]);
-                    }}
+                    onClick={addAward}
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Add Award
@@ -534,7 +696,7 @@ const AboutPageCMS = () => {
                         className="flex-1"
                       />
                       <Input
-                        value={branch.address}
+                        value={branch.address || ""}
                         onChange={(e) => {
                           setBranches(prev => prev.map(b => 
                             b.id === branch.id ? { ...b, address: e.target.value } : b
@@ -544,7 +706,7 @@ const AboutPageCMS = () => {
                         className="flex-1"
                       />
                       <Input
-                        value={branch.contact}
+                        value={branch.contact || ""}
                         onChange={(e) => {
                           setBranches(prev => prev.map(b => 
                             b.id === branch.id ? { ...b, contact: e.target.value } : b
@@ -556,7 +718,7 @@ const AboutPageCMS = () => {
                       <Button
                         size="icon"
                         variant="ghost"
-                        onClick={() => setBranches(prev => prev.filter(b => b.id !== branch.id))}
+                        onClick={() => deleteBranch(branch.id)}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -564,15 +726,7 @@ const AboutPageCMS = () => {
                   ))}
                   <Button 
                     variant="outline"
-                    onClick={() => {
-                      const newBranch: Branch = {
-                        id: Date.now().toString(),
-                        location: "",
-                        address: "",
-                        contact: ""
-                      };
-                      setBranches([...branches, newBranch]);
-                    }}
+                    onClick={addBranch}
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Add Branch
@@ -594,7 +748,7 @@ const AboutPageCMS = () => {
                   <div>
                     <Label>Company Tagline</Label>
                     <Input
-                      value={companyInfo.tagline}
+                      value={companyInfo.tagline || ""}
                       onChange={(e) => setCompanyInfo({ ...companyInfo, tagline: e.target.value })}
                       placeholder="Company tagline"
                     />
@@ -602,7 +756,7 @@ const AboutPageCMS = () => {
                   <div>
                     <Label>Mission Statement</Label>
                     <Textarea
-                      value={companyInfo.mission}
+                      value={companyInfo.mission || ""}
                       onChange={(e) => setCompanyInfo({ ...companyInfo, mission: e.target.value })}
                       placeholder="Mission statement"
                       rows={3}
@@ -611,7 +765,7 @@ const AboutPageCMS = () => {
                   <div>
                     <Label>Vision Statement</Label>
                     <Textarea
-                      value={companyInfo.vision}
+                      value={companyInfo.vision || ""}
                       onChange={(e) => setCompanyInfo({ ...companyInfo, vision: e.target.value })}
                       placeholder="Vision statement"
                       rows={3}
@@ -620,7 +774,7 @@ const AboutPageCMS = () => {
                   <div>
                     <Label>Core Values</Label>
                     <Textarea
-                      value={companyInfo.values}
+                      value={companyInfo.values || ""}
                       onChange={(e) => setCompanyInfo({ ...companyInfo, values: e.target.value })}
                       placeholder="Core values"
                       rows={3}
@@ -629,12 +783,33 @@ const AboutPageCMS = () => {
                   <div>
                     <Label>Kannada Tagline</Label>
                     <Textarea
-                      value={companyInfo.kannada_tagline}
+                      value={companyInfo.kannada_tagline || ""}
                       onChange={(e) => setCompanyInfo({ ...companyInfo, kannada_tagline: e.target.value })}
                       placeholder="ಕನ್ನಡ ಟ್ಯಾಗ್‌ಲೈನ್"
                       rows={2}
                     />
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Gallery Tab - Simplified */}
+          <TabsContent value="gallery">
+            <Card>
+              <CardHeader>
+                <CardTitle>Photo Gallery</CardTitle>
+                <CardDescription>Upload photos by clicking the Upload Photo button for each team member in the Leadership tab</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center py-8">
+                  <Image className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
+                  <p className="text-muted-foreground">
+                    Photos can be uploaded for each team member in the Leadership tab.
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Click on "Upload Photo" button under each team member's photo area.
+                  </p>
                 </div>
               </CardContent>
             </Card>

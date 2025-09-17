@@ -97,6 +97,33 @@ export type Database = {
           },
         ]
       }
+      branch_locations: {
+        Row: {
+          address: string | null
+          contact: string | null
+          created_at: string
+          id: string
+          location: string
+          order_index: number | null
+        }
+        Insert: {
+          address?: string | null
+          contact?: string | null
+          created_at?: string
+          id?: string
+          location: string
+          order_index?: number | null
+        }
+        Update: {
+          address?: string | null
+          contact?: string | null
+          created_at?: string
+          id?: string
+          location?: string
+          order_index?: number | null
+        }
+        Relationships: []
+      }
       buyer_activity: {
         Row: {
           buyer_contact: string | null
@@ -167,6 +194,105 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      company_awards: {
+        Row: {
+          created_at: string
+          id: string
+          order_index: number | null
+          organization: string | null
+          title: string
+          year: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          order_index?: number | null
+          organization?: string | null
+          title: string
+          year?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          order_index?: number | null
+          organization?: string | null
+          title?: string
+          year?: string | null
+        }
+        Relationships: []
+      }
+      company_info: {
+        Row: {
+          created_at: string
+          hero_image_url: string | null
+          id: string
+          kannada_tagline: string | null
+          mission: string | null
+          tagline: string | null
+          team_photo_url: string | null
+          updated_at: string
+          values: string | null
+          vision: string | null
+        }
+        Insert: {
+          created_at?: string
+          hero_image_url?: string | null
+          id?: string
+          kannada_tagline?: string | null
+          mission?: string | null
+          tagline?: string | null
+          team_photo_url?: string | null
+          updated_at?: string
+          values?: string | null
+          vision?: string | null
+        }
+        Update: {
+          created_at?: string
+          hero_image_url?: string | null
+          id?: string
+          kannada_tagline?: string | null
+          mission?: string | null
+          tagline?: string | null
+          team_photo_url?: string | null
+          updated_at?: string
+          values?: string | null
+          vision?: string | null
+        }
+        Relationships: []
+      }
+      leadership_team: {
+        Row: {
+          created_at: string
+          description: string | null
+          designation: string
+          id: string
+          name: string
+          order_index: number | null
+          photo_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          designation: string
+          id?: string
+          name: string
+          order_index?: number | null
+          photo_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          designation?: string
+          id?: string
+          name?: string
+          order_index?: number | null
+          photo_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
       }
       notifications: {
         Row: {
