@@ -13,11 +13,11 @@ const Navbar = () => {
   };
 
   const navItems = {
-    en: ["Home", "Login"],
-    kn: ["ಮುಖಪುಟ", "ಲಾಗಿನ್"]
+    en: ["Home", "About Us", "Services", "Login"],
+    kn: ["ಮುಖಪುಟ", "ನಮ್ಮ ಬಗ್ಗೆ", "ಸೇವೆಗಳು", "ಲಾಗಿನ್"]
   };
 
-  const paths = ["/", "/auth"];
+  const paths = ["/", "/about", "/services", "/auth"];
 
   return (
     <nav className="sticky top-0 z-50 bg-card shadow-medium border-b border-border">
