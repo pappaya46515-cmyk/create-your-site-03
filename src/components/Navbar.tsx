@@ -127,8 +127,8 @@ const Navbar = () => {
                   {user.email}
                 </span>
                 
-                {/* Portal Switcher Dropdown */}
-                {(userRoles.includes('admin') || userRoles.includes('seller') || userRoles.includes('buyer')) && (
+                {/* Portal Switcher Dropdown - Admin Only */}
+                {userRoles.includes('admin') && (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="sm">
@@ -218,8 +218,8 @@ const Navbar = () => {
                     {user.email}
                   </div>
                   
-                  {/* Portal Switcher for Mobile */}
-                  {(userRoles.includes('admin') || userRoles.includes('seller') || userRoles.includes('buyer')) && (
+                  {/* Portal Switcher for Mobile - Admin Only */}
+                  {userRoles.includes('admin') && (
                     <div className="px-4 py-2">
                       <p className="text-xs text-muted-foreground mb-2">Switch Portal</p>
                       <div className="space-y-1">
@@ -274,15 +274,6 @@ const Navbar = () => {
                       </div>
                     </div>
                   )}
-                  
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="justify-start mx-4"
-                    onClick={() => { handleLogout(); setIsMenuOpen(false); }}
-                  >
-                    {t('logout')}
-                  </Button>
                 </>
               ) : (
                 <Link
