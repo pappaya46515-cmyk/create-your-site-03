@@ -3,8 +3,23 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Target, Eye, Heart, Award, Users, Factory, Trophy, Tractor, Building2, MapPin } from "lucide-react";
 import omGaneshLogo from "@/assets/om-ganesh-official-logo.jpg";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const About = () => {
+  const [leadership, setLeadership] = useState<Array<{ id: string; name: string; designation: string; description: string | null; photo_url: string | null }>>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      const { data } = await supabase
+        .from('leadership_team')
+        .select('*')
+        .order('order_index');
+      if (data) setLeadership(data as any);
+    };
+    load();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -100,62 +115,36 @@ const About = () => {
             <div className="mb-12">
               <h2 className="text-3xl font-bold text-foreground mb-6">Our Leadership</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card className="overflow-hidden">
-                  <div className="h-48 bg-gradient-to-br from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10 flex items-center justify-center">
-                    <Users className="h-24 w-24 text-primary opacity-50" />
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="font-bold text-xl mb-2">Mr. Bhaskar Kamath</h3>
-                    <p className="text-primary font-semibold mb-2">CMD - Om Ganesh Group</p>
-                    <p className="text-muted-foreground">
-                      Our visionary founder who started 38 years back with freelance sales of tractors. 
-                      He established the first organized trailer manufacturing unit in Shimoga and 
-                      revived a sick MF dealership 20 years ago.
-                    </p>
-                  </CardContent>
-                </Card>
-                
-                <Card className="overflow-hidden">
-                  <div className="h-48 bg-gradient-to-br from-secondary/10 to-secondary/5 dark:from-secondary/20 dark:to-secondary/10 flex items-center justify-center">
-                    <Users className="h-24 w-24 text-secondary opacity-50" />
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="font-bold text-xl mb-2">Mr. Harsha B Kamath</h3>
-                    <p className="text-primary font-semibold mb-2">CEO - Om Ganesh Group</p>
-                    <p className="text-muted-foreground">
-                      A mechanical engineer with AutoCAD expertise from Bangalore, he joined the 
-                      family business and is responsible for our current enviable market position.
-                    </p>
-                  </CardContent>
-                </Card>
-                
-                <Card className="overflow-hidden">
-                  <div className="h-48 bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900 dark:to-purple-800 flex items-center justify-center">
-                    <Users className="h-24 w-24 text-purple-600 dark:text-purple-400 opacity-50" />
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="font-bold text-xl mb-2">Mrs. Shalini Kamath</h3>
-                    <p className="text-primary font-semibold mb-2">Director</p>
-                    <p className="text-muted-foreground">
-                      A pillar of moral support, she has successfully managed the business during 
-                      our CMD's business tours, ensuring continuity and stability.
-                    </p>
-                  </CardContent>
-                </Card>
-                
-                <Card className="overflow-hidden">
-                  <div className="h-48 bg-gradient-to-br from-green-100 to-green-50 dark:from-green-900 dark:to-green-800 flex items-center justify-center">
-                    <Users className="h-24 w-24 text-green-600 dark:text-green-400 opacity-50" />
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="font-bold text-xl mb-2">Mr. Vishwas Kamath</h3>
-                    <p className="text-primary font-semibold mb-2">Managing Partner</p>
-                    <p className="text-muted-foreground">
-                      With vast IT industry experience, he manages the Channagiri TAFE tractor 
-                      dealership and oversees Veedol distributorship in Shimoga & Chikmagalur districts.
-                    </p>
-                  </CardContent>
-                </Card>
+                {leadership.length > 0 ? (
+                  leadership.map((m) => (
+                    <Card key={m.id} className="overflow-hidden">
+                      <div className="h-48 bg-muted flex items-center justify-center">
+                        {m.photo_url ? (
+                          <img
+                            src={m.photo_url}
+                            alt={`${m.name} - ${m.designation}`}
+                            className="w-full h-48 object-cover"
+                            loading="lazy"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src = '/placeholder.svg';
+                            }}
+                          />
+                        ) : (
+                          <Users className="h-24 w-24 text-muted-foreground/50" />
+                        )}
+                      </div>
+                      <CardContent className="p-6">
+                        <h3 className="font-bold text-xl mb-2">{m.name}</h3>
+                        <p className="text-primary font-semibold mb-2">{m.designation}</p>
+                        {m.description && (
+                          <p className="text-muted-foreground">{m.description}</p>
+                        )}
+                      </CardContent>
+                    </Card>
+                  ))
+                ) : (
+                  <p className="text-muted-foreground">Leadership profiles will appear here.</p>
+                )}
               </div>
             </div>
 
