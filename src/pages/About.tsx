@@ -21,129 +21,150 @@ const About = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-background via-muted/20 to-background">
       <Navbar />
       
-      {/* Hero Section with Consistent Brand Colors and Tractor Background */}
-      <section className="py-16 bg-gradient-to-br from-primary to-secondary relative overflow-hidden">
-        {/* Tractor Background Pattern */}
+      {/* Hero Section with Enhanced Visuals */}
+      <section className="py-20 bg-gradient-to-br from-primary via-secondary to-accent relative overflow-hidden animate-fade-in">
+        {/* Animated Tractor Background Pattern */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-black/30"></div>
-          {/* Tractor icons as background pattern */}
-          <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-black/40"></div>
+          {/* Floating Tractor icons */}
+          <div className="absolute inset-0 opacity-20">
             {[...Array(20)].map((_, i) => (
               <Tractor 
                 key={i} 
-                className="absolute text-white"
+                className="absolute text-white animate-float"
                 style={{
                   width: '60px',
                   height: '60px',
                   left: `${(i % 5) * 25}%`,
                   top: `${Math.floor(i / 5) * 30}%`,
-                  transform: `rotate(${i * 15}deg)`
+                  transform: `rotate(${i * 15}deg)`,
+                  animationDelay: `${i * 0.2}s`
                 }}
               />
             ))}
           </div>
         </div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="bg-white/95 backdrop-blur rounded-lg p-4 inline-block mb-6">
+          <div className="text-center max-w-4xl mx-auto animate-slide-up">
+            <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-6 inline-block mb-8 shadow-2xl hover-lift">
               <img 
                 src={omGaneshLogo} 
                 alt="Om Ganesh Tractors" 
-                className="h-32 w-auto mx-auto object-contain"
+                className="h-36 w-auto mx-auto object-contain"
               />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
               OM GANESH TRACTORS
             </h1>
-            <div className="text-2xl md:text-3xl font-bold text-accent mb-4">
+            <div className="text-3xl md:text-4xl font-bold text-white/90 mb-6">
               MASSEY FERGUSON
             </div>
-            <p className="text-xl text-white/90">
+            <p className="text-2xl text-white/90 mb-8">
               38 Years of Excellence in Agricultural Equipment & Services
             </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-4">
-              <div className="bg-white/10 backdrop-blur px-6 py-3 rounded-lg border border-white/20">
-                <p className="text-white font-semibold">Since 1988</p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <div className="glass backdrop-blur-xl px-8 py-4 rounded-xl border border-white/30 hover-lift">
+                <p className="text-white font-bold text-lg">Since 1988</p>
               </div>
-              <div className="bg-white/10 backdrop-blur px-6 py-3 rounded-lg border border-white/20">
-                <p className="text-white font-semibold">5 Districts</p>
+              <div className="glass backdrop-blur-xl px-8 py-4 rounded-xl border border-white/30 hover-lift">
+                <p className="text-white font-bold text-lg">5 Districts</p>
               </div>
-              <div className="bg-white/10 backdrop-blur px-6 py-3 rounded-lg border border-white/20">
-                <p className="text-white font-semibold">11,000+ Farmers Served</p>
+              <div className="glass backdrop-blur-xl px-8 py-4 rounded-xl border border-white/30 hover-lift">
+                <p className="text-white font-bold text-lg">11,000+ Farmers Served</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Photo Gallery Section */}
-      <section className="py-8 bg-gray-50 dark:bg-gray-900">
+      {/* Photo Gallery Section - Enhanced */}
+      <section className="py-12 bg-gradient-to-r from-muted/50 via-background to-muted/50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg">
+          <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent animate-slide-up">
+            Our Legacy
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white dark:bg-card rounded-2xl p-6 shadow-card hover-lift animate-fade-in" style={{animationDelay: '0.1s'}}>
               <img 
                 src={omGaneshLogo} 
                 alt="Om Ganesh Group" 
-                className="w-full h-48 object-contain"
+                className="w-full h-56 object-contain rounded-lg"
               />
-              <p className="text-center mt-2 font-semibold">Om Ganesh Group</p>
+              <p className="text-center mt-4 font-bold text-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Om Ganesh Group</p>
             </div>
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg">
-              <div className="w-full h-48 bg-primary/10 dark:bg-primary/20 flex items-center justify-center rounded">
-                <Tractor className="h-20 w-20 text-primary" />
+            <div className="bg-white dark:bg-card rounded-2xl p-6 shadow-card hover-lift animate-fade-in" style={{animationDelay: '0.2s'}}>
+              <div className="w-full h-56 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center rounded-lg">
+                <Tractor className="h-24 w-24 text-primary animate-float" />
               </div>
-              <p className="text-center mt-2 font-semibold">Massey Ferguson Dealership</p>
+              <p className="text-center mt-4 font-bold text-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Massey Ferguson Dealership</p>
             </div>
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg">
-              <div className="w-full h-48 bg-secondary/10 dark:bg-secondary/20 flex items-center justify-center rounded">
-                <Building2 className="h-20 w-20 text-secondary" />
+            <div className="bg-white dark:bg-card rounded-2xl p-6 shadow-card hover-lift animate-fade-in" style={{animationDelay: '0.3s'}}>
+              <div className="w-full h-56 bg-gradient-to-br from-secondary/20 to-accent/20 flex items-center justify-center rounded-lg">
+                <Building2 className="h-24 w-24 text-secondary animate-float" style={{animationDelay: '0.5s'}} />
               </div>
-              <p className="text-center mt-2 font-semibold">Manufacturing Excellence</p>
+              <p className="text-center mt-4 font-bold text-lg bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Manufacturing Excellence</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Content Section */}
-      <section className="py-16">
+      <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            {/* Leadership Section with Photos */}
-            <div className="mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-6">Our Leadership</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="max-w-6xl mx-auto">
+            {/* Leadership Section with Photos - Enhanced */}
+            <div className="mb-16">
+              <h2 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent animate-slide-up">
+                Our Leadership
+              </h2>
+              <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto animate-fade-in">
+                Meet the visionary leaders driving Om Ganesh Tractors towards excellence
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {leadership.length > 0 ? (
-                  leadership.map((m) => (
-                    <Card key={m.id} className="overflow-hidden">
-                      <div className="h-48 bg-muted flex items-center justify-center">
+                  leadership.map((m, index) => (
+                    <Card key={m.id} className="overflow-hidden hover-lift animate-slide-up shadow-card" style={{animationDelay: `${index * 0.1}s`}}>
+                      <div className="h-64 relative overflow-hidden group">
                         {m.photo_url ? (
-                          <img
-                            src={m.photo_url}
-                            alt={`${m.name} - ${m.designation}`}
-                            className="w-full h-48 object-cover"
-                            loading="lazy"
-                            onError={(e) => {
-                              (e.currentTarget as HTMLImageElement).src = '/placeholder.svg';
-                            }}
-                          />
+                          <>
+                            <img
+                              src={m.photo_url}
+                              alt={`${m.name} - ${m.designation}`}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                              loading="lazy"
+                              onError={(e) => {
+                                (e.currentTarget as HTMLImageElement).src = '/placeholder.svg';
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          </>
                         ) : (
-                          <Users className="h-24 w-24 text-muted-foreground/50" />
+                          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                            <Users className="h-32 w-32 text-muted-foreground/30 animate-float" />
+                          </div>
                         )}
                       </div>
-                      <CardContent className="p-6">
-                        <h3 className="font-bold text-xl mb-2">{m.name}</h3>
-                        <p className="text-primary font-semibold mb-2">{m.designation}</p>
+                      <CardContent className="p-8">
+                        <h3 className="font-bold text-2xl mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                          {m.name}
+                        </h3>
+                        <p className="text-primary font-semibold mb-4 text-lg">{m.designation}</p>
                         {m.description && (
-                          <p className="text-muted-foreground">{m.description}</p>
+                          <p className="text-muted-foreground leading-relaxed">{m.description}</p>
                         )}
                       </CardContent>
                     </Card>
                   ))
                 ) : (
-                  <p className="text-muted-foreground">Leadership profiles will appear here.</p>
+                  <div className="col-span-2 text-center py-12">
+                    <div className="animate-pulse">
+                      <div className="h-8 bg-muted rounded w-64 mx-auto mb-4"></div>
+                      <div className="h-4 bg-muted rounded w-48 mx-auto"></div>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>

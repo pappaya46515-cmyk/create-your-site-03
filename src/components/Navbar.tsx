@@ -70,54 +70,69 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-card shadow-medium border-b border-border">
+    <nav className="sticky top-0 z-50 glass-dark backdrop-blur-xl border-b border-white/10 animate-slide-up">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo Section */}
-          <Link to="/" className="flex items-center space-x-3">
-            <img 
-              src={omGaneshLogo} 
-              alt="Om Ganesh" 
-              className="h-12 w-auto object-contain"
-            />
+        <div className="flex items-center justify-between h-20">
+          {/* Logo Section - Enhanced */}
+          <Link to="/" className="flex items-center space-x-3 group hover-lift">
+            <div className="relative">
+              <img 
+                src={omGaneshLogo} 
+                alt="Om Ganesh" 
+                className="h-14 w-auto object-contain rounded-lg shadow-lg group-hover:shadow-glow transition-all"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-lg animate-pulse"></div>
+            </div>
             <div>
-              <h1 className="text-xl font-bold text-primary">Kamtha Stock System</h1>
-              <p className="text-xs text-muted-foreground">ESTD-1988</p>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                Kamtha Stock System
+              </h1>
+              <p className="text-xs text-muted-foreground font-medium">ESTD-1988</p>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          {/* Desktop Navigation - Enhanced */}
+          <div className="hidden md:flex items-center space-x-2">
             {navItems.map((item, index) => (
               <Link
                 key={item}
                 to={paths[index]}
-                className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+                className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-all duration-300 relative group"
               >
-                {item}
+                <span className="relative z-10">{item}</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
               </Link>
             ))}
           </div>
 
-          {/* Right Section */}
-          <div className="flex items-center space-x-2">
+          {/* Right Section - Enhanced */}
+          <div className="flex items-center space-x-3">
+            {/* Language Toggle - Always Visible with Enhanced Design */}
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleLanguage}
-              className="hidden md:flex items-center gap-2"
+              className="relative flex items-center gap-2 hover-glow bg-gradient-to-r from-primary/10 to-secondary/10 hover:from-primary/20 hover:to-secondary/20"
             >
               <Globe2 className="h-4 w-4" />
-              {language === "en" ? "ಕನ್ನಡ" : "English"}
+              <span className="font-bold text-sm">
+                {language === "en" ? "ಕನ್ನಡ" : "English"}
+              </span>
+              <span className="absolute -top-1 -right-1 flex h-5 w-5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-5 w-5 bg-gradient-to-r from-primary to-secondary items-center justify-center text-[9px] text-white font-bold">
+                  {language.toUpperCase()}
+                </span>
+              </span>
             </Button>
 
             <Button
               variant="ghost"
               size="sm"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 hover-glow"
             >
               <Phone className="h-4 w-4" />
-              <span className="hidden sm:inline">1800-XXX-XXXX</span>
+              <span className="hidden sm:inline font-medium">1800-XXX-XXXX</span>
             </Button>
 
             {/* Auth Controls */}

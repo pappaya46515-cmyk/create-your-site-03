@@ -1,8 +1,11 @@
-import { Facebook, Twitter, Instagram, Youtube, MapPin, Phone, Mail } from "lucide-react";
+import { Facebook, Twitter, Instagram, Youtube, MapPin, Phone, Mail, Globe2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import omGaneshLogo from "@/assets/om-ganesh-official-logo.jpg";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Button } from "@/components/ui/button";
 
 const Footer = () => {
+  const { language, setLanguage, t } = useLanguage();
   return (
     <footer className="bg-accent text-accent-foreground">
       <div className="container mx-auto px-4 py-12">
@@ -81,8 +84,21 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-border/20 text-center text-sm opacity-80">
-          <p>&copy; 2024 Kamtha Trailers. All rights reserved.</p>
+        <div className="mt-8 pt-8 border-t border-border/20 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-sm opacity-80">&copy; 2024 Kamtha Trailers. All rights reserved.</p>
+          
+          {/* Language Toggle in Footer */}
+          <Button
+            onClick={() => setLanguage(language === "en" ? "kn" : "en")}
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2 hover-glow"
+          >
+            <Globe2 className="h-4 w-4" />
+            <span className="font-medium">
+              {language === "en" ? "ಕನ್ನಡ" : "English"}
+            </span>
+          </Button>
         </div>
       </div>
     </footer>
