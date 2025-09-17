@@ -11,6 +11,7 @@ import { Slider } from "@/components/ui/slider";
 import { Search, Filter, Eye, Heart, MessageCircle, FileCheck, Loader2 } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useToast } from "@/hooks/use-toast";
+import { useBuyerTracking } from "@/hooks/useBuyerTracking";
 
 interface Vehicle {
   id: string;
@@ -35,6 +36,7 @@ interface Vehicle {
 const VehicleBrowse = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { trackSearch, trackVehicleInterest } = useBuyerTracking();
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [filteredVehicles, setFilteredVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(true);
@@ -131,8 +133,10 @@ const VehicleBrowse = () => {
 
     setFilteredVehicles(filtered);
 
-    // Log search analytics
+    // Track search analytics with real data
     if (searchTerm || category !== "all" || priceRange[0] !== 250000 || priceRange[1] !== 5000000) {
+      const searchQuery = `${searchTerm} ${category !== "all" ? category : ""} ₹${priceRange[0]}-₹${priceRange[1]}`.trim();
+      trackSearch(searchQuery, filtered.length);
       logSearchAnalytics(searchTerm, category, priceRange, filtered.length);
     }
   };
@@ -158,7 +162,7 @@ const VehicleBrowse = () => {
     }
   };
 
-  const toggleSaveVehicle = async (vehicleId: string) => {
+  const toggleSaveVehicle = async (vehicleId: string, vehicleName?: string) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
@@ -189,6 +193,12 @@ const VehicleBrowse = () => {
           description: "Vehicle removed from your saved list",
         });
       } else {
+        // Track interest in vehicle
+        const vehicle = vehicles.find(v => v.id === vehicleId);
+        if (vehicle) {
+          trackVehicleInterest(vehicleId, vehicle.model_name);
+        }
+        
         // Add to saved
         const { error } = await supabase
           .from("buyer_interests")

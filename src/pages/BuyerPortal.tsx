@@ -1,14 +1,69 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate, Link } from "react-router-dom";
-import { LogOut, Search, Heart, MessageCircle, FileText, TrendingUp, ShoppingBag } from "lucide-react";
+import { LogOut, Search, Heart, MessageCircle, FileText, TrendingUp, ShoppingBag, Upload } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
+import { useBuyerTracking } from "@/hooks/useBuyerTracking";
 
 const BuyerPortal = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [stats, setStats] = useState({
+    viewedVehicles: 0,
+    savedVehicles: 0,
+    activeInquiries: 0,
+    agreements: 0
+  });
+  const { trackLogin } = useBuyerTracking();
+
+  useEffect(() => {
+    trackLogin(); // Track when buyer logs in
+    fetchStats();
+  }, []);
+
+  const fetchStats = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      // Fetch saved vehicles count
+      const { count: savedCount } = await supabase
+        .from("buyer_interests")
+        .select("*", { count: "exact" })
+        .eq("buyer_id", user.id);
+
+      // Fetch viewed vehicles (from buyer_activity)
+      const { count: viewedCount } = await supabase
+        .from("buyer_activity")
+        .select("*", { count: "exact" })
+        .eq("buyer_id", user.id)
+        .not("vehicle_interested_id", "is", null);
+
+      // Fetch agreements count
+      const { data: vehicles } = await supabase
+        .from("vehicles")
+        .select("id")
+        .eq("buyer_id", user.id)
+        .eq("status", "sold");
+      
+      const vehicleIds = vehicles?.map(v => v.id) || [];
+      const { count: agreementCount } = await supabase
+        .from("agreements")
+        .select("*", { count: "exact" })
+        .in("vehicle_id", vehicleIds);
+
+      setStats({
+        viewedVehicles: viewedCount || 0,
+        savedVehicles: savedCount || 0,
+        activeInquiries: savedCount || 0, // Using saved as proxy for inquiries
+        agreements: agreementCount || 0
+      });
+    } catch (error) {
+      console.error("Error fetching stats:", error);
+    }
+  };
 
   const handleLogout = async () => {
     setLoading(true);
@@ -16,11 +71,11 @@ const BuyerPortal = () => {
     navigate("/");
   };
 
-  const stats = [
-    { icon: <Search className="h-8 w-8" />, title: "Vehicles Viewed", value: "45" },
-    { icon: <Heart className="h-8 w-8" />, title: "Saved Vehicles", value: "8" },
-    { icon: <MessageCircle className="h-8 w-8" />, title: "Active Inquiries", value: "3" },
-    { icon: <FileText className="h-8 w-8" />, title: "Agreements", value: "2" },
+  const statsDisplay = [
+    { icon: <Search className="h-8 w-8" />, title: "Vehicles Viewed", value: stats.viewedVehicles },
+    { icon: <Heart className="h-8 w-8" />, title: "Saved Vehicles", value: stats.savedVehicles },
+    { icon: <MessageCircle className="h-8 w-8" />, title: "Active Inquiries", value: stats.activeInquiries },
+    { icon: <FileText className="h-8 w-8" />, title: "Agreements", value: stats.agreements },
   ];
 
   return (
@@ -43,7 +98,7 @@ const BuyerPortal = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {stats.map((stat, index) => (
+            {statsDisplay.map((stat, index) => (
               <Card key={index}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
@@ -112,14 +167,17 @@ const BuyerPortal = () => {
                   <ShoppingBag className="h-5 w-5" />
                   My Purchases
                 </CardTitle>
-                <CardDescription>View your purchased vehicles</CardDescription>
+                <CardDescription>View your purchased vehicles & upload CC</CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
                 <Link to="/buyer-portal/purchases">
                   <Button className="w-full">View Purchases</Button>
                 </Link>
-                <Link to="/buyer-portal/purchases">
-                  <Button className="w-full" variant="outline">Download Agreements</Button>
+                <Link to="/buyer-portal/cc-upload">
+                  <Button className="w-full" variant="outline">
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload CC Documents
+                  </Button>
                 </Link>
               </CardContent>
             </Card>
@@ -145,12 +203,12 @@ const BuyerPortal = () => {
             <Card>
               <CardHeader>
                 <CardTitle>Market Insights</CardTitle>
-                <CardDescription>Price trends and recommendations</CardDescription>
+                <CardDescription>Real-time price trends</CardDescription>
               </CardHeader>
               <CardContent className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-primary" />
                 <span className="text-sm text-muted-foreground">
-                  Average tractor price: ₹4.5L - ₹6L
+                  Check analytics dashboard for real-time trends
                 </span>
               </CardContent>
             </Card>
