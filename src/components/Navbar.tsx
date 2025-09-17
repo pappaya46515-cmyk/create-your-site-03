@@ -9,6 +9,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [language, setLanguage] = useState<"en" | "kn">("en");
   const [user, setUser] = useState<any>(null);
+  const [userRoles, setUserRoles] = useState<string[]>([]);
   const navigate = useNavigate();
 
   const toggleLanguage = () => {
@@ -26,16 +27,36 @@ const Navbar = () => {
     // Initialize auth state
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        fetchUserRoles(session.user.id);
+      }
     });
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        fetchUserRoles(session.user.id);
+      } else {
+        setUserRoles([]);
+      }
     });
     return () => subscription.unsubscribe();
   }, []);
 
+  const fetchUserRoles = async (userId: string) => {
+    const { data, error } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', userId);
+    
+    if (!error && data) {
+      setUserRoles(data.map(r => r.role));
+    }
+  };
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setUser(null);
+    setUserRoles([]);
     navigate("/");
   };
 
@@ -96,9 +117,21 @@ const Navbar = () => {
                 <span className="text-sm text-muted-foreground max-w-[160px] truncate" title={user.email}>
                   {user.email}
                 </span>
-                <Button variant="outline" size="sm" onClick={() => navigate('/portal-select')}>
-                  Portal
-                </Button>
+                {userRoles.includes('admin') && (
+                  <Button variant="outline" size="sm" onClick={() => navigate('/portal-select')}>
+                    Portal
+                  </Button>
+                )}
+                {userRoles.includes('seller') && !userRoles.includes('admin') && (
+                  <Button variant="outline" size="sm" onClick={() => navigate('/seller-portal')}>
+                    Seller Portal
+                  </Button>
+                )}
+                {userRoles.includes('buyer') && !userRoles.includes('admin') && !userRoles.includes('seller') && (
+                  <Button variant="outline" size="sm" onClick={() => navigate('/buyer-portal')}>
+                    Buyer Portal
+                  </Button>
+                )}
                 <Button variant="ghost" size="sm" onClick={handleLogout}>
                   Logout
                 </Button>
@@ -150,14 +183,36 @@ const Navbar = () => {
                   <div className="px-4 py-2 text-sm text-muted-foreground truncate" title={user.email}>
                     {user.email}
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="justify-start mx-4"
-                    onClick={() => { navigate('/portal-select'); setIsMenuOpen(false); }}
-                  >
-                    Portal
-                  </Button>
+                  {userRoles.includes('admin') && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="justify-start mx-4"
+                      onClick={() => { navigate('/portal-select'); setIsMenuOpen(false); }}
+                    >
+                      Portal
+                    </Button>
+                  )}
+                  {userRoles.includes('seller') && !userRoles.includes('admin') && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="justify-start mx-4"
+                      onClick={() => { navigate('/seller-portal'); setIsMenuOpen(false); }}
+                    >
+                      Seller Portal
+                    </Button>
+                  )}
+                  {userRoles.includes('buyer') && !userRoles.includes('admin') && !userRoles.includes('seller') && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="justify-start mx-4"
+                      onClick={() => { navigate('/buyer-portal'); setIsMenuOpen(false); }}
+                    >
+                      Buyer Portal
+                    </Button>
+                  )}
                   <Button
                     variant="ghost"
                     size="sm"
@@ -176,7 +231,6 @@ const Navbar = () => {
                   Login
                 </Link>
               )}
-
             </div>
           </div>
         )}
