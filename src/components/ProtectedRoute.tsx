@@ -32,20 +32,28 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
 
         // If a specific role is required, check it
         if (requiredRole) {
-          const { data, error } = await supabase
+          const { data: roles, error } = await supabase
             .from("user_roles")
             .select("role")
-            .eq("user_id", session.user.id)
-            .eq("role", requiredRole)
-            .maybeSingle();
+            .eq("user_id", session.user.id);
 
-          if (error || !data) {
+          if (error) {
             navigate("/dashboard");
             return;
           }
-        }
 
-        setAuthorized(true);
+          const userRoles = roles?.map(r => r.role) || [];
+          
+          // Allow admins to access any portal
+          if (userRoles.includes('admin') || userRoles.includes(requiredRole)) {
+            setAuthorized(true);
+          } else {
+            navigate("/dashboard");
+            return;
+          }
+        } else {
+          setAuthorized(true);
+        }
       } catch (error) {
         console.error("Auth check error:", error);
         navigate("/auth");
