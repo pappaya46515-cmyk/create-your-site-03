@@ -97,6 +97,42 @@ export type Database = {
           },
         ]
       }
+      buyer_activity: {
+        Row: {
+          buyer_contact: string | null
+          buyer_id: string
+          buyer_name: string | null
+          created_at: string
+          id: string
+          login_date: string
+          search_query: string | null
+          vehicle_interested_id: string | null
+          vehicle_interested_name: string | null
+        }
+        Insert: {
+          buyer_contact?: string | null
+          buyer_id: string
+          buyer_name?: string | null
+          created_at?: string
+          id?: string
+          login_date?: string
+          search_query?: string | null
+          vehicle_interested_id?: string | null
+          vehicle_interested_name?: string | null
+        }
+        Update: {
+          buyer_contact?: string | null
+          buyer_id?: string
+          buyer_name?: string | null
+          created_at?: string
+          id?: string
+          login_date?: string
+          search_query?: string | null
+          vehicle_interested_id?: string | null
+          vehicle_interested_name?: string | null
+        }
+        Relationships: []
+      }
       buyer_interests: {
         Row: {
           buyer_id: string
@@ -221,6 +257,39 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      vehicle_cc_uploads: {
+        Row: {
+          buyer_id: string
+          cc_image_url: string | null
+          created_at: string
+          id: string
+          reminder_sent: boolean | null
+          updated_at: string
+          uploaded_at: string | null
+          vehicle_id: string
+        }
+        Insert: {
+          buyer_id: string
+          cc_image_url?: string | null
+          created_at?: string
+          id?: string
+          reminder_sent?: boolean | null
+          updated_at?: string
+          uploaded_at?: string | null
+          vehicle_id: string
+        }
+        Update: {
+          buyer_id?: string
+          cc_image_url?: string | null
+          created_at?: string
+          id?: string
+          reminder_sent?: boolean | null
+          updated_at?: string
+          uploaded_at?: string | null
+          vehicle_id?: string
         }
         Relationships: []
       }

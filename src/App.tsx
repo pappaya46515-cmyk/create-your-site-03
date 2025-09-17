@@ -18,6 +18,7 @@ import PortalSelector from "./pages/PortalSelector";
 import VehicleBrowse from "./pages/buyer/VehicleBrowse";
 import BuyerPurchases from "./pages/buyer/BuyerPurchases";
 import SavedVehicles from "./pages/buyer/SavedVehicles";
+import CCUpload from "./pages/buyer/CCUpload";
 import AddVehicle from "./pages/seller/AddVehicle";
 import MyListings from "./pages/seller/MyListings";
 import VehicleDocuments from "./pages/seller/VehicleDocuments";
@@ -93,6 +94,11 @@ const App = () => (
             <Route path="/buyer-portal/notifications" element={
               <ProtectedRoute requiredRole="buyer">
                 <BuyerNotifications />
+              </ProtectedRoute>
+            } />
+            <Route path="/buyer-portal/cc-upload" element={
+              <ProtectedRoute requiredRole="buyer">
+                <CCUpload />
               </ProtectedRoute>
             } />
             <Route path="/seller-portal/add-vehicle" element={
