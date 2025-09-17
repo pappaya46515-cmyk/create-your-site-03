@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
-import { Target, Eye, Heart, Award, Users, Factory, Trophy, Tractor, Building2, MapPin } from "lucide-react";
+import { Target, Eye, Heart, Award, Users, Factory, Trophy, Tractor, Building2, MapPin, Calendar, TrendingUp, Sparkles } from "lucide-react";
 import omGaneshLogo from "@/assets/om-ganesh-official-logo.jpg";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -294,42 +294,80 @@ const About = () => {
             {/* TAFE Partnership */}
             <div className="mb-12">
               <h2 className="text-3xl font-bold text-foreground mb-6">TAFE - Tractors & Farm Equipment</h2>
-              <Card className="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 border-2 border-red-200 dark:border-red-800">
-                <CardContent className="p-8">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-xl">
-                      MASSEY FERGUSON
-                    </div>
-                    <div className="text-muted-foreground">
-                      Official Dealer Partner
+              <Card className="hover:shadow-strong transition-all duration-300 border-2 hover:border-primary overflow-hidden">
+                <CardContent className="p-0">
+                  {/* Header with gradient */}
+                  <div className="bg-gradient-to-r from-primary to-secondary p-6">
+                    <div className="flex items-center justify-between flex-wrap gap-4">
+                      <div className="flex items-center gap-4">
+                        <div className="bg-white text-primary px-6 py-3 rounded-lg font-bold text-xl shadow-medium">
+                          MASSEY FERGUSON
+                        </div>
+                        <div className="text-white font-semibold">
+                          Official Dealer Partner
+                        </div>
+                      </div>
+                      <Tractor className="h-12 w-12 text-white/80" />
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold mb-4">Legacy & Heritage</h3>
-                  <div className="space-y-3 text-muted-foreground">
-                    <p className="flex items-start gap-2">
-                      <span className="text-red-600 font-bold">•</span> 
-                      Amalgamations group entered tractor business in 1960
-                    </p>
-                    <p className="flex items-start gap-2">
-                      <span className="text-red-600 font-bold">•</span> 
-                      Standard Motor Products assembled Massey Ferguson tractors in Bangalore
-                    </p>
-                    <p className="flex items-start gap-2">
-                      <span className="text-red-600 font-bold">•</span> 
-                      TAFE established through collaboration with MF of England
-                    </p>
-                    <p className="flex items-start gap-2">
-                      <span className="text-red-600 font-bold">•</span> 
-                      Operations moved to Chennai with initial capacity of 12,000 units annually
-                    </p>
-                  </div>
-                  <div className="mt-6 p-4 bg-white dark:bg-gray-800 rounded-lg">
-                    <h4 className="font-semibold text-lg mb-2">TAFE Vision:</h4>
-                    <p className="text-muted-foreground italic">
-                      "To us in TAFE, Excellence is not something that we engineer, inspect and input into our tractors. 
-                      It is an innate desire to attain the best that comes from within each of us. It defines our lives 
-                      at work and at home and ripples out into the world around us."
-                    </p>
+                  
+                  {/* Content */}
+                  <div className="p-8 space-y-6">
+                    <div>
+                      <h3 className="text-xl font-bold mb-4 text-foreground flex items-center gap-2">
+                        <Award className="h-6 w-6 text-primary" />
+                        Legacy & Heritage
+                      </h3>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div className="space-y-3">
+                          <div className="flex items-start gap-3">
+                            <Calendar className="h-5 w-5 text-primary mt-0.5" />
+                            <div>
+                              <p className="font-semibold text-foreground">1960</p>
+                              <p className="text-sm text-muted-foreground">Amalgamations group entered tractor business</p>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-3">
+                            <MapPin className="h-5 w-5 text-primary mt-0.5" />
+                            <div>
+                              <p className="font-semibold text-foreground">Bangalore</p>
+                              <p className="text-sm text-muted-foreground">Standard Motor Products assembled MF tractors</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="flex items-start gap-3">
+                            <Users className="h-5 w-5 text-primary mt-0.5" />
+                            <div>
+                              <p className="font-semibold text-foreground">TAFE Partnership</p>
+                              <p className="text-sm text-muted-foreground">Collaboration with MF of England</p>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-3">
+                            <TrendingUp className="h-5 w-5 text-primary mt-0.5" />
+                            <div>
+                              <p className="font-semibold text-foreground">12,000 Units</p>
+                              <p className="text-sm text-muted-foreground">Initial annual capacity in Chennai</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Vision Box */}
+                    <div className="bg-gradient-to-br from-primary/5 to-secondary/5 p-6 rounded-xl border border-primary/20">
+                      <div className="flex items-start gap-3">
+                        <Sparkles className="h-6 w-6 text-primary mt-1" />
+                        <div>
+                          <h4 className="font-bold text-lg mb-3 text-foreground">TAFE Vision</h4>
+                          <p className="text-muted-foreground italic leading-relaxed">
+                            "To us in TAFE, Excellence is not something that we engineer, inspect and input into our tractors. 
+                            It is an innate desire to attain the best that comes from within each of us. It defines our lives 
+                            at work and at home and ripples out into the world around us."
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -340,17 +378,93 @@ const About = () => {
               <h2 className="text-3xl font-bold text-foreground mb-6">
                 ನಮ್ಮ ಸೇವೆ - Kamtha Service
               </h2>
-              <Card className="border-2 border-primary">
-                <CardContent className="p-8">
-                  <p className="text-xl text-primary font-semibold mb-4">
-                    ಕರ್ನಾಟಕದಾದ್ಯಂತ 11,000+ ರೈತರಿಗೆ ಪಾರದರ್ಶಕತೆಯಿಂದ ಉಪಯೋಗಿಸಿದ ರೈತ ಉಪಕರಣಗಳ ಮಾರಾಟದ ವ್ಯವಸ್ಥೆ
-                  </p>
-                  <p className="text-lg text-muted-foreground">
-                    With 35 years of standing and catering to 5 districts, we specialize in providing 
-                    transparent services for pre-owned agricultural machinery to farmers. Every piece of 
-                    equipment listed on our platform goes through a thorough verification process by our 
-                    executives to ensure quality and authenticity.
-                  </p>
+              <Card className="hover:shadow-strong transition-all duration-300 border-2 hover:border-primary overflow-hidden">
+                <CardContent className="p-0">
+                  {/* Header with gradient */}
+                  <div className="bg-gradient-to-r from-secondary to-accent p-6">
+                    <div className="flex items-center justify-between flex-wrap gap-4">
+                      <h3 className="text-2xl font-bold text-white">
+                        35 Years of Excellence
+                      </h3>
+                      <div className="flex items-center gap-3">
+                        <Award className="h-8 w-8 text-white/80" />
+                        <Trophy className="h-8 w-8 text-white/80" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="p-8 space-y-6">
+                    {/* Kannada Tagline */}
+                    <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 rounded-xl">
+                      <p className="text-xl text-primary font-bold text-center">
+                        ಕರ್ನಾಟಕದಾದ್ಯಂತ 11,000+ ರೈತರಿಗೆ ಪಾರದರ್ಶಕತೆಯಿಂದ ಉಪಯೋಗಿಸಿದ ರೈತ ಉಪಕರಣಗಳ ಮಾರಾಟದ ವ್ಯವಸ್ಥೆ
+                      </p>
+                      <p className="text-center text-muted-foreground mt-2">
+                        Transparent Pre-owned Agricultural Equipment Sales Across Karnataka
+                      </p>
+                    </div>
+                    
+                    {/* Service Stats */}
+                    <div className="grid md:grid-cols-3 gap-6">
+                      <div className="text-center p-4 bg-card rounded-lg border">
+                        <div className="text-3xl font-bold text-primary mb-2">35+</div>
+                        <p className="text-muted-foreground">Years of Service</p>
+                      </div>
+                      <div className="text-center p-4 bg-card rounded-lg border">
+                        <div className="text-3xl font-bold text-primary mb-2">5</div>
+                        <p className="text-muted-foreground">Districts Covered</p>
+                      </div>
+                      <div className="text-center p-4 bg-card rounded-lg border">
+                        <div className="text-3xl font-bold text-primary mb-2">11,000+</div>
+                        <p className="text-muted-foreground">Farmers Served</p>
+                      </div>
+                    </div>
+                    
+                    {/* Service Description */}
+                    <div className="bg-gradient-to-br from-accent/5 to-primary/5 p-6 rounded-xl">
+                      <h4 className="font-bold text-lg mb-3 text-foreground flex items-center gap-2">
+                        <Users className="h-5 w-5 text-primary" />
+                        Our Commitment
+                      </h4>
+                      <p className="text-muted-foreground leading-relaxed mb-4">
+                        With 35 years of standing and catering to 5 districts, we specialize in providing 
+                        transparent services for pre-owned agricultural machinery to farmers. Every piece of 
+                        equipment listed on our platform goes through a thorough verification process by our 
+                        executives to ensure quality and authenticity.
+                      </p>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div className="flex items-start gap-3">
+                          <div className="h-2 w-2 bg-primary rounded-full mt-2"></div>
+                          <div>
+                            <p className="font-semibold text-foreground">Document Verification</p>
+                            <p className="text-sm text-muted-foreground">RC, Insurance, NOC, Forms 29/30</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <div className="h-2 w-2 bg-primary rounded-full mt-2"></div>
+                          <div>
+                            <p className="font-semibold text-foreground">Fair Pricing</p>
+                            <p className="text-sm text-muted-foreground">Minimum ₹2.5L deal value</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <div className="h-2 w-2 bg-primary rounded-full mt-2"></div>
+                          <div>
+                            <p className="font-semibold text-foreground">Quality Assurance</p>
+                            <p className="text-sm text-muted-foreground">Thoroughly inspected equipment</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <div className="h-2 w-2 bg-primary rounded-full mt-2"></div>
+                          <div>
+                            <p className="font-semibold text-foreground">Trust & Transparency</p>
+                            <p className="text-sm text-muted-foreground">Clear documentation process</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </div>
