@@ -545,10 +545,12 @@ const AboutPageCMS = () => {
                             {member.photo_url ? (
                               <div className="relative">
                                 <img 
-                                  src={`${member.photo_url}?t=${Date.now()}`} 
+                                  key={member.photo_url}
+                                  src={member.photo_url} 
                                   alt={member.name}
                                   className="w-full h-48 object-cover rounded-lg"
                                   onError={(e) => {
+                                    console.error('Image failed to load:', member.photo_url);
                                     e.currentTarget.src = '/placeholder.svg';
                                   }}
                                 />
