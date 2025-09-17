@@ -229,9 +229,8 @@ const AddVehicle = () => {
           deal_value: formData.deal_value,
           registration_number: formData.registration_number || null,
           engine_number: formData.engine_number || null,
-          vehicle_number: formData.vehicle_number || null,
-          jersey_number: formData.jersey_number || null,
-          serial_number: formData.serial_number || null,
+          model_name: formData.model_name,
+          model_year: formData.model_year,
         })
         .select()
         .single();
@@ -243,17 +242,22 @@ const AddVehicle = () => {
         .from('agreements')
         .insert({
           created_by: user.id,
+          vehicle_id: vehicle.id,
           seller_name: formData.seller_name,
           seller_father_name: formData.seller_father_name,
           seller_address: formData.seller_address,
           seller_contact: formData.seller_contact,
+          seller_pincode: formData.seller_pincode,
+          seller_aadhaar: formData.seller_aadhaar,
           buyer_name: formData.buyer_name,
           buyer_father_name: formData.buyer_father_name,
           buyer_address: formData.buyer_address,
           buyer_contact: formData.buyer_contact,
-          vehicle_details: `${formData.model_name} - ${formData.model_year}`,
-          sale_amount: formData.deal_value,
           insurance_number: formData.insurance_number || null,
+          rc_number: formData.rc_number || null,
+          vehicle_number: formData.vehicle_number || null,
+          jersey_number: formData.jersey_number || null,
+          serial_number: formData.serial_number || null,
         });
 
       if (agreementError) throw agreementError;

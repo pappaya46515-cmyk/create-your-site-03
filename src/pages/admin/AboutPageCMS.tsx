@@ -140,10 +140,31 @@ const AboutPageCMS = () => {
     setUploading(memberId);
 
     try {
-      const fileName = `leadership/${memberId}-${Date.now()}.${file.name.split('.').pop()}`;
+      // Find the member to get their name for the filename
+      const member = leadership.find(m => m.id === memberId);
+      if (!member) throw new Error("Member not found");
+
+      // Create a unique filename based on member name and timestamp
+      const safeName = member.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+      const fileName = `leadership/${safeName}-${Date.now()}.${file.name.split('.').pop()}`;
+      
+      // Delete old photo if exists
+      if (member.photo_url) {
+        const oldFileName = member.photo_url.split('/').pop();
+        if (oldFileName) {
+          await supabase.storage
+            .from("vehicle-images")
+            .remove([`leadership/${oldFileName}`]);
+        }
+      }
+
+      // Upload new photo
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from("vehicle-images")
-        .upload(fileName, file, { upsert: true });
+        .upload(fileName, file, { 
+          upsert: true,
+          cacheControl: '3600'
+        });
 
       if (uploadError) throw uploadError;
 
@@ -151,30 +172,36 @@ const AboutPageCMS = () => {
         .from("vehicle-images")
         .getPublicUrl(fileName);
 
-      // Update in database
+      // Update in database with proper identification
       const { error: updateError } = await supabase
         .from("leadership_team")
-        .update({ photo_url: publicUrl })
+        .update({ 
+          photo_url: publicUrl,
+          updated_at: new Date().toISOString()
+        })
         .eq("id", memberId);
 
       if (updateError) throw updateError;
 
-      // Update local state
-      setLeadership(prev => prev.map(member => 
-        member.id === memberId 
-          ? { ...member, photo_url: publicUrl }
-          : member
+      // Update local state immediately for responsive UI
+      setLeadership(prev => prev.map(m => 
+        m.id === memberId 
+          ? { ...m, photo_url: publicUrl }
+          : m
       ));
+
+      // Reload data to ensure sync
+      await loadAllData();
 
       toast({
         title: "Success",
-        description: "Photo uploaded successfully"
+        description: `Photo updated for ${member.name}`
       });
     } catch (error) {
       console.error("Error uploading photo:", error);
       toast({
         title: "Upload Failed",
-        description: "Failed to upload photo",
+        description: "Failed to upload photo. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -510,17 +537,28 @@ const AboutPageCMS = () => {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {leadership.map((member) => (
-                    <Card key={member.id}>
+                    <Card key={member.id} className="relative">
                       <CardContent className="p-6">
                         <div className="space-y-4">
                           {/* Photo Upload Area */}
                           <div className="relative">
                             {member.photo_url ? (
-                              <img 
-                                src={member.photo_url} 
-                                alt={member.name}
-                                className="w-full h-48 object-cover rounded-lg"
-                              />
+                              <div className="relative">
+                                <img 
+                                  src={`${member.photo_url}?t=${Date.now()}`} 
+                                  alt={member.name}
+                                  className="w-full h-48 object-cover rounded-lg"
+                                  onError={(e) => {
+                                    e.currentTarget.src = '/placeholder.svg';
+                                  }}
+                                />
+                                {/* Show loading overlay when uploading */}
+                                {uploading === member.id && (
+                                  <div className="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center">
+                                    <Loader2 className="h-8 w-8 text-white animate-spin" />
+                                  </div>
+                                )}
+                              </div>
                             ) : (
                               <div className="w-full h-48 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
                                 <Users className="h-12 w-12 text-gray-400" />
@@ -534,13 +572,16 @@ const AboutPageCMS = () => {
                               className="hidden"
                               onChange={(e) => {
                                 const file = e.target.files?.[0];
-                                if (file) handlePhotoUpload(file, member.id);
+                                if (file) {
+                                  e.target.value = ''; // Reset input
+                                  handlePhotoUpload(file, member.id);
+                                }
                               }}
                             />
                             
                             <Button 
                               size="sm" 
-                              variant="secondary"
+                              variant={member.photo_url ? "default" : "secondary"}
                               className="absolute bottom-2 right-2"
                               onClick={() => fileInputRefs.current[member.id]?.click()}
                               disabled={uploading === member.id}
@@ -550,48 +591,73 @@ const AboutPageCMS = () => {
                               ) : (
                                 <Upload className="h-4 w-4 mr-1" />
                               )}
-                              Upload Photo
+                              {member.photo_url ? 'Change' : 'Upload'} Photo
                             </Button>
                           </div>
 
                           {/* Member Details */}
                           <div className="space-y-2">
-                            <Input
-                              value={member.name}
-                              onChange={(e) => {
-                                setLeadership(prev => prev.map(m => 
-                                  m.id === member.id ? { ...m, name: e.target.value } : m
-                                ));
-                              }}
-                              placeholder="Name"
-                            />
-                            <Input
-                              value={member.designation}
-                              onChange={(e) => {
-                                setLeadership(prev => prev.map(m => 
-                                  m.id === member.id ? { ...m, designation: e.target.value } : m
-                                ));
-                              }}
-                              placeholder="Designation"
-                            />
-                            <Textarea
-                              value={member.description || ""}
-                              onChange={(e) => {
-                                setLeadership(prev => prev.map(m => 
-                                  m.id === member.id ? { ...m, description: e.target.value } : m
-                                ));
-                              }}
-                              placeholder="Description"
-                              rows={3}
-                            />
-                            <Button
-                              variant="destructive"
-                              size="sm"
-                              onClick={() => deleteLeadershipMember(member.id)}
-                            >
-                              <Trash2 className="h-4 w-4 mr-1" />
-                              Remove
-                            </Button>
+                            <div>
+                              <Label htmlFor={`name-${member.id}`} className="text-sm font-medium">
+                                Name *
+                              </Label>
+                              <Input
+                                id={`name-${member.id}`}
+                                value={member.name}
+                                onChange={(e) => {
+                                  setLeadership(prev => prev.map(m => 
+                                    m.id === member.id ? { ...m, name: e.target.value } : m
+                                  ));
+                                }}
+                                placeholder="Enter name"
+                                required
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor={`designation-${member.id}`} className="text-sm font-medium">
+                                Designation/Role *
+                              </Label>
+                              <Input
+                                id={`designation-${member.id}`}
+                                value={member.designation}
+                                onChange={(e) => {
+                                  setLeadership(prev => prev.map(m => 
+                                    m.id === member.id ? { ...m, designation: e.target.value } : m
+                                  ));
+                                }}
+                                placeholder="Enter designation"
+                                required
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor={`description-${member.id}`} className="text-sm font-medium">
+                                Description
+                              </Label>
+                              <Textarea
+                                id={`description-${member.id}`}
+                                value={member.description || ""}
+                                onChange={(e) => {
+                                  setLeadership(prev => prev.map(m => 
+                                    m.id === member.id ? { ...m, description: e.target.value } : m
+                                  ));
+                                }}
+                                placeholder="Enter description"
+                                rows={3}
+                              />
+                            </div>
+                            <div className="flex justify-between items-center pt-2">
+                              <div className="text-xs text-muted-foreground">
+                                ID: {member.id.slice(0, 8)}...
+                              </div>
+                              <Button
+                                variant="destructive"
+                                size="sm"
+                                onClick={() => deleteLeadershipMember(member.id)}
+                              >
+                                <Trash2 className="h-4 w-4 mr-1" />
+                                Remove
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       </CardContent>
