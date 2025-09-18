@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,13 @@ const AddVehicle = () => {
   const [showAgreementPreview, setShowAgreementPreview] = useState(false);
   const agreementRef = useRef<HTMLDivElement>(null);
   
+  // Master data states
+  const [makes, setMakes] = useState<any[]>([]);
+  const [models, setModels] = useState<any[]>([]);
+  const [filteredModels, setFilteredModels] = useState<any[]>([]);
+  const [selectedMake, setSelectedMake] = useState("");
+  const [selectedModel, setSelectedModel] = useState("");
+  
   // Vehicle form state with all required fields
   const [formData, setFormData] = useState({
     // Basic Info
@@ -30,6 +37,8 @@ const AddVehicle = () => {
     category: "tractor" as "tractor" | "commercial" | "agriculture" | "other_vehicle",
     ownership_type: "kamtha" as "kamtha" | "third_party",
     deal_value: 250000,
+    hp: "",
+    hp_range: "",
     
     // Vehicle Numbers
     registration_number: "",

@@ -401,6 +401,100 @@ export type Database = {
         }
         Relationships: []
       }
+      tractor_makes: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      tractor_models: {
+        Row: {
+          created_at: string
+          hp: number | null
+          hp_range: string | null
+          id: string
+          make_id: string
+          model_name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          hp?: number | null
+          hp_range?: string | null
+          id?: string
+          make_id: string
+          model_name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          hp?: number | null
+          hp_range?: string | null
+          id?: string
+          make_id?: string
+          model_name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tractor_models_make_id_fkey"
+            columns: ["make_id"]
+            isOneToOne: false
+            referencedRelation: "tractor_makes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tractor_price_matrix: {
+        Row: {
+          created_at: string
+          id: string
+          model_id: string
+          price: number | null
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          model_id: string
+          price?: number | null
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          model_id?: string
+          price?: number | null
+          updated_at?: string
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tractor_price_matrix_model_id_fkey"
+            columns: ["model_id"]
+            isOneToOne: false
+            referencedRelation: "tractor_models"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string | null

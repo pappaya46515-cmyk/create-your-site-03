@@ -39,6 +39,7 @@ const DashboardLayout = ({ children, userRole }: DashboardLayoutProps) => {
           { icon: User, label: "Users", path: "/admin/users" },
           { icon: FileText, label: "Documents", path: "/admin/documents" },
           { icon: BarChart3, label: "Analytics", path: "/admin/analytics" },
+          { icon: Tractor, label: "Tractor Master Data", path: "/admin/tractor-master-data" },
           { icon: Bell, label: "Notifications", path: "/admin/notifications" },
         ];
       case "seller":

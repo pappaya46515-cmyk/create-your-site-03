@@ -31,6 +31,7 @@ import Analytics from "./pages/admin/Analytics";
 import AdminNotifications from "./pages/admin/AdminNotifications";
 import CMSPortal from "./pages/admin/CMSPortal";
 import AboutPageCMS from "./pages/admin/AboutPageCMS";
+import { TractorMasterData } from "./pages/admin/TractorMasterData";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -157,6 +158,11 @@ const App = () => (
             <Route path="/admin/cms/about" element={
               <ProtectedRoute requiredRole="admin">
                 <AboutPageCMS />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/tractor-master-data" element={
+              <ProtectedRoute requiredRole="admin">
+                <TractorMasterData />
               </ProtectedRoute>
             } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
