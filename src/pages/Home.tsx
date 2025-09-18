@@ -45,6 +45,18 @@ const Home = () => {
     loadLeadership();
   }, []);
 
+  // Auto-scroll carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextButton = document.querySelector('[aria-label="Next slide"]') as HTMLButtonElement;
+      if (nextButton) {
+        nextButton.click();
+      }
+    }, 4000); // Auto-scroll every 4 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   const slides = [
     {
       title: t('farmersServed'),
@@ -161,48 +173,64 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Leadership Team Carousel */}
-          {leadership.length > 0 && (
-            <div className="max-w-6xl mx-auto mb-12">
-              <h2 className="text-3xl font-bold text-white text-center mb-8">Our Leadership Team</h2>
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {leadership.map((leader) => (
-                    <CarouselItem key={leader.id} className="md:basis-1/2">
-                      <div className="p-4">
-                        <Card className="overflow-hidden hover-lift shadow-2xl">
-                          <div className="h-72 relative overflow-hidden group">
-                            {leader.photo_url ? (
-                              <img
-                                src={leader.photo_url}
-                                alt={`${leader.name} - ${leader.designation}`}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                              />
-                            ) : (
-                              <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                                <Users className="h-32 w-32 text-muted-foreground/30" />
-                              </div>
-                            )}
-                          </div>
-                          <CardContent className="p-6">
-                            <h3 className="font-bold text-2xl mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                              {leader.name}
-                            </h3>
-                            <p className="text-primary font-semibold text-lg">{leader.designation}</p>
-                            {leader.description && (
-                              <p className="text-muted-foreground mt-2">{leader.description}</p>
-                            )}
-                          </CardContent>
-                        </Card>
-                      </div>
+          {/* Leadership Team Carousel - Auto-scrolling */}
+          <div className="max-w-6xl mx-auto mb-12">
+            <h2 className="text-3xl font-bold text-white text-center mb-8">Our Leadership Team</h2>
+            <Carousel 
+              className="w-full"
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {leadership.length > 0 ? (
+                  leadership.map((leader) => (
+                    <CarouselItem key={leader.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                      <Card className="overflow-hidden hover-lift shadow-2xl h-full">
+                        <div className="h-64 relative overflow-hidden group">
+                          {leader.photo_url ? (
+                            <img
+                              src={leader.photo_url}
+                              alt={`${leader.name} - ${leader.designation}`}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-white/20 to-white/10 flex items-center justify-center">
+                              <Users className="h-24 w-24 text-white/50" />
+                            </div>
+                          )}
+                        </div>
+                        <CardContent className="p-4">
+                          <h3 className="font-bold text-xl mb-1 text-white">
+                            {leader.name}
+                          </h3>
+                          <p className="text-yellow-300 font-semibold">{leader.designation}</p>
+                        </CardContent>
+                      </Card>
                     </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="bg-white/90 hover:bg-white" />
-                <CarouselNext className="bg-white/90 hover:bg-white" />
-              </Carousel>
-            </div>
-          )}
+                  ))
+                ) : (
+                  // Placeholder cards while loading
+                  [...Array(4)].map((_, index) => (
+                    <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                      <Card className="overflow-hidden shadow-2xl h-full">
+                        <div className="h-64 bg-gradient-to-br from-white/20 to-white/10 flex items-center justify-center">
+                          <Users className="h-24 w-24 text-white/50" />
+                        </div>
+                        <CardContent className="p-4">
+                          <h3 className="font-bold text-xl mb-1 text-white">Loading...</h3>
+                          <p className="text-yellow-300 font-semibold">Management Team</p>
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                  ))
+                )}
+              </CarouselContent>
+              <CarouselPrevious className="bg-white/90 hover:bg-white -left-12" />
+              <CarouselNext className="bg-white/90 hover:bg-white -right-12" />
+            </Carousel>
+          </div>
 
           {/* Key Stats */}
           <div className="flex flex-wrap justify-center gap-6">
@@ -286,158 +314,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* About Us Section */}
-      <section className="py-16 bg-gradient-to-r from-muted/50 via-background to-muted/50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            About Om Ganesh Group
-          </h2>
-
-          {/* Mission Vision Values */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <Card className="hover-lift">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <Target className="h-8 w-8 text-primary" />
-                  <h3 className="font-bold text-xl">Our Mission</h3>
-                </div>
-                <p className="text-muted-foreground">
-                  To provide comprehensive agricultural equipment and services that empower farmers 
-                  and contribute to agricultural prosperity across Karnataka.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="hover-lift">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <Eye className="h-8 w-8 text-primary" />
-                  <h3 className="font-bold text-xl">Our Vision</h3>
-                </div>
-                <p className="text-muted-foreground">
-                  To be the most trusted partner for farmers in Karnataka, driving agricultural 
-                  innovation and sustainable farming practices.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="hover-lift">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <Heart className="h-8 w-8 text-primary" />
-                  <h3 className="font-bold text-xl">Our Values</h3>
-                </div>
-                <p className="text-muted-foreground">
-                  Integrity, Quality, Innovation, Customer Focus, and Sustainable Growth 
-                  form the foundation of our business operations.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Group Companies */}
-          <div className="mb-12">
-            <h3 className="text-3xl font-bold text-center mb-8">Our Group Companies</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card>
-                <CardContent className="p-6 flex items-start gap-4">
-                  <Factory className="h-8 w-8 text-primary flex-shrink-0 mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-lg mb-1">Om Ganesh Agro Products</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Manufacturing Trailers, Trollies and Agri equipment since 1988
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardContent className="p-6 flex items-start gap-4">
-                  <Tractor className="h-8 w-8 text-primary flex-shrink-0 mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-lg mb-1">Shimoga Tractors & Implements (P) Ltd</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Manufacturing Power Tillers & Power Trolley since 1988
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardContent className="p-6 flex items-start gap-4">
-                  <Users className="h-8 w-8 text-primary flex-shrink-0 mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-lg mb-1">Om Ganesh Motors</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Authorized Yamaha 2-wheeler dealers since 2008
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardContent className="p-6 flex items-start gap-4">
-                  <Factory className="h-8 w-8 text-primary flex-shrink-0 mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-lg mb-1">Om Ganesh Agro Spares</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Authorized TAFE spare parts dealers since 1998
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          {/* Awards Section */}
-          <div className="mb-12">
-            <h3 className="text-3xl font-bold text-center mb-8">Awards & Recognition</h3>
-            <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg p-8 border-2 border-yellow-200 dark:border-yellow-800">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[
-                  "Best Customer Relation Award - Govt of Karnataka (2005-06)",
-                  "Excellence in Manufacturing - Chamber of Commerce, Shimoga (2010-11)",
-                  "SMERA Ranking - Canara Bank (2010-11)",
-                  "Star Dealer Award from TAFE",
-                  "12 Achievement Awards from TAFE (2000-2013)",
-                  "Best Exchange Sales Award from TAFE",
-                  "Best Upcoming Dealer from Yamaha (2010-11)"
-                ].map((award, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <Trophy className="h-5 w-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-1" />
-                    <p className="text-muted-foreground">{award}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Network */}
-          <Card className="overflow-hidden">
-            <div className="h-48 bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900 dark:to-green-900 flex items-center justify-center relative">
-              <MapPin className="h-32 w-32 text-primary opacity-20 absolute" />
-              <div className="relative z-10 text-center">
-                <p className="text-2xl font-bold text-primary">6 Branches</p>
-                <p className="text-lg text-muted-foreground">Across Karnataka</p>
-              </div>
-            </div>
-            <CardContent className="p-8">
-              <p className="text-lg text-muted-foreground mb-4">
-                With our headquarters in Shimoga on Shankar Mutt Road, we have expanded our presence 
-                across Karnataka with branches in:
-              </p>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3">
-                {["Shikaripura", "Chanagiri", "Honnali", "Anvati", "Udupi", "Sagar"].map((location) => (
-                  <div key={location} className="bg-primary/5 rounded-lg p-3 text-center border border-primary/20">
-                    <MapPin className="h-4 w-4 text-primary mx-auto mb-1" />
-                    <p className="font-semibold text-foreground">{location}</p>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
 
       {/* Latest Vehicles from Sellers */}
       <LatestVehicles />
