@@ -122,10 +122,10 @@ const Home = () => {
       <Navbar />
       
       {/* Hero Section with Clean Design */}
-      <section className="relative py-12 overflow-hidden bg-gradient-to-br from-green-600 via-green-500 to-yellow-500">
+      <section className="relative py-12 overflow-hidden bg-gradient-to-br from-primary via-secondary to-accent">
         {/* Simple Pattern Background */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-black/20"></div>
+          <div className="absolute inset-0 bg-black/30"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -140,12 +140,15 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Simple Tagline */}
+          {/* KAMTHA and Tagline */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
-              {language === 'kn' ? 'ನಿಮ್ಮ ವಿಶ್ವಾಸಪಾತ್ರ ಕೃಷಿ ಸಹಯೋಗಿ' : 'Your Trusted Agriculture Partner'}
+            <h1 className="text-4xl md:text-5xl font-bold text-yellow-300 animate-pulse mb-3">
+              {language === 'en' ? 'KAMTHA' : 'ಕಂಠ'}
             </h1>
-            <p className="text-xl md:text-2xl text-yellow-100 font-medium">
+            <p className="text-xl md:text-2xl text-white font-medium mb-2">
+              {language === 'kn' ? 'ನಿಮ್ಮ ವಿಶ್ವಾಸಪಾತ್ರ ಕೃಷಿ ಸಹಯೋಗಿ' : 'Your Trusted Agriculture Partner'}
+            </p>
+            <p className="text-lg md:text-xl text-yellow-100">
               {language === 'kn' ? '38 ವರ್ಷಗಳ ಸೇವೆ' : '38 Years of Service'}
             </p>
           </div>
@@ -175,8 +178,8 @@ const Home = () => {
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <div className="w-full h-full bg-gradient-to-br from-green-100 to-yellow-100 flex items-center justify-center">
-                              <Users className="h-20 w-20 text-green-600" />
+                            <div className="w-full h-full bg-gradient-to-br from-purple-100 to-blue-100 flex items-center justify-center">
+                              <Users className="h-20 w-20 text-purple-600" />
                             </div>
                           )}
                         </div>
@@ -184,7 +187,7 @@ const Home = () => {
                           <h3 className="font-bold text-lg text-gray-800">
                             {leader.name}
                           </h3>
-                          <p className="text-green-600 font-medium text-sm">{leader.designation}</p>
+                          <p className="text-purple-600 font-medium text-sm">{leader.designation}</p>
                         </CardContent>
                       </Card>
                     </CarouselItem>
@@ -193,12 +196,12 @@ const Home = () => {
                   [...Array(3)].map((_, index) => (
                     <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3">
                       <Card className="overflow-hidden shadow-lg h-full bg-white">
-                        <div className="h-48 bg-gradient-to-br from-green-100 to-yellow-100 flex items-center justify-center">
-                          <Users className="h-20 w-20 text-green-600" />
+                        <div className="h-48 bg-gradient-to-br from-purple-100 to-blue-100 flex items-center justify-center">
+                          <Users className="h-20 w-20 text-purple-600" />
                         </div>
                         <CardContent className="p-3">
                           <h3 className="font-bold text-lg text-gray-800">Loading...</h3>
-                          <p className="text-green-600 font-medium text-sm">Team Member</p>
+                          <p className="text-purple-600 font-medium text-sm">Team Member</p>
                         </CardContent>
                       </Card>
                     </CarouselItem>
@@ -213,19 +216,19 @@ const Home = () => {
           {/* Key Stats - Simplified with Icons */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             <div className="bg-white/95 backdrop-blur px-6 py-4 rounded-xl shadow-lg text-center">
-              <Calendar className="h-8 w-8 text-green-600 mx-auto mb-2" />
+              <Calendar className="h-8 w-8 text-purple-600 mx-auto mb-2" />
               <p className="text-gray-800 font-bold text-lg">
                 {language === 'kn' ? '1988 ರಿಂದ' : 'Since 1988'}
               </p>
             </div>
             <div className="bg-white/95 backdrop-blur px-6 py-4 rounded-xl shadow-lg text-center">
-              <MapPin className="h-8 w-8 text-green-600 mx-auto mb-2" />
+              <MapPin className="h-8 w-8 text-purple-600 mx-auto mb-2" />
               <p className="text-gray-800 font-bold text-lg">
                 {language === 'kn' ? '5 ಜಿಲ್ಲೆಗಳು' : '5 Districts'}
               </p>
             </div>
             <div className="bg-white/95 backdrop-blur px-6 py-4 rounded-xl shadow-lg text-center">
-              <Users className="h-8 w-8 text-green-600 mx-auto mb-2" />
+              <Users className="h-8 w-8 text-purple-600 mx-auto mb-2" />
               <p className="text-gray-800 font-bold text-lg">
                 {language === 'kn' ? '11,000+ ರೈತರು' : '11,000+ Farmers'}
               </p>
