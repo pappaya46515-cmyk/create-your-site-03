@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { Tractor, Shield, Users, Award, TrendingUp, Headphones, ArrowRight, BarChart3, FileText, Upload, Sparkles, Star, CheckCircle, MapPin, Calendar, IndianRupee, Phone, User, Factory, Trophy, Target, Eye, Heart, Building2, Wrench, PhoneCall } from "lucide-react";
+import { Tractor, Shield, Users, Award, TrendingUp, Headphones, ArrowRight, BarChart3, FileText, Upload, Sparkles, Star, CheckCircle, MapPin, Calendar, IndianRupee, Phone, User, Factory, Trophy, Target, Eye, Heart, Building2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -118,64 +118,43 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-teal-50">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <Navbar />
       
-      {/* Hero Section with Management Team Photos */}
-      <section className="relative py-20 overflow-hidden bg-gradient-to-br from-primary via-secondary to-accent">
-        {/* Animated Background Pattern */}
+      {/* Hero Section with Clean Design */}
+      <section className="relative py-12 overflow-hidden bg-gradient-to-br from-green-600 via-green-500 to-yellow-500">
+        {/* Simple Pattern Background */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-black/40"></div>
-          <div className="absolute inset-0 opacity-20">
-            {[...Array(10)].map((_, i) => (
-              <Tractor 
-                key={i} 
-                className="absolute text-white animate-float"
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  left: `${(i % 5) * 25}%`,
-                  top: `${Math.floor(i / 5) * 50}%`,
-                  transform: `rotate(${i * 15}deg)`,
-                  animationDelay: `${i * 0.2}s`
-                }}
-              />
-            ))}
-          </div>
+          <div className="absolute inset-0 bg-black/20"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-          {/* Company Header with Logo */}
-          <div className="text-center mb-12">
-            <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-6 inline-block mb-8 shadow-2xl hover-lift">
+          {/* Company Logo */}
+          <div className="text-center mb-8">
+            <div className="bg-white rounded-2xl p-4 inline-block shadow-xl">
               <img 
                 src={omGaneshLogo} 
                 alt="Om Ganesh Tractors" 
-                className="h-36 w-auto mx-auto object-contain"
+                className="h-24 w-auto mx-auto object-contain"
               />
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
-              OM GANESH TRACTORS
-            </h1>
-            <div className="text-3xl md:text-4xl font-bold text-white/90 mb-6">
-              MASSEY FERGUSON
-            </div>
-            <p className="text-2xl text-white/90 mb-4">
-              38 Years of Excellence in Agricultural Equipment & Services
-            </p>
-            <div className="inline-block relative">
-              <h2 className="text-4xl md:text-5xl font-bold text-yellow-300 animate-pulse">
-                {language === 'en' ? 'KAMTHA' : 'ಕಂಠ'}
-              </h2>
-              <p className="text-xl text-white/90 mt-2">
-                {t('tagline')}
-              </p>
             </div>
           </div>
 
-          {/* Leadership Team Carousel - Auto-scrolling */}
-          <div className="max-w-6xl mx-auto mb-12">
-            <h2 className="text-3xl font-bold text-white text-center mb-8">{t('leadershipTeam')}</h2>
+          {/* Simple Tagline */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
+              {language === 'kn' ? 'ನಿಮ್ಮ ವಿಶ್ವಾಸಪಾತ್ರ ಕೃಷಿ ಸಹಯೋಗಿ' : 'Your Trusted Agriculture Partner'}
+            </h1>
+            <p className="text-xl md:text-2xl text-yellow-100 font-medium">
+              {language === 'kn' ? '38 ವರ್ಷಗಳ ಸೇವೆ' : '38 Years of Service'}
+            </p>
+          </div>
+
+          {/* Leadership Team - Simplified */}
+          <div className="max-w-5xl mx-auto mb-8">
+            <h2 className="text-2xl font-bold text-white text-center mb-6">
+              {language === 'kn' ? 'ನಮ್ಮ ತಂಡ' : 'Our Team'}
+            </h2>
             <Carousel 
               className="w-full"
               opts={{
@@ -186,122 +165,136 @@ const Home = () => {
               <CarouselContent className="-ml-2 md:-ml-4">
                 {leadership.length > 0 ? (
                   leadership.map((leader) => (
-                    <CarouselItem key={leader.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                      <Card className="overflow-hidden hover-lift shadow-2xl h-full">
-                        <div className="h-64 relative overflow-hidden group">
+                    <CarouselItem key={leader.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3">
+                      <Card className="overflow-hidden shadow-lg h-full bg-white">
+                        <div className="h-48 relative overflow-hidden">
                           {leader.photo_url ? (
                             <img
                               src={leader.photo_url}
-                              alt={`${leader.name} - ${leader.designation}`}
-                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                              alt={leader.name}
+                              className="w-full h-full object-cover"
                             />
                           ) : (
-                            <div className="w-full h-full bg-gradient-to-br from-white/20 to-white/10 flex items-center justify-center">
-                              <Users className="h-24 w-24 text-white/50" />
+                            <div className="w-full h-full bg-gradient-to-br from-green-100 to-yellow-100 flex items-center justify-center">
+                              <Users className="h-20 w-20 text-green-600" />
                             </div>
                           )}
                         </div>
-                        <CardContent className="p-4">
-                          <h3 className="font-bold text-xl mb-1 text-white">
+                        <CardContent className="p-3">
+                          <h3 className="font-bold text-lg text-gray-800">
                             {leader.name}
                           </h3>
-                          <p className="text-yellow-300 font-semibold">{leader.designation}</p>
+                          <p className="text-green-600 font-medium text-sm">{leader.designation}</p>
                         </CardContent>
                       </Card>
                     </CarouselItem>
                   ))
                 ) : (
-                  // Placeholder cards while loading
-                  [...Array(4)].map((_, index) => (
-                    <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                      <Card className="overflow-hidden shadow-2xl h-full">
-                        <div className="h-64 bg-gradient-to-br from-white/20 to-white/10 flex items-center justify-center">
-                          <Users className="h-24 w-24 text-white/50" />
+                  [...Array(3)].map((_, index) => (
+                    <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3">
+                      <Card className="overflow-hidden shadow-lg h-full bg-white">
+                        <div className="h-48 bg-gradient-to-br from-green-100 to-yellow-100 flex items-center justify-center">
+                          <Users className="h-20 w-20 text-green-600" />
                         </div>
-                        <CardContent className="p-4">
-                          <h3 className="font-bold text-xl mb-1 text-white">Loading...</h3>
-                          <p className="text-yellow-300 font-semibold">Management Team</p>
+                        <CardContent className="p-3">
+                          <h3 className="font-bold text-lg text-gray-800">Loading...</h3>
+                          <p className="text-green-600 font-medium text-sm">Team Member</p>
                         </CardContent>
                       </Card>
                     </CarouselItem>
                   ))
                 )}
               </CarouselContent>
-              <CarouselPrevious className="bg-white/90 hover:bg-white -left-12" />
-              <CarouselNext className="bg-white/90 hover:bg-white -right-12" />
+              <CarouselPrevious className="bg-white/90 hover:bg-white" />
+              <CarouselNext className="bg-white/90 hover:bg-white" />
             </Carousel>
           </div>
 
-          {/* Key Stats */}
-          <div className="flex flex-wrap justify-center gap-6">
-            <div className="glass backdrop-blur-xl px-8 py-4 rounded-xl border border-white/30 hover-lift">
-              <p className="text-white font-bold text-lg">Since 1988</p>
+          {/* Key Stats - Simplified with Icons */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            <div className="bg-white/95 backdrop-blur px-6 py-4 rounded-xl shadow-lg text-center">
+              <Calendar className="h-8 w-8 text-green-600 mx-auto mb-2" />
+              <p className="text-gray-800 font-bold text-lg">
+                {language === 'kn' ? '1988 ರಿಂದ' : 'Since 1988'}
+              </p>
             </div>
-            <div className="glass backdrop-blur-xl px-8 py-4 rounded-xl border border-white/30 hover-lift">
-              <p className="text-white font-bold text-lg">5 Districts</p>
+            <div className="bg-white/95 backdrop-blur px-6 py-4 rounded-xl shadow-lg text-center">
+              <MapPin className="h-8 w-8 text-green-600 mx-auto mb-2" />
+              <p className="text-gray-800 font-bold text-lg">
+                {language === 'kn' ? '5 ಜಿಲ್ಲೆಗಳು' : '5 Districts'}
+              </p>
             </div>
-            <div className="glass backdrop-blur-xl px-8 py-4 rounded-xl border border-white/30 hover-lift">
-              <p className="text-white font-bold text-lg">11,000+ Farmers Served</p>
+            <div className="bg-white/95 backdrop-blur px-6 py-4 rounded-xl shadow-lg text-center">
+              <Users className="h-8 w-8 text-green-600 mx-auto mb-2" />
+              <p className="text-gray-800 font-bold text-lg">
+                {language === 'kn' ? '11,000+ ರೈತರು' : '11,000+ Farmers'}
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Service Options - Buy, Sell and Contact for Service */}
-      <section className="py-12">
+      {/* Service Options - Simple and Clear */}
+      <section className="py-8 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-4 max-w-5xl mx-auto">
             {/* Buy Pre-Owned */}
-            <Card className="group hover:shadow-2xl transition-all cursor-pointer bg-gradient-to-br from-green-50 to-green-100 border-green-200">
-              <CardContent className="p-8 text-center">
-                <Tractor className="w-16 h-16 mx-auto mb-4 text-green-600 group-hover:scale-110 transition-transform" />
-                <h3 className="text-2xl font-bold mb-3 text-gray-800">
-                  {language === 'kn' ? 'ಪೂರ್ವ ಮಾಲೀಕತ್ವದ ಖರೀದಿ' : 'Buy Pre-Owned Equipment'}
+            <Card className="group hover:shadow-xl transition-all cursor-pointer border-2 border-green-400 bg-green-50">
+              <CardContent className="p-6 text-center">
+                <div className="bg-green-100 rounded-full p-4 inline-block mb-4">
+                  <Tractor className="w-12 h-12 text-green-700" />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-800">
+                  {language === 'kn' ? 'ಟ್ರ್ಯಾಕ್ಟರ್ ಖರೀದಿಸಿ' : 'Buy Tractor'}
                 </h3>
-                <p className="text-gray-600 mb-6">
-                  {language === 'kn' ? 'ಗುಣಮಟ್ಟದ ಪರೀಕ್ಷಿತ ಉಪಕರಣಗಳು' : 'Quality tested equipment'}
+                <p className="text-gray-700 mb-4 text-sm">
+                  {language === 'kn' ? 'ಪರೀಕ್ಷಿತ ಮತ್ತು ಗುಣಮಟ್ಟದ' : 'Tested & Quality'}
                 </p>
                 <Link to="/register/buyer">
-                  <Button className="bg-green-600 hover:bg-green-700">
-                    {language === 'kn' ? 'ಈಗ ಬ್ರೌಸ್ ಮಾಡಿ' : 'Browse Now'}
+                  <Button className="bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 text-lg">
+                    {language === 'kn' ? '👉 ನೋಡಿ' : '👉 View'}
                   </Button>
                 </Link>
               </CardContent>
             </Card>
 
             {/* Sell Your Equipment */}
-            <Card className="group hover:shadow-2xl transition-all cursor-pointer bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
-              <CardContent className="p-8 text-center">
-                <Wrench className="w-16 h-16 mx-auto mb-4 text-blue-600 group-hover:scale-110 transition-transform" />
-                <h3 className="text-2xl font-bold mb-3 text-gray-800">
-                  {language === 'kn' ? 'ನಿಮ್ಮ ಪೂರ್ವ ಮಾಲೀಕತ್ವ ಮಾರಾಟ' : 'Sell Your Pre-Owned'}
+            <Card className="group hover:shadow-xl transition-all cursor-pointer border-2 border-blue-400 bg-blue-50">
+              <CardContent className="p-6 text-center">
+                <div className="bg-blue-100 rounded-full p-4 inline-block mb-4">
+                  <IndianRupee className="w-12 h-12 text-blue-700" />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-800">
+                  {language === 'kn' ? 'ಟ್ರ್ಯಾಕ್ಟರ್ ಮಾರಾಟ' : 'Sell Tractor'}
                 </h3>
-                <p className="text-gray-600 mb-6">
-                  {language === 'kn' ? 'ಉತ್ತಮ ಮೌಲ್ಯ ಪಡೆಯಿರಿ' : 'Get the best value'}
+                <p className="text-gray-700 mb-4 text-sm">
+                  {language === 'kn' ? 'ಉತ್ತಮ ಬೆಲೆ ಪಡೆಯಿರಿ' : 'Best Price'}
                 </p>
                 <Link to="/register/seller">
-                  <Button className="bg-blue-600 hover:bg-blue-700">
-                    {language === 'kn' ? 'ಈಗ ಮಾರಾಟ ಮಾಡಿ' : 'Sell Now'}
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 text-lg">
+                    {language === 'kn' ? '💰 ಮಾರಿ' : '💰 Sell'}
                   </Button>
                 </Link>
               </CardContent>
             </Card>
 
             {/* Contact Service */}
-            <Card className="group hover:shadow-2xl transition-all cursor-pointer bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
-              <CardContent className="p-8 text-center">
-                <PhoneCall className="w-16 h-16 mx-auto mb-4 text-orange-600 group-hover:scale-110 transition-transform animate-pulse" />
-                <h3 className="text-2xl font-bold mb-3 text-gray-800">
-                  {language === 'kn' ? 'ಸೇವೆಗಾಗಿ ಸಂಪರ್ಕಿಸಿ' : 'Contact for Service'}
+            <Card className="group hover:shadow-xl transition-all cursor-pointer border-2 border-orange-400 bg-orange-50">
+              <CardContent className="p-6 text-center">
+                <div className="bg-orange-100 rounded-full p-4 inline-block mb-4">
+                  <Phone className="w-12 h-12 text-orange-700 animate-pulse" />
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-800">
+                  {language === 'kn' ? 'ಸೇವೆ ಕರೆ' : 'Service Call'}
                 </h3>
-                <div className="space-y-3">
-                  <a href="tel:+919448147073" className="flex items-center justify-center gap-2 text-orange-600 hover:text-orange-700 font-semibold">
-                    <Phone className="w-5 h-5" />
-                    <span>9448147073</span>
+                <div className="space-y-2">
+                  <a href="tel:+919448147073" className="flex items-center justify-center gap-2 bg-orange-100 rounded-lg p-2 hover:bg-orange-200">
+                    <Phone className="w-5 h-5 text-orange-700" />
+                    <span className="font-bold text-lg text-orange-800">9448147073</span>
                   </a>
-                  <a href="tel:+918496971246" className="flex items-center justify-center gap-2 text-orange-600 hover:text-orange-700 font-semibold">
-                    <Phone className="w-5 h-5" />
-                    <span>8496971246</span>
+                  <a href="tel:+918496971246" className="flex items-center justify-center gap-2 bg-orange-100 rounded-lg p-2 hover:bg-orange-200">
+                    <Phone className="w-5 h-5 text-orange-700" />
+                    <span className="font-bold text-lg text-orange-800">8496971246</span>
                   </a>
                 </div>
               </CardContent>
