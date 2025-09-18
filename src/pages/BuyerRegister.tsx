@@ -1,74 +1,28 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
-import { Loader2, UserPlus, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { OTPAuth } from "@/components/OTPAuth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const BuyerRegister = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    fullName: "",
-    phone: "",
-  });
+  const [showNameForm, setShowNameForm] = useState(true);
+  const [fullName, setFullName] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleNameSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-
-    try {
-      // Register the user
-      const { data, error } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-        options: {
-          data: {
-            full_name: formData.fullName,
-            phone: formData.phone,
-          },
-          emailRedirectTo: `${window.location.origin}/auth`,
-        },
-      });
-
-      if (error) throw error;
-
-      if (data.user) {
-        // Add buyer role
-        const { error: roleError } = await supabase
-          .from("user_roles")
-          .insert({
-            user_id: data.user.id,
-            role: "buyer",
-          });
-
-        if (roleError) throw roleError;
-
-        toast({
-          title: "Registration Successful!",
-          description: "Please check your email to verify your account, then login.",
-        });
-
-        // Redirect to login
-        setTimeout(() => navigate("/auth"), 2000);
-      }
-    } catch (error: any) {
-      toast({
-        title: "Registration Failed",
-        description: error.message || "An error occurred during registration",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
+    if (fullName.trim()) {
+      setShowNameForm(false);
     }
+  };
+
+  const handleAuthSuccess = () => {
+    navigate("/portal-select");
   };
 
   return (
@@ -94,87 +48,62 @@ const BuyerRegister = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <Label htmlFor="fullName">Full Name *</Label>
-                  <Input
-                    id="fullName"
-                    type="text"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    required
-                  />
-                </div>
+              {showNameForm ? (
+                <form onSubmit={handleNameSubmit} className="space-y-4">
+                  <div>
+                    <Label htmlFor="fullName">Full Name *</Label>
+                    <Input
+                      id="fullName"
+                      type="text"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      placeholder="Enter your full name"
+                      required
+                    />
+                  </div>
 
-                <div>
-                  <Label htmlFor="email">Email Address *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="phone">Phone Number *</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    pattern="[0-9]{10}"
-                    placeholder="10-digit mobile number"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="password">Password *</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    minLength={6}
-                    required
-                  />
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Minimum 6 characters
-                  </p>
-                </div>
-
-                <Button
-                  type="submit"
-                  className="w-full"
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Creating Account...
-                    </>
-                  ) : (
-                    <>
-                      <UserPlus className="mr-2 h-4 w-4" />
-                      Register as Buyer
-                    </>
-                  )}
-                </Button>
-
-                <div className="text-center text-sm text-muted-foreground">
-                  Already have an account?{" "}
-                  <Button
-                    type="button"
-                    variant="link"
-                    className="p-0"
-                    onClick={() => navigate("/auth")}
-                  >
-                    Sign In
+                  <Button type="submit" className="w-full">
+                    Continue with Mobile Number
                   </Button>
-                </div>
-              </form>
+
+                  <div className="text-center text-sm text-muted-foreground">
+                    Already have an account?{" "}
+                    <Button
+                      type="button"
+                      variant="link"
+                      className="p-0"
+                      onClick={() => navigate("/auth")}
+                    >
+                      Sign In
+                    </Button>
+                  </div>
+                </form>
+              ) : (
+                <>
+                  <div className="mb-4 p-3 bg-muted rounded-lg">
+                    <p className="text-sm">
+                      <span className="font-medium">Name:</span> {fullName}
+                    </p>
+                  </div>
+                  
+                  <OTPAuth
+                    userType="buyer"
+                    fullName={fullName}
+                    onSuccess={handleAuthSuccess}
+                  />
+
+                  <div className="text-center mt-4">
+                    <Button
+                      type="button"
+                      variant="link"
+                      className="text-sm"
+                      onClick={() => setShowNameForm(true)}
+                    >
+                      Change Name
+                    </Button>
+                  </div>
+                </>
+              )}
             </CardContent>
           </Card>
         </div>
