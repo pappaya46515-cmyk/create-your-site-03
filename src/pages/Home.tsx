@@ -247,6 +247,29 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Key Information Carousel */}
+      <section className="py-12 bg-white/80 backdrop-blur-sm">
+        <div className="container mx-auto px-4">
+          <Carousel className="max-w-4xl mx-auto">
+            <CarouselContent>
+              {slides.map((slide, index) => (
+                <CarouselItem key={index}>
+                  <Card className={`${slide.bgColor} text-white border-0`}>
+                    <CardContent className="p-12 text-center">
+                      <h3 className="text-3xl font-bold mb-4">{slide.title}</h3>
+                      <p className="text-xl mb-2">{slide.subtitle}</p>
+                      <p className="text-lg opacity-90">{slide.description}</p>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="bg-white/90 hover:bg-white" />
+            <CarouselNext className="bg-white/90 hover:bg-white" />
+          </Carousel>
+        </div>
+      </section>
+
       {/* Service Options - Buy and Sell */}
       <section className="py-12">
         <div className="container mx-auto px-4">
