@@ -270,6 +270,168 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Company Overview */}
+      <section className="py-16 bg-gradient-to-br from-orange-50 to-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+            {language === 'kn' ? 'ಕಂಪನಿ ಮಾಹಿತಿ' : 'About Om Ganesh Tractors'}
+          </h2>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {/* History */}
+            <Card className="backdrop-blur-sm bg-white/90 shadow-xl hover:shadow-2xl transition-all">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-semibold mb-4 text-orange-600">
+                  {language === 'kn' ? 'ನಮ್ಮ ಇತಿಹಾಸ' : 'Our Legacy'}
+                </h3>
+                <p className="text-gray-700 mb-4">
+                  {language === 'kn' 
+                    ? 'ಓಂ ಗಣೇಶ್ ಗ್ರೂಪ್ 38 ವರ್ಷಗಳ ಹಿಂದೆ ಪ್ರಾರಂಭವಾಯಿತು. ಶ್ರೀ ಭಾಸ್ಕರ್ ಕಾಮತ್ CMD ಆಗಿ, ಟ್ರ್ಯಾಕ್ಟರ್ ಮಾರಾಟದಿಂದ ಪ್ರಾರಂಭಿಸಿ, ಶಿವಮೊಗ್ಗದಲ್ಲಿ ಮೊದಲ ಸಂಘಟಿತ ಟ್ರೇಲರ್ ತಯಾರಿಕೆ ಘಟಕವನ್ನು ಸ್ಥಾಪಿಸಿದರು.'
+                    : 'Om Ganesh Group was founded 38 years ago by Mr. Bhaskar Kamath (CMD). Starting with freelance tractor sales, he established the first organized trailer manufacturing unit in Shimoga and revived a Massey Ferguson dealership 20 years ago.'
+                  }
+                </p>
+                <p className="text-gray-700">
+                  {language === 'kn'
+                    ? 'ಶ್ರೀ ಹರ್ಷ ಬಿ ಕಾಮತ್ (CEO), ಮೆಕಾನಿಕಲ್ ಇಂಜಿನಿಯರ್, ಕುಟುಂಬ ವ್ಯವಹಾರವನ್ನು ಹೊಸ ಎತ್ತರಕ್ಕೆ ಕೊಂಡೊಯ್ದಿದ್ದಾರೆ.'
+                    : 'Mr. Harsha B Kamath (CEO), a mechanical engineer, joined the family business and has been instrumental in achieving our current market position.'
+                  }
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Vision */}
+            <Card className="backdrop-blur-sm bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-xl hover:shadow-2xl transition-all">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-semibold mb-4">
+                  {language === 'kn' ? 'TAFE ದೃಷ್ಟಿ' : 'TAFE Vision'}
+                </h3>
+                <p className="text-white/95 italic">
+                  {language === 'kn'
+                    ? '"ಉತ್ಕೃಷ್ಟತೆ ನಮಗೆ ಕೇವಲ ಇಂಜಿನಿಯರಿಂಗ್ ಅಲ್ಲ. ಇದು ನಮ್ಮೊಳಗಿನ ಅತ್ಯುತ್ತಮವನ್ನು ಸಾಧಿಸುವ ಆಂತರಿಕ ಬಯಕೆ. ಇದು ಕೆಲಸ ಮತ್ತು ಮನೆಯಲ್ಲಿ ನಮ್ಮ ಜೀವನವನ್ನು ವ್ಯಾಖ್ಯಾನಿಸುತ್ತದೆ ಮತ್ತು ನಮ್ಮ ಸುತ್ತಲಿನ ಜಗತ್ತಿನಲ್ಲಿ ಹರಡುತ್ತದೆ."'
+                    : '"To us in TAFE, Excellence is not something that we engineer, inspect and input into our tractors. It is an innate desire to attain the best that comes from within each of us. It defines our lives at work and at home and ripples out into the world around us."'
+                  }
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Group Companies */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+            {language === 'kn' ? 'ನಮ್ಮ ಗ್ರೂಪ್ ಕಂಪನಿಗಳು' : 'Our Group Companies'}
+          </h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            <Card className="bg-white hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <h4 className="font-semibold text-orange-600 mb-2">Om Ganesh Agro Products</h4>
+                <p className="text-sm text-gray-600">
+                  {language === 'kn' ? 'ಟ್ರೇಲರ್ ಮತ್ತು ಕೃಷಿ ಉಪಕರಣಗಳು (1988)' : 'Trailers & Agri Equipment (Since 1988)'}
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <h4 className="font-semibold text-orange-600 mb-2">Shimoga Tractors & Implements</h4>
+                <p className="text-sm text-gray-600">
+                  {language === 'kn' ? 'ಪವರ್ ಟಿಲ್ಲರ್ಸ್ & ಟ್ರಾಲಿಗಳು (1988)' : 'Power Tillers & Trolleys (Since 1988)'}
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <h4 className="font-semibold text-orange-600 mb-2">Om Ganesh Motors</h4>
+                <p className="text-sm text-gray-600">
+                  {language === 'kn' ? 'ಯಮಹಾ 2 ವೀಲರ್ಸ್ ಡೀಲರ್ (2008)' : 'Yamaha 2 Wheelers Dealer (Since 2008)'}
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <h4 className="font-semibold text-orange-600 mb-2">Om Ganesh Agro Spares</h4>
+                <p className="text-sm text-gray-600">
+                  {language === 'kn' ? 'TAFE ಸ್ಪೇರ್ ಪಾರ್ಟ್ಸ್ ಡೀಲರ್ (1998)' : 'TAFE Spare Parts Dealer (Since 1998)'}
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="mt-8 text-center">
+            <p className="text-gray-700 max-w-3xl mx-auto">
+              {language === 'kn'
+                ? 'ಮುಖ್ಯ ಕಚೇರಿ: ಶಿವಮೊಗ್ಗ - ಶಂಕರ ಮಠ ರಸ್ತೆ | ಶಾಖೆಗಳು: ಶಿಕಾರಿಪುರ, ಚನ್ನಗಿರಿ, ಹೊನ್ನಾಳಿ, ಅಣ್ವತ್ತಿ, ಉಡುಪಿ ಮತ್ತು ಸಾಗರ'
+                : 'HQ: Shimoga - Shankar Mutt Road | Branches: Shikaripura, Chanagiri, Honnali, Anvati, Udupi & Sagar'
+              }
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Awards & Recognition */}
+      <section className="py-16 bg-gradient-to-br from-white to-orange-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+            {language === 'kn' ? 'ಪ್ರಶಸ್ತಿಗಳು ಮತ್ತು ಗೌರವಗಳು' : 'Awards & Recognition'}
+          </h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
+              <div className="text-orange-500 mb-3">🏆</div>
+              <h4 className="font-semibold mb-2">
+                {language === 'kn' ? 'ಉತ್ತಮ ಗ್ರಾಹಕ ಸಂಬಂಧ ಪ್ರಶಸ್ತಿ' : 'Best Customer Relation Award'}
+              </h4>
+              <p className="text-sm text-gray-600">Government of Karnataka (2005-06)</p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
+              <div className="text-orange-500 mb-3">⭐</div>
+              <h4 className="font-semibold mb-2">
+                {language === 'kn' ? 'ಸ್ಟಾರ್ ಡೀಲರ್ ಪ್ರಶಸ್ತಿ' : 'Star Dealer Award'}
+              </h4>
+              <p className="text-sm text-gray-600">TAFE Recognition</p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
+              <div className="text-orange-500 mb-3">🎯</div>
+              <h4 className="font-semibold mb-2">
+                {language === 'kn' ? '12 TAFE ಪ್ರಶಸ್ತಿಗಳು' : '12 TAFE Awards'}
+              </h4>
+              <p className="text-sm text-gray-600">Various Achievements (2000-2013)</p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
+              <div className="text-orange-500 mb-3">🏅</div>
+              <h4 className="font-semibold mb-2">
+                {language === 'kn' ? 'ಉತ್ಪಾದನೆಯಲ್ಲಿ ಶ್ರೇಷ್ಠತೆ' : 'Excellence in Manufacturing'}
+              </h4>
+              <p className="text-sm text-gray-600">Chamber of Commerce, Shimoga (2010-11)</p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
+              <div className="text-orange-500 mb-3">💼</div>
+              <h4 className="font-semibold mb-2">
+                {language === 'kn' ? 'SMERA ರೇಟಿಂಗ್' : 'SMERA Rating'}
+              </h4>
+              <p className="text-sm text-gray-600">Canara Bank (2010-11)</p>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
+              <div className="text-orange-500 mb-3">🚀</div>
+              <h4 className="font-semibold mb-2">
+                {language === 'kn' ? 'ಉತ್ತಮ ಬೆಳವಣಿಗೆ ಡೀಲರ್' : 'Best Upcoming Dealer'}
+              </h4>
+              <p className="text-sm text-gray-600">Yamaha (2010-11)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Service Options - Buy and Sell */}
       <section className="py-12">
         <div className="container mx-auto px-4">
