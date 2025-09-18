@@ -87,33 +87,33 @@ const Home = () => {
   const features = [
     {
       icon: <Tractor className="h-8 w-8 text-white" />,
-      title: "Vehicle Stock Management",
-      description: "Complete digital platform for managing tractors and commercial vehicles"
+      title: t('vehicleStockManagement'),
+      description: t('vehicleStockDesc')
     },
     {
       icon: <Shield className="h-8 w-8 text-white" />,
-      title: "Document Verification",
-      description: "RC, Insurance, Forms 29/30, NOC - all documents verified and stored"
+      title: t('documentVerificationFeature'),
+      description: t('documentVerificationDesc')
     },
     {
       icon: <Users className="h-8 w-8 text-white" />,
-      title: "11,000+ Farmers Served",
-      description: "Trusted platform connecting buyers and sellers across Karnataka"
+      title: t('farmersServedFeature'),
+      description: t('farmersServedDesc')
     },
     {
       icon: <FileText className="h-8 w-8 text-white" />,
-      title: "Agreement Generation",
-      description: "Automated PDF agreements with complete documentation"
+      title: t('agreementGeneration'),
+      description: t('agreementGenerationDesc')
     },
     {
       icon: <BarChart3 className="h-8 w-8 text-white" />,
-      title: "Analytics & Reports",
-      description: "Track stock movement, buyer interests, and market trends"
+      title: t('analyticsReports'),
+      description: t('analyticsReportsDesc')
     },
     {
       icon: <Award className="h-8 w-8 text-white" />,
-      title: "Minimum ₹2.5L Value",
-      description: "Quality assured with minimum deal value enforcement"
+      title: t('minValueFeature'),
+      description: t('minValueDesc')
     }
   ];
 
@@ -175,7 +175,7 @@ const Home = () => {
 
           {/* Leadership Team Carousel - Auto-scrolling */}
           <div className="max-w-6xl mx-auto mb-12">
-            <h2 className="text-3xl font-bold text-white text-center mb-8">Our Leadership Team</h2>
+            <h2 className="text-3xl font-bold text-white text-center mb-8">{t('leadershipTeam')}</h2>
             <Carousel 
               className="w-full"
               opts={{
@@ -296,18 +296,29 @@ const Home = () => {
             </Card>
           </div>
 
-          {/* Contact Numbers */}
-          <div className="flex flex-wrap justify-center gap-8">
-            <div className="flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-lg">
-              <Headphones className="h-6 w-6 text-purple-600" />
-              <a href="tel:9448147073" className="font-bold text-lg text-gray-800 hover:text-purple-600 transition-colors">
-                9448147073
+          {/* Contact Numbers - Customer Service */}
+          <div className="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl p-6 max-w-2xl mx-auto border-2 border-yellow-400">
+            <h3 className="text-center text-xl font-bold text-gray-800 mb-4">{t('contactForService')}</h3>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a 
+                href="tel:9448147073" 
+                className="flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-purple-200 hover:border-purple-400"
+              >
+                <Phone className="h-6 w-6 text-purple-600 animate-pulse" />
+                <div className="text-left">
+                  <p className="text-xs text-gray-600">{t('clickToCall')}</p>
+                  <p className="font-bold text-lg text-gray-800">9448147073</p>
+                </div>
               </a>
-            </div>
-            <div className="flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-lg">
-              <Headphones className="h-6 w-6 text-blue-600" />
-              <a href="tel:8496971246" className="font-bold text-lg text-gray-800 hover:text-blue-600 transition-colors">
-                8496971246
+              <a 
+                href="tel:8496971246" 
+                className="flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-blue-200 hover:border-blue-400"
+              >
+                <Phone className="h-6 w-6 text-blue-600 animate-pulse" />
+                <div className="text-left">
+                  <p className="text-xs text-gray-600">{t('clickToCall')}</p>
+                  <p className="font-bold text-lg text-gray-800">8496971246</p>
+                </div>
               </a>
             </div>
           </div>
@@ -371,11 +382,11 @@ const Home = () => {
             </div>
             <div className="transform hover:scale-110 transition-transform">
               <div className="text-5xl font-bold mb-2">100%</div>
-              <div className="text-white/90">Verified Documents</div>
+              <div className="text-white/90">{t('verifiedDocuments')}</div>
             </div>
             <div className="transform hover:scale-110 transition-transform">
               <div className="text-5xl font-bold mb-2">24/7</div>
-              <div className="text-white/90">System Access</div>
+              <div className="text-white/90">{t('systemAccess')}</div>
             </div>
           </div>
         </div>

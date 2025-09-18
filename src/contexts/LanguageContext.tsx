@@ -81,7 +81,27 @@ const translations = {
     
     // Stats
     verifiedDocuments: "Verified Documents",
-    systemAccess: "System Access"
+    systemAccess: "System Access",
+    
+    // Contact
+    contactForService: "Contact for Service",
+    clickToCall: "Click to call",
+    
+    // Leadership
+    leadershipTeam: "Our Leadership Team",
+    founderCEO: "Founder & CEO",
+    managingDirector: "Managing Director",
+    chairmanAdvisor: "Chairman & Advisor",
+    
+    // Footer
+    quickLinks: "Quick Links",
+    contact: "Contact",
+    email: "Email",
+    phone: "Phone",
+    address: "Address",
+    allRightsReserved: "All rights reserved",
+    privacyPolicy: "Privacy Policy",
+    termsOfService: "Terms of Service"
   },
   kn: {
     // Navigation
@@ -155,7 +175,27 @@ const translations = {
     
     // Stats
     verifiedDocuments: "ಪರಿಶೀಲಿಸಿದ ದಾಖಲೆಗಳು",
-    systemAccess: "ಸಿಸ್ಟಮ್ ಪ್ರವೇಶ"
+    systemAccess: "ಸಿಸ್ಟಮ್ ಪ್ರವೇಶ",
+    
+    // Contact
+    contactForService: "ಸೇವೆಗಾಗಿ ಸಂಪರ್ಕಿಸಿ",
+    clickToCall: "ಕರೆ ಮಾಡಲು ಕ್ಲಿಕ್ ಮಾಡಿ",
+    
+    // Leadership
+    leadershipTeam: "ನಮ್ಮ ನಾಯಕತ್ವ ತಂಡ",
+    founderCEO: "ಸಂಸ್ಥಾಪಕ ಮತ್ತು CEO",
+    managingDirector: "ವ್ಯವಸ್ಥಾಪಕ ನಿರ್ದೇಶಕ",
+    chairmanAdvisor: "ಅಧ್ಯಕ್ಷ ಮತ್ತು ಸಲಹೆಗಾರ",
+    
+    // Footer
+    quickLinks: "ತ್ವರಿತ ಲಿಂಕ್‌ಗಳು",
+    contact: "ಸಂಪರ್ಕ",
+    email: "ಇಮೇಲ್",
+    phone: "ಫೋನ್",
+    address: "ವಿಳಾಸ",
+    allRightsReserved: "ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ",
+    privacyPolicy: "ಗೌಪ್ಯತಾ ನೀತಿ",
+    termsOfService: "ಸೇವಾ ನಿಯಮಗಳು"
   }
 };
 
