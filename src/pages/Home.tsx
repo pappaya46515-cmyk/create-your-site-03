@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import omGaneshLogo from "@/assets/om-ganesh-official-logo.jpg";
+import Autoplay from "embla-carousel-autoplay";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -19,6 +20,16 @@ const Home = () => {
   const { t, language } = useLanguage();
   const [user, setUser] = useState<any>(null);
   const [leadership, setLeadership] = useState<Array<{ id: string; name: string; designation: string; description: string | null; photo_url: string | null }>>([]);
+  
+  // Auto-play plugin for carousel
+  const plugin = useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: false })
+  );
+  
+  // Auto-play plugin for info carousel
+  const infoPlugin = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: false })
+  );
 
   useEffect(() => {
     // Check if user is logged in
@@ -160,10 +171,13 @@ const Home = () => {
             </h2>
             <Carousel 
               className="w-full"
+              plugins={[plugin.current]}
               opts={{
                 align: "start",
                 loop: true,
               }}
+              onMouseEnter={plugin.current.stop}
+              onMouseLeave={plugin.current.reset}
             >
               <CarouselContent className="-ml-2 md:-ml-4">
                 {leadership.length > 0 ? (
@@ -309,7 +323,16 @@ const Home = () => {
       {/* Key Information Carousel */}
       <section className="py-12 bg-white/80 backdrop-blur-sm">
         <div className="container mx-auto px-4">
-          <Carousel className="max-w-4xl mx-auto">
+          <Carousel 
+            className="max-w-4xl mx-auto"
+            plugins={[infoPlugin.current]}
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            onMouseEnter={infoPlugin.current.stop}
+            onMouseLeave={infoPlugin.current.reset}
+          >
             <CarouselContent>
               {slides.map((slide, index) => (
                 <CarouselItem key={index}>
