@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import LatestVehicles from "@/components/LatestVehicles";
@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { Tractor, Shield, Users, Award, TrendingUp, Headphones, ArrowRight, BarChart3, FileText, Upload, Sparkles, Star, CheckCircle, MapPin, Calendar, IndianRupee, Phone, User, Factory, Trophy, Target, Eye, Heart, Building2 } from "lucide-react";
+import { Tractor, Shield, Users, Award, TrendingUp, Headphones, ArrowRight, BarChart3, FileText, Upload, Sparkles, Star, CheckCircle, MapPin, Calendar, IndianRupee, Phone, User, Factory, Trophy, Target, Eye, Heart, Building2, Wrench, PhoneCall } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -247,6 +247,69 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Service Options - Buy, Sell and Contact for Service */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {/* Buy Pre-Owned */}
+            <Card className="group hover:shadow-2xl transition-all cursor-pointer bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+              <CardContent className="p-8 text-center">
+                <Tractor className="w-16 h-16 mx-auto mb-4 text-green-600 group-hover:scale-110 transition-transform" />
+                <h3 className="text-2xl font-bold mb-3 text-gray-800">
+                  {language === 'kn' ? 'ಪೂರ್ವ ಮಾಲೀಕತ್ವದ ಖರೀದಿ' : 'Buy Pre-Owned Equipment'}
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  {language === 'kn' ? 'ಗುಣಮಟ್ಟದ ಪರೀಕ್ಷಿತ ಉಪಕರಣಗಳು' : 'Quality tested equipment'}
+                </p>
+                <Link to="/register/buyer">
+                  <Button className="bg-green-600 hover:bg-green-700">
+                    {language === 'kn' ? 'ಈಗ ಬ್ರೌಸ್ ಮಾಡಿ' : 'Browse Now'}
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Sell Your Equipment */}
+            <Card className="group hover:shadow-2xl transition-all cursor-pointer bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+              <CardContent className="p-8 text-center">
+                <Wrench className="w-16 h-16 mx-auto mb-4 text-blue-600 group-hover:scale-110 transition-transform" />
+                <h3 className="text-2xl font-bold mb-3 text-gray-800">
+                  {language === 'kn' ? 'ನಿಮ್ಮ ಪೂರ್ವ ಮಾಲೀಕತ್ವ ಮಾರಾಟ' : 'Sell Your Pre-Owned'}
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  {language === 'kn' ? 'ಉತ್ತಮ ಮೌಲ್ಯ ಪಡೆಯಿರಿ' : 'Get the best value'}
+                </p>
+                <Link to="/register/seller">
+                  <Button className="bg-blue-600 hover:bg-blue-700">
+                    {language === 'kn' ? 'ಈಗ ಮಾರಾಟ ಮಾಡಿ' : 'Sell Now'}
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Contact Service */}
+            <Card className="group hover:shadow-2xl transition-all cursor-pointer bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
+              <CardContent className="p-8 text-center">
+                <PhoneCall className="w-16 h-16 mx-auto mb-4 text-orange-600 group-hover:scale-110 transition-transform animate-pulse" />
+                <h3 className="text-2xl font-bold mb-3 text-gray-800">
+                  {language === 'kn' ? 'ಸೇವೆಗಾಗಿ ಸಂಪರ್ಕಿಸಿ' : 'Contact for Service'}
+                </h3>
+                <div className="space-y-3">
+                  <a href="tel:+919448147073" className="flex items-center justify-center gap-2 text-orange-600 hover:text-orange-700 font-semibold">
+                    <Phone className="w-5 h-5" />
+                    <span>9448147073</span>
+                  </a>
+                  <a href="tel:+918496971246" className="flex items-center justify-center gap-2 text-orange-600 hover:text-orange-700 font-semibold">
+                    <Phone className="w-5 h-5" />
+                    <span>8496971246</span>
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Key Information Carousel */}
       <section className="py-12 bg-white/80 backdrop-blur-sm">
         <div className="container mx-auto px-4">
@@ -432,83 +495,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Service Options - Buy and Sell */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
-            {/* Buy Pre-owned Section */}
-            <Card className="border-2 border-purple-200 hover:border-purple-400 transition-all duration-300 hover:shadow-2xl">
-              <CardContent className="p-8">
-                <div className="flex items-center mb-6">
-                  <div className="p-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full mr-4">
-                    <Users className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-800">{t('buyPreowned')}</h3>
-                </div>
-                <p className="text-gray-600 mb-6">
-                  {t('buyDescription')}
-                </p>
-                <Button 
-                  size="lg"
-                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
-                  onClick={() => navigate("/register/buyer")}
-                >
-                  {t('startBuying')} <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Sell Pre-owned Section */}
-            <Card className="border-2 border-teal-200 hover:border-teal-400 transition-all duration-300 hover:shadow-2xl">
-              <CardContent className="p-8">
-                <div className="flex items-center mb-6">
-                  <div className="p-3 bg-gradient-to-r from-teal-600 to-purple-600 rounded-full mr-4">
-                    <Tractor className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-800">{t('sellPreowned')}</h3>
-                </div>
-                <p className="text-gray-600 mb-6">
-                  {t('sellDescription')}
-                </p>
-                <Button 
-                  size="lg"
-                  className="w-full bg-gradient-to-r from-teal-600 to-purple-600 hover:from-teal-700 hover:to-purple-700 text-white"
-                  onClick={() => navigate("/register/seller")}
-                >
-                  {t('listEquipment')} <Upload className="ml-2 h-5 w-5" />
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Contact Numbers - Customer Service */}
-          <div className="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl p-6 max-w-2xl mx-auto border-2 border-yellow-400">
-            <h3 className="text-center text-xl font-bold text-gray-800 mb-4">{t('contactForService')}</h3>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a 
-                href="tel:9448147073" 
-                className="flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-purple-200 hover:border-purple-400"
-              >
-                <Phone className="h-6 w-6 text-purple-600 animate-pulse" />
-                <div className="text-left">
-                  <p className="text-xs text-gray-600">{t('clickToCall')}</p>
-                  <p className="font-bold text-lg text-gray-800">9448147073</p>
-                </div>
-              </a>
-              <a 
-                href="tel:8496971246" 
-                className="flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-blue-200 hover:border-blue-400"
-              >
-                <Phone className="h-6 w-6 text-blue-600 animate-pulse" />
-                <div className="text-left">
-                  <p className="text-xs text-gray-600">{t('clickToCall')}</p>
-                  <p className="font-bold text-lg text-gray-800">8496971246</p>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
 
       {/* Latest Vehicles from Sellers */}
