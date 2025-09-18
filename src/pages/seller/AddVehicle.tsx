@@ -12,6 +12,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Save, ArrowLeft, Upload, FileText, Printer, Download } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
+import { VehicleFormWithMasterData } from "@/components/VehicleFormWithMasterData";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
@@ -555,48 +556,15 @@ const AddVehicle = () => {
                 <CardHeader>
                   <CardTitle className="text-xl">Vehicle Information</CardTitle>
                   <CardDescription>
-                    Enter the vehicle details
+                    Select or enter the vehicle details
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="model_name">Model Name *</Label>
-                    <Input
-                      id="model_name"
-                      value={formData.model_name}
-                      onChange={(e) => setFormData({ ...formData, model_name: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="model_year">Model Year *</Label>
-                    <Input
-                      id="model_year"
-                      type="number"
-                      min="1900"
-                      max={new Date().getFullYear()}
-                      value={formData.model_year}
-                      onChange={(e) => setFormData({ ...formData, model_year: parseInt(e.target.value) || new Date().getFullYear() })}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="category">Category *</Label>
-                    <Select
-                      value={formData.category}
-                      onValueChange={(value) => setFormData({ ...formData, category: value as typeof formData.category })}
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="tractor">Tractor</SelectItem>
-                        <SelectItem value="commercial">Commercial Vehicle</SelectItem>
-                        <SelectItem value="agriculture">Agriculture Equipment</SelectItem>
-                        <SelectItem value="other_vehicle">Other Vehicle</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <CardContent>
+                  <VehicleFormWithMasterData 
+                    formData={formData} 
+                    setFormData={setFormData} 
+                    errors={errors} 
+                  />
                   <div className="space-y-2">
                     <Label htmlFor="registration_number">Registration Number</Label>
                     <Input
