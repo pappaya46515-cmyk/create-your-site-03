@@ -7,6 +7,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Auth from "./pages/Auth";
+import AdminAuth from "./pages/AdminAuth";
 import BuyerRegister from "./pages/BuyerRegister";
 import SellerRegister from "./pages/SellerRegister";
 import Dashboard from "./pages/Dashboard";
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/admin-auth" element={<AdminAuth />} />
             <Route path="/register/buyer" element={<BuyerRegister />} />
             <Route path="/register/seller" element={<SellerRegister />} />
             <Route path="/dashboard" element={

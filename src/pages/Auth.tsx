@@ -204,6 +204,17 @@ const Auth = () => {
                         Register as Seller
                       </Button>
                     </div>
+                    <div className="pt-4 mt-4 border-t">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => navigate("/admin-auth")}
+                        className="text-xs"
+                      >
+                        Admin Login →
+                      </Button>
+                    </div>
                   </div>
                 </form>
               ) : (
