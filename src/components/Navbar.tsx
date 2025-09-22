@@ -85,7 +85,7 @@ const Navbar = () => {
             </div>
             <div>
               <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                Kamtha Stock System
+                Kamtha
               </h1>
               <p className="text-xs text-muted-foreground font-medium">ESTD-1988</p>
             </div>

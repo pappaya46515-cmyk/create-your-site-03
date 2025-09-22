@@ -167,7 +167,7 @@ const Hero = () => {
                   Buy Pre-owned Equipment & Customer Service
                 </p>
                 <Button className="bg-primary hover:bg-primary-hover text-primary-foreground">
-                  Buy Pre-owned <ArrowRight className="ml-2 h-4 w-4" />
+                  Buy Pre Own <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </Link>
@@ -186,7 +186,7 @@ const Hero = () => {
                   Sell Your Pre-owned Equipment
                 </p>
                 <Button className="bg-secondary hover:bg-secondary-hover text-secondary-foreground">
-                  Sell Pre-owned <ArrowRight className="ml-2 h-4 w-4" />
+                  Sell Pre Own <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </Link>
