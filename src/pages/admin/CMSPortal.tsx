@@ -21,7 +21,7 @@ const CMSPortal = () => {
     tagline: "Pre-owned Agricultural Equipment Marketplace",
     kannadaTagline: "ಕರ್ನಾಟಕದಾದ್ಯಂತ ರೈತರಿಗೆ ಸೇವೆ",
     phone1: "9448147073",
-    phone2: "8496971246",
+    phone2: "9480833792",
     email: "info@kamtha.com",
     address: "Karnataka, India",
     whatsapp: "9448147073"

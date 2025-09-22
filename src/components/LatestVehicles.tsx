@@ -214,11 +214,11 @@ const LatestVehicles = () => {
                         <span className="font-semibold">9448147073</span>
                       </a>
                       <a 
-                        href="tel:8496971246" 
+                        href="tel:9480833792" 
                         className="text-sm flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
                       >
                         <Phone className="h-3 w-3" />
-                        <span>8496971246</span>
+                        <span>9480833792</span>
                       </a>
                     </div>
                   </CardContent>

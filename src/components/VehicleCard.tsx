@@ -99,11 +99,11 @@ const VehicleCard = ({ vehicle, isSaved, onToggleSave, onViewDetails }: VehicleC
           </div>
           <div className="text-center">
             <a 
-              href="tel:8496971246" 
+              href="tel:9480833792" 
               className="text-lg text-muted-foreground hover:text-foreground transition-colors"
             >
               <Phone className="inline-block w-4 h-4 mr-2" />
-              8496971246
+              9480833792
             </a>
           </div>
         </div>
