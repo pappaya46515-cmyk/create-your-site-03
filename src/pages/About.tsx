@@ -144,57 +144,88 @@ const About = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            {/* Leadership Section with Photos - Enhanced */}
+            {/* Service Excellence Section - Replacing Leadership */}
             <div className="mb-16">
               <h2 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent animate-slide-up">
-                Our Leadership
+                Why Choose Kamtha?
               </h2>
               <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto animate-fade-in">
-                Meet the visionary leaders driving Om Ganesh Tractors towards excellence
+                Your trusted partner in agricultural equipment for over 38 years
               </p>
+              
+              {/* Service Excellence Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {leadership.length > 0 ? (
-                  leadership.map((m, index) => (
-                    <Card key={m.id} className="overflow-hidden hover-lift animate-slide-up shadow-card" style={{animationDelay: `${index * 0.1}s`}}>
-                      <div className="h-64 relative overflow-hidden group">
-                        {m.photo_url ? (
-                          <>
-                            <img
-                              src={m.photo_url}
-                              alt={`${m.name} - ${m.designation}`}
-                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                              loading="lazy"
-                              onError={(e) => {
-                                (e.currentTarget as HTMLImageElement).src = '/placeholder.svg';
-                              }}
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                          </>
-                        ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                            <Users className="h-32 w-32 text-muted-foreground/30 animate-float" />
-                          </div>
-                        )}
-                      </div>
-                      <CardContent className="p-8">
-                        <h3 className="font-bold text-2xl mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                          {m.name}
-                        </h3>
-                        <p className="text-primary font-semibold mb-4 text-lg">{m.designation}</p>
-                        {m.description && (
-                          <p className="text-muted-foreground leading-relaxed">{m.description}</p>
-                        )}
-                      </CardContent>
-                    </Card>
-                  ))
-                ) : (
-                  <div className="col-span-2 text-center py-12">
-                    <div className="animate-pulse">
-                      <div className="h-8 bg-muted rounded w-64 mx-auto mb-4"></div>
-                      <div className="h-4 bg-muted rounded w-48 mx-auto"></div>
+                <Card className="overflow-hidden hover-lift animate-slide-up shadow-card" style={{animationDelay: '0.1s'}}>
+                  <div className="h-48 relative overflow-hidden group bg-gradient-to-br from-green-100 to-green-50 dark:from-green-900 dark:to-green-800">
+                    <div className="flex items-center justify-center h-full">
+                      <Award className="h-24 w-24 text-green-600 dark:text-green-400 animate-float" />
                     </div>
                   </div>
-                )}
+                  <CardContent className="p-8">
+                    <h3 className="font-bold text-2xl mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                      Quality Assurance
+                    </h3>
+                    <p className="text-primary font-semibold mb-4 text-lg">100% Verified Equipment</p>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Every pre-owned equipment undergoes rigorous quality checks and certification before being listed. 
+                      We ensure all documents are verified and machinery is in optimal working condition.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="overflow-hidden hover-lift animate-slide-up shadow-card" style={{animationDelay: '0.2s'}}>
+                  <div className="h-48 relative overflow-hidden group bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900 dark:to-blue-800">
+                    <div className="flex items-center justify-center h-full">
+                      <Trophy className="h-24 w-24 text-blue-600 dark:text-blue-400 animate-float" />
+                    </div>
+                  </div>
+                  <CardContent className="p-8">
+                    <h3 className="font-bold text-2xl mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                      Trusted Network
+                    </h3>
+                    <p className="text-primary font-semibold mb-4 text-lg">11,000+ Happy Farmers</p>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Our extensive network of satisfied customers across 5 districts speaks to our commitment to 
+                      providing reliable agricultural solutions and exceptional after-sales service.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="overflow-hidden hover-lift animate-slide-up shadow-card" style={{animationDelay: '0.3s'}}>
+                  <div className="h-48 relative overflow-hidden group bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900 dark:to-purple-800">
+                    <div className="flex items-center justify-center h-full">
+                      <Sparkles className="h-24 w-24 text-purple-600 dark:text-purple-400 animate-float" />
+                    </div>
+                  </div>
+                  <CardContent className="p-8">
+                    <h3 className="font-bold text-2xl mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                      Best Value
+                    </h3>
+                    <p className="text-primary font-semibold mb-4 text-lg">Competitive Pricing & EMI</p>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Get the best market prices for both buying and selling. We offer flexible payment options 
+                      including easy EMI schemes to make equipment ownership accessible to all farmers.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="overflow-hidden hover-lift animate-slide-up shadow-card" style={{animationDelay: '0.4s'}}>
+                  <div className="h-48 relative overflow-hidden group bg-gradient-to-br from-orange-100 to-orange-50 dark:from-orange-900 dark:to-orange-800">
+                    <div className="flex items-center justify-center h-full">
+                      <Building2 className="h-24 w-24 text-orange-600 dark:text-orange-400 animate-float" />
+                    </div>
+                  </div>
+                  <CardContent className="p-8">
+                    <h3 className="font-bold text-2xl mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                      Complete Support
+                    </h3>
+                    <p className="text-primary font-semibold mb-4 text-lg">End-to-End Service</p>
+                    <p className="text-muted-foreground leading-relaxed">
+                      From documentation assistance to transportation, we provide comprehensive support throughout 
+                      your buying or selling journey. Our expert team handles RC transfers, insurance, and all paperwork.
+                    </p>
+                  </CardContent>
+                </Card>
               </div>
             </div>
 
