@@ -6,6 +6,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import Buy from "./pages/Buy";
+import Sell from "./pages/Sell";
+import Services from "./pages/Services";
+import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import AdminAuth from "./pages/AdminAuth";
 import BuyerRegister from "./pages/BuyerRegister";
@@ -48,6 +52,10 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/buy" element={<Buy />} />
+            <Route path="/sell" element={<Sell />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/admin-auth" element={<AdminAuth />} />
             <Route path="/register/buyer" element={<BuyerRegister />} />
