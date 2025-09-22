@@ -262,7 +262,7 @@ const Home = () => {
                   <Tractor className="w-12 h-12 text-green-700" />
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-gray-800">
-                  {language === 'kn' ? 'ಟ್ರ್ಯಾಕ್ಟರ್ ಖರೀದಿಸಿ' : 'Buy Tractor'}
+                  {language === 'kn' ? 'ಟ್ರ್ಯಾಕ್ಟರ್ ಖರೀದಿಸಿ' : 'Buy Pre Own'}
                 </h3>
                 <p className="text-gray-700 mb-4 text-sm">
                   {language === 'kn' ? 'ಪರೀಕ್ಷಿತ ಮತ್ತು ಗುಣಮಟ್ಟದ' : 'Tested & Quality'}
@@ -282,7 +282,7 @@ const Home = () => {
                   <IndianRupee className="w-12 h-12 text-blue-700" />
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-gray-800">
-                  {language === 'kn' ? 'ಟ್ರ್ಯಾಕ್ಟರ್ ಮಾರಾಟ' : 'Sell Tractor'}
+                  {language === 'kn' ? 'ಟ್ರ್ಯಾಕ್ಟರ್ ಮಾರಾಟ' : 'Sell Pre Own'}
                 </h3>
                 <p className="text-gray-700 mb-4 text-sm">
                   {language === 'kn' ? 'ಉತ್ತಮ ಬೆಲೆ ಪಡೆಯಿರಿ' : 'Best Price'}
