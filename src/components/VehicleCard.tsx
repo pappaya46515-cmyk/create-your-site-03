@@ -44,29 +44,53 @@ const VehicleCard = ({ vehicle, isSaved, onToggleSave, onViewDetails }: VehicleC
     return count;
   };
 
+  // Generate equipment image based on category
+  const getEquipmentImage = () => {
+    const categoryImages: Record<string, string> = {
+      'tractor': 'https://images.unsplash.com/photo-1589923158776-cb4485d99fd6?w=400&h=300&fit=crop',
+      'harvester': 'https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?w=400&h=300&fit=crop',
+      'tiller': 'https://images.unsplash.com/photo-1622383563227-04401ab4e5ea?w=400&h=300&fit=crop',
+      'plough': 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=300&fit=crop',
+      'other': 'https://images.unsplash.com/photo-1530267981375-f0de937f5f13?w=400&h=300&fit=crop'
+    };
+    return categoryImages[vehicle.category] || categoryImages.other;
+  };
+
   return (
-    <Card className="hover:shadow-strong transition-all hover:scale-105 transform duration-300">
-      <CardHeader>
-        <div className="flex justify-between items-start">
-          <div>
-            <CardTitle className="text-lg">{vehicle.model_name}</CardTitle>
-            <CardDescription>
-              {vehicle.model_year} • {vehicle.category}
-            </CardDescription>
-            <Badge 
-              variant={vehicle.property_owner === 'kamtha' ? 'default' : 'secondary'}
-              className="mt-2"
-            >
-              {vehicle.property_owner === 'kamtha' ? '✓ Kamtha Property' : 'Third Party'}
-            </Badge>
-          </div>
+    <Card className="hover:shadow-strong transition-all hover:scale-105 transform duration-300 overflow-hidden">
+      {/* Equipment Image */}
+      <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+        <img 
+          src={getEquipmentImage()}
+          alt={vehicle.model_name}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            e.currentTarget.src = 'https://images.unsplash.com/photo-1530267981375-f0de937f5f13?w=400&h=300&fit=crop';
+          }}
+        />
+        <div className="absolute top-2 right-2">
           <Button
             size="icon"
-            variant={isSaved ? "default" : "outline"}
+            variant={isSaved ? "default" : "secondary"}
             onClick={onToggleSave}
+            className="bg-white/90 backdrop-blur"
           >
-            <Heart className={`h-4 w-4 ${isSaved ? "fill-current" : ""}`} />
+            <Heart className={`h-4 w-4 ${isSaved ? "fill-current text-red-500" : ""}`} />
           </Button>
+        </div>
+        {vehicle.property_owner === 'kamtha' && (
+          <Badge className="absolute top-2 left-2 bg-green-600 text-white">
+            ✓ Kamtha Property
+          </Badge>
+        )}
+      </div>
+      
+      <CardHeader className="pb-3">
+        <div>
+          <CardTitle className="text-lg">{vehicle.model_name}</CardTitle>
+          <CardDescription>
+            {vehicle.model_year} • {vehicle.category.charAt(0).toUpperCase() + vehicle.category.slice(1)}
+          </CardDescription>
         </div>
       </CardHeader>
       

@@ -167,64 +167,39 @@ const Home = () => {
           {/* Leadership Team - Simplified */}
           <div className="max-w-5xl mx-auto mb-8">
             <h2 className="text-2xl font-bold text-white text-center mb-6">
-              {language === 'kn' ? 'ನಮ್ಮ ತಂಡ' : 'Our Team'}
+              {language === 'kn' ? 'ನಮ್ಮನ್ನು ಏಕೆ ಆಯ್ಕೆ ಮಾಡಬೇಕು?' : 'Why Choose Om Ganesh?'}
             </h2>
-            <Carousel 
-              className="w-full"
-              plugins={[plugin.current]}
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              onMouseEnter={plugin.current.stop}
-              onMouseLeave={plugin.current.reset}
-            >
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {leadership.length > 0 ? (
-                  leadership.map((leader) => (
-                    <CarouselItem key={leader.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3">
-                      <Card className="overflow-hidden shadow-lg h-full bg-white">
-                        <div className="h-48 relative overflow-hidden">
-                          {leader.photo_url ? (
-                            <img
-                              src={leader.photo_url}
-                              alt={leader.name}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full bg-gradient-to-br from-purple-100 to-blue-100 flex items-center justify-center">
-                              <Users className="h-20 w-20 text-purple-600" />
-                            </div>
-                          )}
-                        </div>
-                        <CardContent className="p-3">
-                          <h3 className="font-bold text-lg text-gray-800">
-                            {leader.name}
-                          </h3>
-                          <p className="text-purple-600 font-medium text-sm">{leader.designation}</p>
-                        </CardContent>
-                      </Card>
-                    </CarouselItem>
-                  ))
-                ) : (
-                  [...Array(3)].map((_, index) => (
-                    <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3">
-                      <Card className="overflow-hidden shadow-lg h-full bg-white">
-                        <div className="h-48 bg-gradient-to-br from-purple-100 to-blue-100 flex items-center justify-center">
-                          <Users className="h-20 w-20 text-purple-600" />
-                        </div>
-                        <CardContent className="p-3">
-                          <h3 className="font-bold text-lg text-gray-800">Loading...</h3>
-                          <p className="text-purple-600 font-medium text-sm">Team Member</p>
-                        </CardContent>
-                      </Card>
-                    </CarouselItem>
-                  ))
-                )}
-              </CarouselContent>
-              <CarouselPrevious className="bg-white/90 hover:bg-white" />
-              <CarouselNext className="bg-white/90 hover:bg-white" />
-            </Carousel>
+            {/* Service Excellence Cards */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Card className="bg-white/95 backdrop-blur hover:shadow-xl transition-all">
+                <CardContent className="p-4 text-center">
+                  <Shield className="w-10 h-10 text-green-600 mx-auto mb-2" />
+                  <h3 className="font-bold">Verified Equipment</h3>
+                  <p className="text-xs text-gray-600 mt-1">All equipment tested</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-white/95 backdrop-blur hover:shadow-xl transition-all">
+                <CardContent className="p-4 text-center">
+                  <Award className="w-10 h-10 text-blue-600 mx-auto mb-2" />
+                  <h3 className="font-bold">Trusted Since 1988</h3>
+                  <p className="text-xs text-gray-600 mt-1">38 years of service</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-white/95 backdrop-blur hover:shadow-xl transition-all">
+                <CardContent className="p-4 text-center">
+                  <IndianRupee className="w-10 h-10 text-purple-600 mx-auto mb-2" />
+                  <h3 className="font-bold">Best Prices</h3>
+                  <p className="text-xs text-gray-600 mt-1">With easy EMI</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-white/95 backdrop-blur hover:shadow-xl transition-all">
+                <CardContent className="p-4 text-center">
+                  <Phone className="w-10 h-10 text-orange-600 mx-auto mb-2" />
+                  <h3 className="font-bold">24/7 Support</h3>
+                  <p className="text-xs text-gray-600 mt-1">Always available</p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
 
           {/* Key Stats - Simplified with Icons */}

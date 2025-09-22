@@ -130,12 +130,35 @@ const LatestVehicles = () => {
                   key={vehicle.id} 
                   className="hover:shadow-strong transition-all duration-300 hover:scale-105 overflow-hidden"
                 >
-                  {/* Updated Badge */}
-                  <div className="px-4 pt-4">
-                    <Badge variant="secondary" className="mb-2">
+                  {/* Equipment Image */}
+                  <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+                    <img 
+                      src={
+                        vehicle.category === 'tractor' ? 'https://images.unsplash.com/photo-1589923158776-cb4485d99fd6?w=400&h=300&fit=crop' :
+                        vehicle.category === 'harvester' ? 'https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?w=400&h=300&fit=crop' :
+                        vehicle.category === 'tiller' ? 'https://images.unsplash.com/photo-1622383563227-04401ab4e5ea?w=400&h=300&fit=crop' :
+                        vehicle.category === 'plough' ? 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=300&fit=crop' :
+                        'https://images.unsplash.com/photo-1530267981375-f0de937f5f13?w=400&h=300&fit=crop'
+                      }
+                      alt={vehicle.model_name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = 'https://images.unsplash.com/photo-1530267981375-f0de937f5f13?w=400&h=300&fit=crop';
+                      }}
+                    />
+                    <Badge 
+                      variant="secondary"
+                      className="absolute top-2 right-2"
+                    >
                       <Calendar className="h-3 w-3 mr-1" />
-                      Updated {getTimeAgo(vehicle.updated_at)}
+                      {getTimeAgo(vehicle.updated_at)}
                     </Badge>
+                    {vehicle.property_owner === 'kamtha' && (
+                      <Badge className="absolute top-2 left-2 bg-green-600 text-white">
+                        ✓ Kamtha Property
+                      </Badge>
+                    )}
                   </div>
 
                   <CardHeader>
