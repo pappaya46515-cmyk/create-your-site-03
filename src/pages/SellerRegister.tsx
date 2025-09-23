@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
-import { OTPAuth } from "@/components/OTPAuth";
+import { EmailPasswordAuth } from "@/components/EmailPasswordAuth";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -77,7 +77,7 @@ const SellerRegister = () => {
                   </div>
 
                   <Button type="submit" className="w-full">
-                    Continue with Mobile Number
+                    Continue
                   </Button>
 
                   <div className="text-center text-sm text-muted-foreground">
@@ -105,11 +105,12 @@ const SellerRegister = () => {
                     )}
                   </div>
                   
-                  <OTPAuth
+                  <EmailPasswordAuth
                     userType="seller"
                     fullName={formData.fullName}
                     businessName={formData.businessName}
                     onSuccess={handleAuthSuccess}
+                    isSignUp={true}
                   />
 
                   <div className="text-center mt-4">
