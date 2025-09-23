@@ -156,10 +156,10 @@ const Navbar = () => {
                       <DropdownMenuItem onClick={() => navigate('/admin')}>
                         Admin Portal
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => navigate('/buyer')}>
+                      <DropdownMenuItem onClick={() => navigate('/buyer-portal')}>
                         Buyer Portal
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => navigate('/seller')}>
+                      <DropdownMenuItem onClick={() => navigate('/seller-portal')}>
                         Seller Portal
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -235,7 +235,7 @@ const Navbar = () => {
                           variant="outline"
                           size="sm"
                           className="w-full justify-start"
-                          onClick={() => { navigate('/buyer'); setIsMenuOpen(false); }}
+                          onClick={() => { navigate('/buyer-portal'); setIsMenuOpen(false); }}
                         >
                           Buyer Portal
                         </Button>
@@ -243,7 +243,7 @@ const Navbar = () => {
                           variant="outline"
                           size="sm"
                           className="w-full justify-start"
-                          onClick={() => { navigate('/seller'); setIsMenuOpen(false); }}
+                          onClick={() => { navigate('/seller-portal'); setIsMenuOpen(false); }}
                         >
                           Seller Portal
                         </Button>
