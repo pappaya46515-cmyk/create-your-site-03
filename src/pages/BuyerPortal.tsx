@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate, Link } from "react-router-dom";
-import { LogOut, Search, Heart, MessageCircle, FileText, TrendingUp, ShoppingBag, Upload } from "lucide-react";
+import { LogOut, Search, Heart, MessageCircle, FileText, TrendingUp, ShoppingBag, Upload, ArrowLeft, Home } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useBuyerTracking } from "@/hooks/useBuyerTracking";
 
@@ -87,14 +87,23 @@ const BuyerPortal = () => {
               <h1 className="text-3xl font-bold text-foreground">Buyer Dashboard</h1>
               <p className="text-muted-foreground">Find your perfect vehicle</p>
             </div>
-            <Button 
-              onClick={handleLogout}
-              disabled={loading}
-              variant="outline"
-            >
-              <LogOut className="mr-2 h-4 w-4" />
-              Logout
-            </Button>
+            <div className="flex gap-2">
+              <Button 
+                onClick={() => navigate("/")}
+                variant="outline"
+              >
+                <Home className="mr-2 h-4 w-4" />
+                Back to Home
+              </Button>
+              <Button 
+                onClick={handleLogout}
+                disabled={loading}
+                variant="outline"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </Button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
