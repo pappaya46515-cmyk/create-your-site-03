@@ -156,11 +156,11 @@ const Navbar = () => {
                       <DropdownMenuItem onClick={() => navigate('/admin')}>
                         Admin Portal
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => navigate('/admin/cms')}>
-                        CMS Portal
+                      <DropdownMenuItem onClick={() => navigate('/buyer')}>
+                        Buyer Portal
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => navigate('/admin/analytics')}>
-                        Analytics
+                      <DropdownMenuItem onClick={() => navigate('/seller')}>
+                        Seller Portal
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -235,17 +235,17 @@ const Navbar = () => {
                           variant="outline"
                           size="sm"
                           className="w-full justify-start"
-                          onClick={() => { navigate('/admin/cms'); setIsMenuOpen(false); }}
+                          onClick={() => { navigate('/buyer'); setIsMenuOpen(false); }}
                         >
-                          CMS Portal
+                          Buyer Portal
                         </Button>
                         <Button
                           variant="outline"
                           size="sm"
                           className="w-full justify-start"
-                          onClick={() => { navigate('/admin/analytics'); setIsMenuOpen(false); }}
+                          onClick={() => { navigate('/seller'); setIsMenuOpen(false); }}
                         >
-                          Analytics
+                          Seller Portal
                         </Button>
                       </div>
                     </div>
