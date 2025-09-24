@@ -280,9 +280,13 @@ const Home = () => {
                   {language === 'kn' ? 'ಸೇವೆ ಕರೆ' : 'Service Call'}
                 </h3>
                 <div className="space-y-2">
+                  <a href="tel:+919480833792" className="flex items-center justify-center gap-2 bg-orange-100 rounded-lg p-2 hover:bg-orange-200">
+                    <Phone className="w-5 h-5 text-orange-700" />
+                    <span className="font-bold text-lg text-orange-800">9480833792</span>
+                  </a>
                   <a href="tel:+919900045575" className="flex items-center justify-center gap-2 bg-orange-100 rounded-lg p-2 hover:bg-orange-200">
                     <Phone className="w-5 h-5 text-orange-700" />
-                    <span className="font-bold text-lg text-orange-800">+9900045575</span>
+                    <span className="font-bold text-lg text-orange-800">9900045575</span>
                   </a>
                 </div>
               </CardContent>
