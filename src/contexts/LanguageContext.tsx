@@ -115,7 +115,7 @@ const translations = {
     sellerPortal: "ಮಾರಾಟಗಾರ ಪೋರ್ಟಲ್",
     
     // Hero Section
-    appName: "ಕಂಠ",
+    appName: "ಕಮ್ತ",
     tagline: "ಬಳಸಿದ ಕೃಷಿ ಉಪಕರಣಗಳ ಮಾರುಕಟ್ಟೆ",
     karnatakService: "ಕರ್ನಾಟಕದಾದ್ಯಂತ ರೈತರಿಗೆ ಸೇವೆ",
     

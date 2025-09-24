@@ -154,7 +154,7 @@ const Home = () => {
           {/* KAMTA and Tagline */}
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-yellow-300 animate-pulse mb-3">
-              {language === 'en' ? 'KAMTA' : 'ಕಂಠ'}
+              {language === 'en' ? 'KAMTA' : 'ಕಮ್ತ'}
             </h1>
             <p className="text-xl md:text-2xl text-white font-medium mb-2">
               {language === 'kn' ? 'ನಿಮ್ಮ ವಿಶ್ವಾಸಪಾತ್ರ ಕೃಷಿ ಸಹಯೋಗಿ' : 'Your Trusted Agriculture Partner'}
@@ -237,7 +237,7 @@ const Home = () => {
                   <Tractor className="w-12 h-12 text-green-700" />
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-gray-800">
-                  {language === 'kn' ? 'ಟ್ರ್ಯಾಕ್ಟರ್ ಖರೀದಿಸಿ' : 'Buy pre own vehicle'}
+                  {language === 'kn' ? 'ಬಳಸಿದ ವಾಹನ ಖರೀದಿಸಿ' : 'Buy pre own vehicle'}
                 </h3>
                 <p className="text-gray-700 mb-4 text-sm">
                   {language === 'kn' ? 'ಪರೀಕ್ಷಿತ ಮತ್ತು ಗುಣಮಟ್ಟದ' : 'Tested & Quality'}
@@ -257,7 +257,7 @@ const Home = () => {
                   <IndianRupee className="w-12 h-12 text-blue-700" />
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-gray-800">
-                  {language === 'kn' ? 'ಟ್ರ್ಯಾಕ್ಟರ್ ಮಾರಾಟ' : 'Sell Pre Own Vehicle'}
+                  {language === 'kn' ? 'ಬಳಸಿದ ವಾಹನ ಮಾರಾಟ' : 'Sell Pre Own Vehicle'}
                 </h3>
                 <p className="text-gray-700 mb-4 text-sm">
                   {language === 'kn' ? 'ಉತ್ತಮ ಬೆಲೆ ಪಡೆಯಿರಿ' : 'Best Price'}
