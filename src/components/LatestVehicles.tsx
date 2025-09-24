@@ -230,18 +230,18 @@ const LatestVehicles = () => {
                     {/* Contact Numbers */}
                     <div className="bg-accent/10 p-3 rounded-lg space-y-1">
                       <a 
-                        href="tel:9448147073" 
+                        href="tel:9480833792" 
                         className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
                       >
                         <Phone className="h-4 w-4" />
-                        <span className="font-semibold">9448147073</span>
+                        <span className="font-semibold">9480833792</span>
                       </a>
                       <a 
-                        href="tel:9480833792" 
+                        href="tel:9900045575" 
                         className="text-sm flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
                       >
                         <Phone className="h-3 w-3" />
-                        <span>9480833792</span>
+                        <span>9900045575</span>
                       </a>
                     </div>
                   </CardContent>
