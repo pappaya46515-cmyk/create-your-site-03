@@ -19,7 +19,7 @@ const Footer = () => {
                 className="h-12 w-auto object-contain"
               />
               <div>
-                <h3 className="text-lg font-bold">Kamta Trailer</h3>
+                <h3 className="text-lg font-bold">Kamta</h3>
               </div>
             </div>
             <p className="text-sm opacity-80 mb-4">
@@ -84,7 +84,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-8 pt-8 border-t border-border/20 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm opacity-80">@2025 Kamta Trailers. All rights reserved.</p>
+          <p className="text-sm opacity-80">@2025 Kamta. All rights reserved.</p>
           
           {/* Language Toggle in Footer */}
           <Button

@@ -327,24 +327,23 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Company Overview */}
+      {/* Company Overview - Our Legacy */}
       <section className="py-16 bg-gradient-to-br from-orange-50 to-white">
         <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+            {language === 'kn' ? 'ನಮ್ಮ ಇತಿಹಾಸ' : 'Our Legacy'}
+          </h2>
           
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {/* History */}
+          <div className="max-w-4xl mx-auto">
             <Card className="backdrop-blur-sm bg-white/90 shadow-xl hover:shadow-2xl transition-all">
               <CardContent className="p-8">
-                <h3 className="text-2xl font-semibold mb-4 text-orange-600">
-                  {language === 'kn' ? 'ನಮ್ಮ ಇತಿಹಾಸ' : 'Our Legacy'}
-                </h3>
-                <p className="text-gray-700 mb-4">
+                <p className="text-gray-700 mb-4 text-lg">
                   {language === 'kn' 
                     ? 'ಓಂ ಗಣೇಶ್ ಗ್ರೂಪ್ 38 ವರ್ಷಗಳ ಹಿಂದೆ ಪ್ರಾರಂಭವಾಯಿತು. ಶ್ರೀ ಭಾಸ್ಕರ್ ಕಾಮತ್ CMD ಆಗಿ, ಟ್ರ್ಯಾಕ್ಟರ್ ಮಾರಾಟದಿಂದ ಪ್ರಾರಂಭಿಸಿ, ಶಿವಮೊಗ್ಗದಲ್ಲಿ ಮೊದಲ ಸಂಘಟಿತ ಟ್ರೇಲರ್ ತಯಾರಿಕೆ ಘಟಕವನ್ನು ಸ್ಥಾಪಿಸಿದರು.'
                     : 'Om Ganesh Group was founded 38 years ago by Mr. Bhaskar Kamath (CMD). Starting with freelance tractor sales, he established the first organized trailer manufacturing unit in Shimoga and revived a Massey Ferguson dealership 20 years ago.'
                   }
                 </p>
-                <p className="text-gray-700">
+                <p className="text-gray-700 text-lg">
                   {language === 'kn'
                     ? 'ಶ್ರೀ ಹರ್ಷ ಬಿ ಕಾಮತ್ (CEO), ಮೆಕಾನಿಕಲ್ ಇಂಜಿನಿಯರ್, ಕುಟುಂಬ ವ್ಯವಹಾರವನ್ನು ಹೊಸ ಎತ್ತರಕ್ಕೆ ಕೊಂಡೊಯ್ದಿದ್ದಾರೆ.'
                     : 'Mr. Harsha B Kamath (CEO), a mechanical engineer, joined the family business and has been instrumental in achieving our current market position.'
@@ -352,7 +351,6 @@ const Home = () => {
                 </p>
               </CardContent>
             </Card>
-
           </div>
         </div>
       </section>
@@ -469,7 +467,7 @@ const Home = () => {
               <div className="text-white/90">Farmers Served</div>
             </div>
             <div className="transform hover:scale-110 transition-transform">
-              <div className="text-5xl font-bold mb-2">₹2.5L+</div>
+              <div className="text-5xl font-bold mb-2">₹1.5L+</div>
               <div className="text-white/90">Min Deal Value</div>
             </div>
             <div className="transform hover:scale-110 transition-transform">
