@@ -330,9 +330,6 @@ const Home = () => {
       {/* Company Overview */}
       <section className="py-16 bg-gradient-to-br from-orange-50 to-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            {language === 'kn' ? 'ಕಂಪನಿ ಮಾಹಿತಿ' : 'About Om Ganesh Tractors'}
-          </h2>
           
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {/* History */}
