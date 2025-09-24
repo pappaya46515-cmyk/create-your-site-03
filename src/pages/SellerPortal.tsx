@@ -20,7 +20,6 @@ const SellerPortal = () => {
     { icon: <Package className="h-8 w-8" />, title: "Active Listings", value: "12" },
     { icon: <Eye className="h-8 w-8" />, title: "Total Views", value: "1,234" },
     { icon: <FileText className="h-8 w-8" />, title: "Inquiries", value: "45" },
-    { icon: <DollarSign className="h-8 w-8" />, title: "Total Sales", value: "₹25.5L" },
   ];
 
   return (
@@ -29,7 +28,7 @@ const SellerPortal = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-between items-center mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-foreground">Seller Dashboard</h1>
+              <h1 className="text-3xl font-bold text-foreground">Seller Portal</h1>
               <p className="text-muted-foreground">Manage your vehicle listings</p>
             </div>
             <div className="flex gap-2">
