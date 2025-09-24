@@ -151,10 +151,10 @@ const Home = () => {
             </div>
           </div>
 
-          {/* KAMTHA and Tagline */}
+          {/* KAMTA and Tagline */}
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-yellow-300 animate-pulse mb-3">
-              {language === 'en' ? 'KAMTHA' : 'ಕಂಠ'}
+              {language === 'en' ? 'KAMTA' : 'ಕಂಠ'}
             </h1>
             <p className="text-xl md:text-2xl text-white font-medium mb-2">
               {language === 'kn' ? 'ನಿಮ್ಮ ವಿಶ್ವಾಸಪಾತ್ರ ಕೃಷಿ ಸಹಯೋಗಿ' : 'Your Trusted Agriculture Partner'}
