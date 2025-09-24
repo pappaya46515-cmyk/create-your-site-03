@@ -156,7 +156,7 @@ const LatestVehicles = () => {
                     </Badge>
                     {vehicle.property_owner === 'kamtha' && (
                       <Badge className="absolute top-2 left-2 bg-green-600 text-white">
-                        ✓ Kamtha Property
+                        ✓ Kamta Property
                       </Badge>
                     )}
                   </div>
@@ -180,7 +180,7 @@ const LatestVehicles = () => {
                         variant={vehicle.property_owner === 'kamtha' ? 'default' : 'outline'}
                         className="mt-2"
                       >
-                        {vehicle.property_owner === 'kamtha' ? '✓ Kamtha Property' : 'Third Party'}
+                        {vehicle.property_owner === 'kamtha' ? '✓ Kamta Property' : 'Third Party'}
                       </Badge>
                     )}
                   </CardHeader>

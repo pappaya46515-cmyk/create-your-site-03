@@ -147,7 +147,7 @@ const About = () => {
             {/* Service Excellence Section - Replacing Leadership */}
             <div className="mb-16">
               <h2 className="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent animate-slide-up">
-                Why Choose Kamtha?
+                Why Choose Kamta?
               </h2>
               <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto animate-fade-in">
                 Your trusted partner in agricultural equipment for over 38 years

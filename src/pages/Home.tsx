@@ -167,7 +167,7 @@ const Home = () => {
           {/* Leadership Team - Simplified */}
           <div className="max-w-5xl mx-auto mb-8">
             <h2 className="text-2xl font-bold text-white text-center mb-6">
-              {language === 'kn' ? 'ನಮ್ಮನ್ನು ಏಕೆ ಆಯ್ಕೆ ಮಾಡಬೇಕು?' : 'Why Choose Kamtha?'}
+              {language === 'kn' ? 'ನಮ್ಮನ್ನು ಏಕೆ ಆಯ್ಕೆ ಮಾಡಬೇಕು?' : 'Why Choose Kamta?'}
             </h2>
             {/* Service Excellence Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

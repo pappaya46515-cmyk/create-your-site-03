@@ -98,7 +98,7 @@ const Auth = () => {
             <CardHeader>
               <CardTitle className="text-2xl">Sign In</CardTitle>
               <CardDescription>
-                Access your Kamtha account
+                Access your Kamta account
               </CardDescription>
             </CardHeader>
             <CardContent>

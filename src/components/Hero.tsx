@@ -10,7 +10,7 @@ const Hero = () => {
 
   const slides = [
     {
-      title: "Welcome to Kamtha",
+      title: "Welcome to Kamta",
       subtitle: "Pre-owned Agri Machines and Transparent Service",
       kannada: "ಕರ್ನಾಟಕದಾದ್ಯಂತ 11000 ರೈತರಿಗೆ ಪಾರದರ್ಶಕತೆಯಿಂದ ಉಪಯೋಗಿಸಿದ ರೈತ ಉಪಕರಣಗಳ ಮಾರಾಟದ ವ್ಯವಸ್ಥೆ",
       icon: <Tractor className="h-16 w-16 text-primary animate-fade-in" />,
@@ -41,7 +41,7 @@ const Hero = () => {
 
   const handleGetStarted = () => {
     toast({
-      title: "Welcome to Kamtha!",
+      title: "Welcome to Kamta!",
       description: "Choose your service type to continue.",
     });
   };

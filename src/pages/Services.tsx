@@ -39,7 +39,7 @@ const Services = () => {
       icon: <Shield className="h-10 w-10 text-accent" />,
       title: "ಪರಿಶೀಲನೆ ಸೇವೆ",
       subtitle: "Verification Services",
-      description: "All equipment verified by Kamtha executives for authenticity",
+      description: "All equipment verified by Kamta executives for authenticity",
       features: [
         "Document verification",
         "Physical inspection",
@@ -137,7 +137,7 @@ const Services = () => {
             Ready to Get Started?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Join thousands of farmers who trust Kamtha for their equipment needs
+            Join thousands of farmers who trust Kamta for their equipment needs
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/buy">

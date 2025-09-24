@@ -332,7 +332,7 @@ const AddVehicle = () => {
                 <CardHeader>
                   <CardTitle className="text-xl">Property Type Selection</CardTitle>
                   <CardDescription>
-                    Select whether this is a Kamtha or Non-Kamtha (Third Party) property
+                    Select whether this is a Kamta or Non-Kamta (Third Party) property
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -350,7 +350,7 @@ const AddVehicle = () => {
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="third_party" id="third_party" />
                       <Label htmlFor="third_party" className="font-medium cursor-pointer">
-                        Non-Kamtha (Third Party) Property
+                        Non-Kamta (Third Party) Property
                       </Label>
                     </div>
                   </RadioGroup>
@@ -744,7 +744,7 @@ const AddVehicle = () => {
                       <div>
                         <h2 className="font-bold text-lg mb-3">PROPERTY TYPE</h2>
                         <p className="leading-relaxed">
-                          This sale agreement is for a <strong>{formData.ownership_type === 'kamtha' ? 'Kamtha' : 'Non-Kamtha (Third Party)'}</strong> property.
+                          This sale agreement is for a <strong>{formData.ownership_type === 'kamtha' ? 'Kamta' : 'Non-Kamta (Third Party)'}</strong> property.
                         </p>
                       </div>
 

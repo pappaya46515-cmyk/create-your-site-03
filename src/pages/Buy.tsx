@@ -147,7 +147,7 @@ const Buy = () => {
             <h2 className="text-2xl font-bold text-foreground">
               Available Pre-owned Equipment ({filteredEquipment.length})
             </h2>
-            <p className="text-muted-foreground">All listings are verified by Kamtha executives</p>
+            <p className="text-muted-foreground">All listings are verified by Kamta executives</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

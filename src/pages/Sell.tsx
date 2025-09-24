@@ -52,7 +52,7 @@ const Sell = () => {
 
     toast({
       title: "Application Submitted!",
-      description: "Your listing has been sent to Kamtha executives for verification and approval.",
+      description: "Your listing has been sent to Kamta executives for verification and approval.",
     });
 
     // Reset form
@@ -105,7 +105,7 @@ const Sell = () => {
                   <CardHeader>
                     <CardTitle className="text-2xl">Pre-owned Equipment Listing Form</CardTitle>
                     <CardDescription>
-                      Fill in the details below to list your equipment. All listings are verified by Kamtha executives.
+                      Fill in the details below to list your equipment. All listings are verified by Kamta executives.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -242,7 +242,7 @@ const Sell = () => {
                   <CardContent className="p-6">
                     <h3 className="font-semibold mb-2">What happens next?</h3>
                     <ol className="space-y-2 text-sm text-muted-foreground">
-                      <li>1. Your submission will be sent to Kamtha executives for review</li>
+                      <li>1. Your submission will be sent to Kamta executives for review</li>
                       <li>2. Our team will verify the equipment details and documents</li>
                       <li>3. Once approved, your listing will be added to the buyer portal</li>
                       <li>4. You will be notified via SMS/email about the approval status</li>

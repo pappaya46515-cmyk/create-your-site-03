@@ -14,7 +14,7 @@ import {
   ArrowLeftRight,
   Plus
 } from "lucide-react";
-import kamthaLogo from "@/assets/om-ganesh-official-logo.jpg";
+import kamtaLogo from "@/assets/om-ganesh-official-logo.jpg";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -73,12 +73,12 @@ const DashboardLayout = ({ children, userRole }: DashboardLayoutProps) => {
               {sidebarOpen && (
                 <>
                   <img 
-                    src={kamthaLogo} 
-                    alt="Kamtha" 
+                    src={kamtaLogo} 
+                    alt="Kamta"
                     className="h-10 w-auto object-contain"
                   />
                   <div>
-                    <h2 className="font-bold text-foreground">Kamtha</h2>
+                    <h2 className="font-bold text-foreground">Kamta</h2>
                     <p className="text-xs text-muted-foreground capitalize">{userRole} Portal</p>
                   </div>
                 </>

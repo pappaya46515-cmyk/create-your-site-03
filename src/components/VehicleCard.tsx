@@ -80,7 +80,7 @@ const VehicleCard = ({ vehicle, isSaved, onToggleSave, onViewDetails }: VehicleC
         </div>
         {vehicle.property_owner === 'kamtha' && (
           <Badge className="absolute top-2 left-2 bg-green-600 text-white">
-            ✓ Kamtha Property
+            ✓ Kamta Property
           </Badge>
         )}
       </div>

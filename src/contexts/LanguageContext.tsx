@@ -21,7 +21,7 @@ const translations = {
     sellerPortal: "Seller Portal",
     
     // Hero Section
-    appName: "KAMTHA",
+    appName: "KAMTA",
     tagline: "Pre-owned Agricultural Equipment Marketplace",
     karnatakService: "Serving farmers across Karnataka",
     
