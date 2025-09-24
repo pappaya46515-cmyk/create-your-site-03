@@ -15,7 +15,7 @@ const Analytics = () => {
     totalUsers: 0,
     totalVehicles: 0,
     soldVehicles: 0,
-    totalRevenue: 0,
+    
     activeListings: 0,
     totalDocuments: 0,
     recentSearches: 0,
@@ -80,9 +80,6 @@ const Analytics = () => {
       const totalVehicles = vehiclesData?.length || 0;
       const soldVehicles = vehiclesData?.filter(v => v.status === "sold").length || 0;
       const activeListings = vehiclesData?.filter(v => v.status === "available").length || 0;
-      const totalRevenue = vehiclesData
-        ?.filter(v => v.status === "sold")
-        .reduce((sum, v) => sum + Number(v.deal_value), 0) || 0;
 
       // Fetch document count
       const { count: documentCount } = await supabase
@@ -98,7 +95,6 @@ const Analytics = () => {
         totalUsers: Object.values(usersByRole).reduce((a, b) => a + b, 0),
         totalVehicles,
         soldVehicles,
-        totalRevenue,
         activeListings,
         totalDocuments: documentCount || 0,
         recentSearches: searchCount || 0,
@@ -226,7 +222,6 @@ const Analytics = () => {
   const statCards = [
     { icon: <Users className="h-8 w-8" />, title: "Total Users", value: stats.totalUsers, color: "text-blue-500" },
     { icon: <Car className="h-8 w-8" />, title: "Total Vehicles", value: stats.totalVehicles, color: "text-green-500" },
-    { icon: <DollarSign className="h-8 w-8" />, title: "Total Revenue", value: formatCurrency(stats.totalRevenue), color: "text-purple-500" },
     { icon: <TrendingUp className="h-8 w-8" />, title: "Active Listings", value: stats.activeListings, color: "text-orange-500" },
     { icon: <BarChart3 className="h-8 w-8" />, title: "Sold Vehicles", value: stats.soldVehicles, color: "text-red-500" },
     { icon: <FileText className="h-8 w-8" />, title: "Documents", value: stats.totalDocuments, color: "text-indigo-500" },
