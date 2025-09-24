@@ -131,7 +131,7 @@ const Navbar = () => {
               className="flex items-center gap-2 hover-glow"
             >
               <Phone className="h-4 w-4" />
-              <span className="hidden sm:inline font-medium">1800-XXX-XXXX</span>
+              <span className="hidden sm:inline font-medium">+9900045575</span>
             </Button>
 
             {/* Auth Controls */}

@@ -237,7 +237,7 @@ const Home = () => {
                   <Tractor className="w-12 h-12 text-green-700" />
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-gray-800">
-                  {language === 'kn' ? 'ಟ್ರ್ಯಾಕ್ಟರ್ ಖರೀದಿಸಿ' : 'Buy Pre Own'}
+                  {language === 'kn' ? 'ಟ್ರ್ಯಾಕ್ಟರ್ ಖರೀದಿಸಿ' : 'Buy pre own vehicle'}
                 </h3>
                 <p className="text-gray-700 mb-4 text-sm">
                   {language === 'kn' ? 'ಪರೀಕ್ಷಿತ ಮತ್ತು ಗುಣಮಟ್ಟದ' : 'Tested & Quality'}
@@ -257,7 +257,7 @@ const Home = () => {
                   <IndianRupee className="w-12 h-12 text-blue-700" />
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-gray-800">
-                  {language === 'kn' ? 'ಟ್ರ್ಯಾಕ್ಟರ್ ಮಾರಾಟ' : 'Sell Pre Own'}
+                  {language === 'kn' ? 'ಟ್ರ್ಯಾಕ್ಟರ್ ಮಾರಾಟ' : 'Sell Pre Own Vehicle'}
                 </h3>
                 <p className="text-gray-700 mb-4 text-sm">
                   {language === 'kn' ? 'ಉತ್ತಮ ಬೆಲೆ ಪಡೆಯಿರಿ' : 'Best Price'}
@@ -280,13 +280,9 @@ const Home = () => {
                   {language === 'kn' ? 'ಸೇವೆ ಕರೆ' : 'Service Call'}
                 </h3>
                 <div className="space-y-2">
-                  <a href="tel:+919448147073" className="flex items-center justify-center gap-2 bg-orange-100 rounded-lg p-2 hover:bg-orange-200">
+                  <a href="tel:+919900045575" className="flex items-center justify-center gap-2 bg-orange-100 rounded-lg p-2 hover:bg-orange-200">
                     <Phone className="w-5 h-5 text-orange-700" />
-                    <span className="font-bold text-lg text-orange-800">9448147073</span>
-                  </a>
-                  <a href="tel:+919480833792" className="flex items-center justify-center gap-2 bg-orange-100 rounded-lg p-2 hover:bg-orange-200">
-                    <Phone className="w-5 h-5 text-orange-700" />
-                    <span className="font-bold text-lg text-orange-800">9480833792</span>
+                    <span className="font-bold text-lg text-orange-800">+9900045575</span>
                   </a>
                 </div>
               </CardContent>
