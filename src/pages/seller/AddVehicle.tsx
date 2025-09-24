@@ -37,7 +37,7 @@ const AddVehicle = () => {
     model_year: new Date().getFullYear(),
     category: "tractor" as "tractor" | "commercial" | "agriculture" | "other_vehicle",
     ownership_type: "kamtha" as "kamtha" | "third_party",
-    deal_value: 250000,
+    deal_value: 150000,
     hp: "",
     hp_range: "",
     
@@ -80,8 +80,8 @@ const AddVehicle = () => {
     const newErrors: Record<string, string> = {};
 
     // Validate deal value
-    if (formData.deal_value < 250000) {
-      newErrors.deal_value = "Deal value must be above ₹2,50,000/-";
+    if (formData.deal_value < 150000) {
+      newErrors.deal_value = "Deal value must be above ₹1,50,000/-";
     }
 
     // Validate seller Aadhaar
@@ -327,12 +327,12 @@ const AddVehicle = () => {
 
           {!showAgreementPreview ? (
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Property Type Selection */}
+              {/* Display Location Selection */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl">Property Type Selection</CardTitle>
+                  <CardTitle className="text-xl">Display Location</CardTitle>
                   <CardDescription>
-                    Select whether this is a Kamta or Non-Kamta (Third Party) property
+                    Select whether this is a Kamta or Non-Kamta (Third Party) display
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -344,13 +344,13 @@ const AddVehicle = () => {
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="kamtha" id="kamtha" />
                       <Label htmlFor="kamtha" className="font-medium cursor-pointer">
-                        Kamtha Property
+                        Kamta Display
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="third_party" id="third_party" />
                       <Label htmlFor="third_party" className="font-medium cursor-pointer">
-                        Non-Kamta (Third Party) Property
+                        Non-Kamta (Third Party) Display
                       </Label>
                     </div>
                   </RadioGroup>
@@ -362,7 +362,7 @@ const AddVehicle = () => {
                 <CardHeader>
                   <CardTitle className="text-xl">Deal Value</CardTitle>
                   <CardDescription>
-                    Final deal value must be above ₹2,50,000/-
+                    Final deal value must be above ₹1,50,000/-
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -371,7 +371,7 @@ const AddVehicle = () => {
                     <Input
                       id="deal_value"
                       type="number"
-                      min="250000"
+                      min="150000"
                       value={formData.deal_value}
                       onChange={(e) => setFormData({ ...formData, deal_value: parseInt(e.target.value) || 0 })}
                       className={errors.deal_value ? "border-destructive" : ""}
