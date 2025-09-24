@@ -56,9 +56,6 @@ const About = () => {
                 className="h-36 w-auto mx-auto object-contain"
               />
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
-              OM GANESH TRACTORS
-            </h1>
             <div className="text-3xl md:text-4xl font-bold text-white/90 mb-6">
               MASSEY FERGUSON
             </div>
@@ -410,21 +407,6 @@ const About = () => {
                               <p className="text-sm text-muted-foreground">Initial annual capacity in Chennai</p>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Vision Box */}
-                    <div className="bg-gradient-to-br from-primary/5 to-secondary/5 p-6 rounded-xl border border-primary/20">
-                      <div className="flex items-start gap-3">
-                        <Sparkles className="h-6 w-6 text-primary mt-1" />
-                        <div>
-                          <h4 className="font-bold text-lg mb-3 text-foreground">TAFE Vision</h4>
-                          <p className="text-muted-foreground italic leading-relaxed">
-                            "To us in TAFE, Excellence is not something that we engineer, inspect and input into our tractors. 
-                            It is an innate desire to attain the best that comes from within each of us. It defines our lives 
-                            at work and at home and ripples out into the world around us."
-                          </p>
                         </div>
                       </div>
                     </div>
