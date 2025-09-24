@@ -353,20 +353,6 @@ const Home = () => {
               </CardContent>
             </Card>
 
-            {/* Vision */}
-            <Card className="backdrop-blur-sm bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-xl hover:shadow-2xl transition-all">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-semibold mb-4">
-                  {language === 'kn' ? 'TAFE ದೃಷ್ಟಿ' : 'TAFE Vision'}
-                </h3>
-                <p className="text-white/95 italic">
-                  {language === 'kn'
-                    ? '"ಉತ್ಕೃಷ್ಟತೆ ನಮಗೆ ಕೇವಲ ಇಂಜಿನಿಯರಿಂಗ್ ಅಲ್ಲ. ಇದು ನಮ್ಮೊಳಗಿನ ಅತ್ಯುತ್ತಮವನ್ನು ಸಾಧಿಸುವ ಆಂತರಿಕ ಬಯಕೆ. ಇದು ಕೆಲಸ ಮತ್ತು ಮನೆಯಲ್ಲಿ ನಮ್ಮ ಜೀವನವನ್ನು ವ್ಯಾಖ್ಯಾನಿಸುತ್ತದೆ ಮತ್ತು ನಮ್ಮ ಸುತ್ತಲಿನ ಜಗತ್ತಿನಲ್ಲಿ ಹರಡುತ್ತದೆ."'
-                    : '"To us in TAFE, Excellence is not something that we engineer, inspect and input into our tractors. It is an innate desire to attain the best that comes from within each of us. It defines our lives at work and at home and ripples out into the world around us."'
-                  }
-                </p>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>
@@ -427,64 +413,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Awards & Recognition */}
-      <section className="py-16 bg-gradient-to-br from-white to-orange-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            {language === 'kn' ? 'ಪ್ರಶಸ್ತಿಗಳು ಮತ್ತು ಗೌರವಗಳು' : 'Awards & Recognition'}
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
-              <div className="text-orange-500 mb-3">🏆</div>
-              <h4 className="font-semibold mb-2">
-                {language === 'kn' ? 'ಉತ್ತಮ ಗ್ರಾಹಕ ಸಂಬಂಧ ಪ್ರಶಸ್ತಿ' : 'Best Customer Relation Award'}
-              </h4>
-              <p className="text-sm text-gray-600">Government of Karnataka (2005-06)</p>
-            </div>
 
-            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
-              <div className="text-orange-500 mb-3">⭐</div>
-              <h4 className="font-semibold mb-2">
-                {language === 'kn' ? 'ಸ್ಟಾರ್ ಡೀಲರ್ ಪ್ರಶಸ್ತಿ' : 'Star Dealer Award'}
-              </h4>
-              <p className="text-sm text-gray-600">TAFE Recognition</p>
-            </div>
-
-            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
-              <div className="text-orange-500 mb-3">🎯</div>
-              <h4 className="font-semibold mb-2">
-                {language === 'kn' ? '12 TAFE ಪ್ರಶಸ್ತಿಗಳು' : '12 TAFE Awards'}
-              </h4>
-              <p className="text-sm text-gray-600">Various Achievements (2000-2013)</p>
-            </div>
-
-            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
-              <div className="text-orange-500 mb-3">🏅</div>
-              <h4 className="font-semibold mb-2">
-                {language === 'kn' ? 'ಉತ್ಪಾದನೆಯಲ್ಲಿ ಶ್ರೇಷ್ಠತೆ' : 'Excellence in Manufacturing'}
-              </h4>
-              <p className="text-sm text-gray-600">Chamber of Commerce, Shimoga (2010-11)</p>
-            </div>
-
-            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
-              <div className="text-orange-500 mb-3">💼</div>
-              <h4 className="font-semibold mb-2">
-                {language === 'kn' ? 'SMERA ರೇಟಿಂಗ್' : 'SMERA Rating'}
-              </h4>
-              <p className="text-sm text-gray-600">Canara Bank (2010-11)</p>
-            </div>
-
-            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow">
-              <div className="text-orange-500 mb-3">🚀</div>
-              <h4 className="font-semibold mb-2">
-                {language === 'kn' ? 'ಉತ್ತಮ ಬೆಳವಣಿಗೆ ಡೀಲರ್' : 'Best Upcoming Dealer'}
-              </h4>
-              <p className="text-sm text-gray-600">Yamaha (2010-11)</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Latest Vehicles Section */}
 
 
 
