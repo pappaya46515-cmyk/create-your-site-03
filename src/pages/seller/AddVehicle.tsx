@@ -45,7 +45,7 @@ const AddVehicle = () => {
     registration_number: "",
     engine_number: "",
     vehicle_number: "",
-    jersey_number: "",
+    chassis_number: "",
     serial_number: "",
     insurance_number: "",
     rc_number: "",
@@ -467,11 +467,11 @@ const AddVehicle = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="jersey_number">Jersey Number</Label>
+                    <Label htmlFor="chassis_number">Chassis Number</Label>
                     <Input
-                      id="jersey_number"
-                      value={formData.jersey_number}
-                      onChange={(e) => setFormData({ ...formData, jersey_number: e.target.value })}
+                      id="chassis_number"
+                      value={formData.chassis_number}
+                      onChange={(e) => setFormData({ ...formData, chassis_number: e.target.value })}
                     />
                   </div>
                   <div className="space-y-2">
@@ -648,7 +648,7 @@ const AddVehicle = () => {
                         {formData.registration_number && <p>Registration Number: {formData.registration_number}</p>}
                         {formData.engine_number && <p>Engine Number: {formData.engine_number}</p>}
                         {formData.vehicle_number && <p>Vehicle Number: {formData.vehicle_number}</p>}
-                        {formData.jersey_number && <p>Jersey Number: {formData.jersey_number}</p>}
+                        {formData.chassis_number && <p>Chassis Number: {formData.chassis_number}</p>}
                         {formData.serial_number && <p>Serial Number: {formData.serial_number}</p>}
                         {formData.insurance_number && <p>Insurance Number: {formData.insurance_number}</p>}
                         {formData.rc_number && <p>RC Number: {formData.rc_number}</p>}
