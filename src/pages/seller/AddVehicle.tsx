@@ -58,14 +58,7 @@ const AddVehicle = () => {
     seller_contact: "",
     seller_aadhaar: "",
     
-    // Buyer Details
-    buyer_name: "",
-    buyer_father_name: "",
-    buyer_address: "",
-    buyer_pincode: "",
-    buyer_contact: "",
-    buyer_aadhaar: "",
-    
+    // Documents
     // Documents
     photos: [] as File[],
     
@@ -89,18 +82,13 @@ const AddVehicle = () => {
       newErrors.seller_aadhaar = "Aadhaar number must be exactly 12 digits";
     }
 
-    // Validate buyer Aadhaar
-    if (formData.buyer_aadhaar && formData.buyer_aadhaar.length !== 12) {
-      newErrors.buyer_aadhaar = "Aadhaar number must be exactly 12 digits";
-    }
-
     // Validate contact numbers
     if (formData.seller_contact && formData.seller_contact.length !== 10) {
       newErrors.seller_contact = "Contact number must be exactly 10 digits";
     }
 
-    if (formData.buyer_contact && formData.buyer_contact.length !== 10) {
-      newErrors.buyer_contact = "Contact number must be exactly 10 digits";
+    if (formData.seller_contact && formData.seller_contact.length !== 10) {
+      newErrors.seller_contact = "Contact number must be exactly 10 digits";
     }
 
     // Validate pincode
@@ -108,16 +96,10 @@ const AddVehicle = () => {
       newErrors.seller_pincode = "Pincode must be exactly 6 digits";
     }
 
-    if (formData.buyer_pincode && formData.buyer_pincode.length !== 6) {
-      newErrors.buyer_pincode = "Pincode must be exactly 6 digits";
-    }
-
     // Check required fields
     const requiredFields = [
       'model_name', 'seller_name', 'seller_father_name', 'seller_address',
-      'seller_pincode', 'seller_contact', 'seller_aadhaar',
-      'buyer_name', 'buyer_father_name', 'buyer_address',
-      'buyer_pincode', 'buyer_contact', 'buyer_aadhaar'
+      'seller_pincode', 'seller_contact', 'seller_aadhaar'
     ];
 
     requiredFields.forEach(field => {
@@ -186,11 +168,11 @@ const AddVehicle = () => {
       }
       
       // Save the PDF
-      pdf.save(`sale_agreement_${formData.seller_name}_${formData.buyer_name}_${Date.now()}.pdf`);
+      pdf.save(`vehicle_listing_${formData.seller_name}_${Date.now()}.pdf`);
       
       toast({
         title: "PDF Generated",
-        description: "Sale agreement PDF has been downloaded successfully."
+        description: "Vehicle listing PDF has been downloaded successfully."
       });
     } catch (error) {
       console.error('Error generating PDF:', error);
@@ -247,30 +229,8 @@ const AddVehicle = () => {
 
       if (vehicleError) throw vehicleError;
 
-      // Save agreement
-      const { error: agreementError } = await supabase
-        .from('agreements')
-        .insert({
-          created_by: user.id,
-          vehicle_id: vehicle.id,
-          seller_name: formData.seller_name,
-          seller_father_name: formData.seller_father_name,
-          seller_address: formData.seller_address,
-          seller_contact: formData.seller_contact,
-          seller_pincode: formData.seller_pincode,
-          seller_aadhaar: formData.seller_aadhaar,
-          buyer_name: formData.buyer_name,
-          buyer_father_name: formData.buyer_father_name,
-          buyer_address: formData.buyer_address,
-          buyer_contact: formData.buyer_contact,
-          insurance_number: formData.insurance_number || null,
-          rc_number: formData.rc_number || null,
-          vehicle_number: formData.vehicle_number || null,
-          jersey_number: formData.jersey_number || null,
-          serial_number: formData.serial_number || null,
-        });
-
-      if (agreementError) throw agreementError;
+      // Skip agreement creation as there's no buyer yet
+      // Agreement will be created when vehicle is sold
 
       // Upload photos if any
       if (formData.photos.length > 0) {
@@ -291,7 +251,7 @@ const AddVehicle = () => {
 
       toast({
         title: "Success",
-        description: "Vehicle listing and sale agreement created successfully!",
+        description: "Vehicle listing created successfully!",
       });
 
       navigate('/seller-portal/listings');
@@ -467,89 +427,6 @@ const AddVehicle = () => {
                 </CardContent>
               </Card>
 
-              {/* Buyer Details */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl">Buyer Details</CardTitle>
-                  <CardDescription>
-                    Enter the buyer's information
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="buyer_name">Full Name *</Label>
-                    <Input
-                      id="buyer_name"
-                      value={formData.buyer_name}
-                      onChange={(e) => setFormData({ ...formData, buyer_name: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="buyer_father_name">Father's Name *</Label>
-                    <Input
-                      id="buyer_father_name"
-                      value={formData.buyer_father_name}
-                      onChange={(e) => setFormData({ ...formData, buyer_father_name: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="buyer_address">Full Address *</Label>
-                    <Textarea
-                      id="buyer_address"
-                      value={formData.buyer_address}
-                      onChange={(e) => setFormData({ ...formData, buyer_address: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="buyer_pincode">Pincode (6 digits) *</Label>
-                    <Input
-                      id="buyer_pincode"
-                      maxLength={6}
-                      pattern="[0-9]{6}"
-                      value={formData.buyer_pincode}
-                      onChange={(e) => setFormData({ ...formData, buyer_pincode: e.target.value })}
-                      className={errors.buyer_pincode ? "border-destructive" : ""}
-                      required
-                    />
-                    {errors.buyer_pincode && (
-                      <p className="text-sm text-destructive">{errors.buyer_pincode}</p>
-                    )}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="buyer_contact">Contact Number (10 digits) *</Label>
-                    <Input
-                      id="buyer_contact"
-                      maxLength={10}
-                      pattern="[0-9]{10}"
-                      value={formData.buyer_contact}
-                      onChange={(e) => setFormData({ ...formData, buyer_contact: e.target.value })}
-                      className={errors.buyer_contact ? "border-destructive" : ""}
-                      required
-                    />
-                    {errors.buyer_contact && (
-                      <p className="text-sm text-destructive">{errors.buyer_contact}</p>
-                    )}
-                  </div>
-                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="buyer_aadhaar">Aadhaar Number (12 digits) *</Label>
-                    <Input
-                      id="buyer_aadhaar"
-                      maxLength={12}
-                      pattern="[0-9]{12}"
-                      value={formData.buyer_aadhaar}
-                      onChange={(e) => setFormData({ ...formData, buyer_aadhaar: e.target.value })}
-                      className={errors.buyer_aadhaar ? "border-destructive" : ""}
-                      required
-                    />
-                    {errors.buyer_aadhaar && (
-                      <p className="text-sm text-destructive">{errors.buyer_aadhaar}</p>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
 
               {/* Vehicle Information */}
               <Card>
@@ -722,9 +599,9 @@ const AddVehicle = () => {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-2xl">Sale Agreement Preview</CardTitle>
+                  <CardTitle className="text-2xl">Vehicle Listing Document</CardTitle>
                   <CardDescription>
-                    Review the agreement before saving
+                    Review the vehicle details before listing
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -734,7 +611,7 @@ const AddVehicle = () => {
                     style={{ fontFamily: 'serif' }}
                   >
                     <div className="text-center mb-8">
-                      <h1 className="text-2xl font-bold mb-2">SALE AGREEMENT</h1>
+                      <h1 className="text-2xl font-bold mb-2">VEHICLE LISTING DOCUMENT</h1>
                       <p className="text-gray-600">
                         Date: {new Date().toLocaleDateString('en-IN')}
                       </p>
@@ -760,16 +637,7 @@ const AddVehicle = () => {
                             <p>Contact: {formData.seller_contact}</p>
                             <p>Aadhaar: XXXX-XXXX-{formData.seller_aadhaar.slice(-4)}</p>
                           </div>
-                          <div>
-                            <p className="font-semibold">BUYER:</p>
-                            <p>Name: {formData.buyer_name}</p>
-                            <p>Father's Name: {formData.buyer_father_name}</p>
-                            <p>Address: {formData.buyer_address}</p>
-                            <p>Pincode: {formData.buyer_pincode}</p>
-                            <p>Contact: {formData.buyer_contact}</p>
-                            <p>Aadhaar: XXXX-XXXX-{formData.buyer_aadhaar.slice(-4)}</p>
                           </div>
-                        </div>
                       </div>
 
                       <div>
@@ -796,27 +664,22 @@ const AddVehicle = () => {
                       </div>
 
                       <div>
-                        <h2 className="font-bold text-lg mb-3">TERMS AND CONDITIONS</h2>
+                        <h2 className="font-bold text-lg mb-3">DECLARATION</h2>
                         <ol className="list-decimal list-inside space-y-2">
                           <li>The Seller hereby confirms that the vehicle is free from all encumbrances and has clear title.</li>
-                          <li>The Seller agrees to transfer the ownership of the vehicle to the Buyer upon receipt of full payment.</li>
-                          <li>The Buyer has inspected the vehicle and is satisfied with its condition.</li>
-                          <li>All existing insurance and other documents will be transferred to the Buyer's name.</li>
-                          <li>This agreement is governed by the laws of India.</li>
+                          <li>All vehicle details provided are accurate and complete.</li>
+                          <li>The vehicle is in working condition as described.</li>
+                          <li>All documents related to the vehicle are genuine and valid.</li>
+                          <li>This listing is governed by the laws of India.</li>
                         </ol>
                       </div>
 
                       <div className="mt-12 pt-8 border-t">
-                        <div className="grid grid-cols-2 gap-8">
+                        <div className="text-center">
                           <div>
                             <p className="mb-12">_______________________</p>
                             <p className="font-semibold">Seller's Signature</p>
                             <p>{formData.seller_name}</p>
-                          </div>
-                          <div>
-                            <p className="mb-12">_______________________</p>
-                            <p className="font-semibold">Buyer's Signature</p>
-                            <p>{formData.buyer_name}</p>
                           </div>
                         </div>
                       </div>
