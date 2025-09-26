@@ -25,7 +25,7 @@ const SellerRegister = () => {
   };
 
   const handleAuthSuccess = () => {
-    navigate("/portal-select");
+    navigate("/seller-portal");
   };
 
   return (

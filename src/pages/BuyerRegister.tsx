@@ -22,7 +22,7 @@ const BuyerRegister = () => {
   };
 
   const handleAuthSuccess = () => {
-    navigate("/portal-select");
+    navigate("/buyer-portal");
   };
 
   return (
