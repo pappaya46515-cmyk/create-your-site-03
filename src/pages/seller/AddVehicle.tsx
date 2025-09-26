@@ -123,6 +123,38 @@ const AddVehicle = () => {
     }
   };
 
+  const handlePrint = () => {
+    // Create a style element for print-specific styles
+    const printStyles = document.createElement('style');
+    printStyles.innerHTML = `
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        #agreement-content, #agreement-content * {
+          visibility: visible;
+        }
+        #agreement-content {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+        }
+      }
+    `;
+    
+    // Add styles to document
+    document.head.appendChild(printStyles);
+    
+    // Print
+    window.print();
+    
+    // Clean up - remove the style element after a short delay
+    setTimeout(() => {
+      document.head.removeChild(printStyles);
+    }, 100);
+  };
+
   const generatePDF = async () => {
     if (!agreementRef.current) return;
 
@@ -607,6 +639,7 @@ const AddVehicle = () => {
                 <CardContent>
                   <div 
                     ref={agreementRef}
+                    id="agreement-content"
                     className="bg-white p-8 rounded-lg shadow-sm"
                     style={{ fontFamily: 'serif' }}
                   >
@@ -714,7 +747,7 @@ const AddVehicle = () => {
                 <div className="space-x-4">
                   <Button
                     variant="outline"
-                    onClick={() => window.print()}
+                    onClick={handlePrint}
                   >
                     <Printer className="mr-2 h-4 w-4" />
                     Print
