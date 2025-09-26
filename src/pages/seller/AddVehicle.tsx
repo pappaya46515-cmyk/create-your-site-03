@@ -37,7 +37,7 @@ const AddVehicle = () => {
     model_year: new Date().getFullYear(),
     category: "tractor" as "tractor" | "commercial" | "agriculture" | "other_vehicle",
     ownership_type: "kamtha" as "kamtha" | "third_party",
-    deal_value: 150000,
+    deal_value: 250000,
     hp: "",
     hp_range: "",
     
@@ -72,9 +72,9 @@ const AddVehicle = () => {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    // Validate deal value
-    if (formData.deal_value < 150000) {
-      newErrors.deal_value = "Deal value must be above ₹1,50,000/-";
+    // Validate deal value (minimum ₹2,50,000 as per database constraint)
+    if (formData.deal_value < 250000) {
+      newErrors.deal_value = "Deal value must be at least ₹2,50,000/-";
     }
 
     // Validate seller Aadhaar
@@ -322,16 +322,16 @@ const AddVehicle = () => {
                 <CardHeader>
                   <CardTitle className="text-xl">Deal Value</CardTitle>
                   <CardDescription>
-                    Final deal value must be above ₹1,50,000/-
+                    Final deal value must be at least ₹2,50,000/-
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    <Label htmlFor="deal_value">Deal Amount (₹)</Label>
+                    <Label htmlFor="deal_value">Deal Amount (₹) - Minimum: ₹2,50,000</Label>
                     <Input
                       id="deal_value"
                       type="number"
-                      min="150000"
+                      min="250000"
                       value={formData.deal_value}
                       onChange={(e) => setFormData({ ...formData, deal_value: parseInt(e.target.value) || 0 })}
                       className={errors.deal_value ? "border-destructive" : ""}
