@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { Car, Calendar, IndianRupee, FileText, Edit, Trash2, Upload, Eye } from "lucide-react";
+import { Car, Calendar, IndianRupee, FileText, Edit, Trash2, Upload, Eye, Send, CheckCircle, XCircle, Clock } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { formatPrice } from "@/lib/formatPrice";
 import { Database } from "@/integrations/supabase/types";
@@ -74,6 +74,32 @@ const MyListings = () => {
     }
   };
 
+  const handleSubmitForApproval = async (vehicleId: string) => {
+    try {
+      const { error } = await supabase
+        .from("vehicles")
+        .update({ 
+          status: "pending"
+        })
+        .eq("id", vehicleId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Vehicle submitted for approval. You'll be notified once reviewed."
+      });
+      
+      fetchMyVehicles();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit vehicle for approval",
+        variant: "destructive"
+      });
+    }
+  };
+
   const handleMarkAsSold = async (vehicleId: string) => {
     try {
       const { error } = await supabase
@@ -104,15 +130,35 @@ const MyListings = () => {
   const getStatusBadge = (status: string | null) => {
     switch (status) {
       case "available":
-        return <Badge className="bg-green-500">Available</Badge>;
+        return (
+          <Badge className="bg-green-500 hover:bg-green-600">
+            <CheckCircle className="h-3 w-3 mr-1" />
+            Approved
+          </Badge>
+        );
       case "sold":
-        return <Badge className="bg-blue-500">Sold</Badge>;
+        return (
+          <Badge className="bg-blue-500 hover:bg-blue-600">
+            <CheckCircle className="h-3 w-3 mr-1" />
+            Sold
+          </Badge>
+        );
       case "pending":
-        return <Badge className="bg-yellow-500">Pending</Badge>;
+        return (
+          <Badge className="bg-yellow-500 hover:bg-yellow-600">
+            <Clock className="h-3 w-3 mr-1" />
+            Pending Approval
+          </Badge>
+        );
       case "archived":
-        return <Badge variant="secondary">Archived</Badge>;
+        return (
+          <Badge variant="secondary">
+            <XCircle className="h-3 w-3 mr-1" />
+            Archived
+          </Badge>
+        );
       default:
-        return <Badge variant="outline">Unknown</Badge>;
+        return <Badge variant="outline">Draft</Badge>;
     }
   };
 
@@ -175,6 +221,42 @@ const MyListings = () => {
           </Card>
         ) : (
           <>
+            {/* Status Information Card */}
+            <Card className="mb-6 bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
+              <CardContent className="p-4">
+                <h3 className="font-semibold mb-2 flex items-center gap-2">
+                  <Eye className="h-4 w-4" />
+                  Listing Status Guide
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline">Draft</Badge>
+                    <span className="text-muted-foreground">Not submitted</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-yellow-500 hover:bg-yellow-600">
+                      <Clock className="h-3 w-3 mr-1" />
+                      Pending
+                    </Badge>
+                    <span className="text-muted-foreground">Under review</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-green-500 hover:bg-green-600">
+                      <CheckCircle className="h-3 w-3 mr-1" />
+                      Approved
+                    </Badge>
+                    <span className="text-muted-foreground">Live & visible</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-blue-500 hover:bg-blue-600">
+                      <CheckCircle className="h-3 w-3 mr-1" />
+                      Sold
+                    </Badge>
+                    <span className="text-muted-foreground">Completed</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
             {/* Mobile View - Cards */}
             <div className="block md:hidden space-y-4">
               {vehicles.map((vehicle) => (
@@ -206,9 +288,24 @@ const MyListings = () => {
                         size="sm"
                         variant="outline"
                         onClick={() => navigate(`/seller-portal/vehicles/${vehicle.id}/documents`)}
+                        title="Upload Documents"
                       >
                         <Upload className="h-4 w-4" />
                       </Button>
+                      
+                      {/* Submit for Approval - Only show if not already pending/approved */}
+                      {!vehicle.status || vehicle.status === "archived" ? (
+                        <Button
+                          size="sm"
+                          className="bg-primary hover:bg-primary/90"
+                          onClick={() => handleSubmitForApproval(vehicle.id)}
+                        >
+                          <Send className="h-4 w-4 mr-1" />
+                          Submit
+                        </Button>
+                      ) : null}
+                      
+                      {/* Mark as Sold - Only for approved vehicles */}
                       {vehicle.status === "available" && (
                         <Button
                           size="sm"
@@ -218,13 +315,17 @@ const MyListings = () => {
                           Mark Sold
                         </Button>
                       )}
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => handleDelete(vehicle.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      
+                      {/* Delete - Only for draft/archived vehicles */}
+                      {(!vehicle.status || vehicle.status === "archived") && (
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => handleDelete(vehicle.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -279,9 +380,24 @@ const MyListings = () => {
                                 size="sm"
                                 variant="outline"
                                 onClick={() => navigate(`/seller-portal/vehicles/${vehicle.id}/documents`)}
+                                title="Upload Documents"
                               >
                                 <Upload className="h-4 w-4" />
                               </Button>
+                              
+                              {/* Submit for Approval */}
+                              {!vehicle.status || vehicle.status === "archived" ? (
+                                <Button
+                                  size="sm"
+                                  className="bg-primary hover:bg-primary/90"
+                                  onClick={() => handleSubmitForApproval(vehicle.id)}
+                                >
+                                  <Send className="h-3 w-3 mr-1" />
+                                  Submit
+                                </Button>
+                              ) : null}
+                              
+                              {/* Mark as Sold */}
                               {vehicle.status === "available" && (
                                 <Button
                                   size="sm"
@@ -291,13 +407,17 @@ const MyListings = () => {
                                   Sold
                                 </Button>
                               )}
-                              <Button
-                                size="sm"
-                                variant="destructive"
-                                onClick={() => handleDelete(vehicle.id)}
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
+                              
+                              {/* Delete */}
+                              {(!vehicle.status || vehicle.status === "archived") && (
+                                <Button
+                                  size="sm"
+                                  variant="destructive"
+                                  onClick={() => handleDelete(vehicle.id)}
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              )}
                             </div>
                           </TableCell>
                         </TableRow>

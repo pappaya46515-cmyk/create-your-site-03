@@ -249,7 +249,8 @@ const AddVehicle = () => {
           seller_id: user.id,
           ownership_type: formData.ownership_type,
           category: formData.category,
-          status: 'pending',
+          // Start as draft, seller needs to submit for approval
+          status: 'archived', // Using 'archived' as draft status
           deal_value: formData.deal_value,
           registration_number: formData.registration_number || null,
           engine_number: formData.engine_number || null,
