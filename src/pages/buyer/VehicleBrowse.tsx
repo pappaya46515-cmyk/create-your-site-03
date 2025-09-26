@@ -48,7 +48,7 @@ const VehicleBrowse = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("all");
   const [ownershipType, setOwnershipType] = useState("all");
-  const [priceRange, setPriceRange] = useState([250000, 5000000]);
+  const [priceRange, setPriceRange] = useState([150000, 5000000]);
   const [slabRange, setSlabRange] = useState([0, 100000]);
   const [yearFilter, setYearFilter] = useState("");
   const [showBuyerModal, setShowBuyerModal] = useState(false);
@@ -150,7 +150,7 @@ const VehicleBrowse = () => {
     setFilteredVehicles(filtered);
 
     // Track search analytics with real data
-    if (searchTerm || category !== "all" || priceRange[0] !== 250000 || priceRange[1] !== 5000000) {
+    if (searchTerm || category !== "all" || priceRange[0] !== 150000 || priceRange[1] !== 5000000) {
       const searchQuery = `${searchTerm} ${category !== "all" ? category : ""} ₹${priceRange[0]}-₹${priceRange[1]}`.trim();
       trackSearch(searchQuery, filtered.length);
       logSearchAnalytics(searchTerm, category, priceRange, filtered.length);
@@ -371,7 +371,7 @@ Results Found: ${filteredVehicles.length}
                   <Slider
                     value={priceRange}
                     onValueChange={setPriceRange}
-                    min={250000}
+                    min={150000}
                     max={5000000}
                     step={50000}
                     className="mt-2"
