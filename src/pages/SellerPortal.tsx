@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate, Link } from "react-router-dom";
-import { LogOut, Plus, Package, Eye, FileText, DollarSign, Home } from "lucide-react";
+import { LogOut, Plus, Package, Eye, FileText, IndianRupee, Home } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 
 const SellerPortal = () => {
@@ -117,7 +117,7 @@ const SellerPortal = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <DollarSign className="h-5 w-5" />
+                  <IndianRupee className="h-5 w-5" />
                   Sales Summary
                 </CardTitle>
                 <CardDescription>Track your performance</CardDescription>

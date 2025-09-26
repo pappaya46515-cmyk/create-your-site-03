@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
-import { Car, Search, CheckCircle, XCircle, AlertTriangle, Calendar, DollarSign } from "lucide-react";
+import { Car, Search, CheckCircle, XCircle, AlertTriangle, Calendar, IndianRupee } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Database } from "@/integrations/supabase/types";
 
@@ -263,7 +263,7 @@ const VehicleManagement = () => {
                         <TableCell>{vehicle.rc_owner_name || "N/A"}</TableCell>
                         <TableCell>
                           <div className="flex items-center gap-1">
-                            <DollarSign className="h-3 w-3" />
+                            <IndianRupee className="h-3 w-3" />
                             {formatPrice(Number(vehicle.deal_value))}
                           </div>
                         </TableCell>

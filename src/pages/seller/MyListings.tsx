@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
-import { Car, Calendar, DollarSign, FileText, Edit, Trash2, Upload, Eye } from "lucide-react";
+import { Car, Calendar, IndianRupee, FileText, Edit, Trash2, Upload, Eye } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Database } from "@/integrations/supabase/types";
 
@@ -268,7 +268,7 @@ const MyListings = () => {
                           <TableCell>{vehicle.registration_number || "N/A"}</TableCell>
                           <TableCell>
                             <div className="flex items-center gap-1">
-                              <DollarSign className="h-3 w-3" />
+                              <IndianRupee className="h-3 w-3" />
                               {formatPrice(Number(vehicle.deal_value))}
                             </div>
                           </TableCell>

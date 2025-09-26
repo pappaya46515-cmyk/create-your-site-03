@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Car, Calendar, DollarSign, Trash2, Phone, Mail } from "lucide-react";
+import { Heart, Car, Calendar, IndianRupee, Trash2, Phone, Mail } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Database } from "@/integrations/supabase/types";
 
@@ -166,7 +166,7 @@ const SavedVehicles = () => {
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-sm">
-                      <DollarSign className="h-4 w-4 text-muted-foreground" />
+                      <IndianRupee className="h-4 w-4 text-muted-foreground" />
                       <span className="font-semibold">{formatPrice(Number(vehicle.deal_value))}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">

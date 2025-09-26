@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { ShoppingBag, Calendar, DollarSign, FileText, Download, Eye } from "lucide-react";
+import { ShoppingBag, Calendar, IndianRupee, FileText, Download, Eye } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Database } from "@/integrations/supabase/types";
 
@@ -184,7 +184,7 @@ const BuyerPurchases = () => {
                           <TableCell>{purchase.vehicle.registration_number || "N/A"}</TableCell>
                           <TableCell>
                             <div className="flex items-center gap-1">
-                              <DollarSign className="h-3 w-3" />
+                              <IndianRupee className="h-3 w-3" />
                               {formatPrice(Number(purchase.vehicle.deal_value))}
                             </div>
                           </TableCell>

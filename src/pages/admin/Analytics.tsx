@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
-import { BarChart3, Users, Car, TrendingUp, Search, FileText, DollarSign, Calendar, Phone, AlertCircle, Clock, Activity } from "lucide-react";
+import { BarChart3, Users, Car, TrendingUp, Search, FileText, IndianRupee, Calendar, Phone, AlertCircle, Clock, Activity } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription } from "@/components/ui/alert";
