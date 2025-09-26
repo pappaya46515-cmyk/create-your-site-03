@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Heart, Car, Calendar, IndianRupee, Trash2, Phone, Mail } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
+import { formatPrice } from "@/lib/formatPrice";
 import { Database } from "@/integrations/supabase/types";
 
 type Vehicle = Database["public"]["Tables"]["vehicles"]["Row"];
@@ -112,13 +113,6 @@ const SavedVehicles = () => {
     }
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0
-    }).format(price);
-  };
 
   return (
     <DashboardLayout userRole="buyer">

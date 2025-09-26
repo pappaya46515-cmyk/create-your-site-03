@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { Car, Calendar, IndianRupee, FileText, Edit, Trash2, Upload, Eye } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
+import { formatPrice } from "@/lib/formatPrice";
 import { Database } from "@/integrations/supabase/types";
 
 type Vehicle = Database["public"]["Tables"]["vehicles"]["Row"];
@@ -115,13 +116,6 @@ const MyListings = () => {
     }
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0
-    }).format(price);
-  };
 
   const stats = {
     total: vehicles.length,

@@ -10,6 +10,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Car, Search, CheckCircle, XCircle, AlertTriangle, Calendar, IndianRupee } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Database } from "@/integrations/supabase/types";
+import { formatPrice } from "@/lib/formatPrice";
 
 type Vehicle = Database["public"]["Tables"]["vehicles"]["Row"];
 
@@ -162,13 +163,6 @@ const VehicleManagement = () => {
     }
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0
-    }).format(price);
-  };
 
   return (
     <DashboardLayout userRole="admin">

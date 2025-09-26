@@ -10,6 +10,7 @@ import { Search, Filter, Loader2, IndianRupee, X } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { useToast } from "@/hooks/use-toast";
 import { useBuyerTracking } from "@/hooks/useBuyerTracking";
+import { formatPrice } from "@/lib/formatPrice";
 import BuyerInfoModal from "@/components/BuyerInfoModal";
 import VehicleCard from "@/components/VehicleCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -244,11 +245,6 @@ const VehicleBrowse = () => {
     }
   };
 
-  const formatPrice = (price: number) => {
-    if (price >= 10000000) return `₹${(price / 10000000).toFixed(2)}Cr`;
-    if (price >= 100000) return `₹${(price / 100000).toFixed(2)}L`;
-    return `₹${price.toLocaleString("en-IN")}`;
-  };
 
   const handleBuyerInfo = async (name: string, phone: string) => {
     setShowBuyerModal(false);

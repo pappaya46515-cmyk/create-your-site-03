@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { formatPrice } from "@/lib/formatPrice";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -73,11 +74,6 @@ const LatestVehicles = () => {
     }
   };
 
-  const formatPrice = (price: number) => {
-    if (price >= 10000000) return `₹${(price / 10000000).toFixed(2)}Cr`;
-    if (price >= 100000) return `₹${(price / 100000).toFixed(2)}L`;
-    return `₹${price.toLocaleString("en-IN")}`;
-  };
 
   const getTimeAgo = (date: string) => {
     const now = new Date();
