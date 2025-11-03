@@ -39,6 +39,8 @@ import AboutPageCMS from "./pages/admin/AboutPageCMS";
 import { TractorMasterData } from "./pages/admin/TractorMasterData";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
+import PasswordResetRequest from "./pages/PasswordResetRequest";
+import UpdatePassword from "./pages/UpdatePassword";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +59,8 @@ const App = () => (
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/reset-password" element={<PasswordResetRequest />} />
+            <Route path="/update-password" element={<UpdatePassword />} />
             <Route path="/admin-auth" element={<AdminAuth />} />
             <Route path="/register/buyer" element={<BuyerRegister />} />
             <Route path="/register/seller" element={<SellerRegister />} />

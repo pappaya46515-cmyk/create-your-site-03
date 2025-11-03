@@ -136,6 +136,17 @@ const Auth = () => {
                       required
                     />
                   </div>
+                  <div className="mt-2 text-right">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="px-0"
+                      onClick={() => navigate("/reset-password")}
+                    >
+                      Forgot password?
+                    </Button>
+                  </div>
                 </div>
 
                 <Button
