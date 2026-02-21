@@ -685,12 +685,9 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      bootstrap_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      bootstrap_admin: { Args: never; Returns: boolean }
       get_all_users: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           created_at: string
           email: string
